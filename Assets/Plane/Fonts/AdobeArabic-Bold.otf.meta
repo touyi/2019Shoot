@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 4c7ee58ca9271f24c80544fcc8b1f580
+timeCreated: 1493645311
+licenseType: Pro
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -1
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Adobe Arabic
+  fontNames:
+  - Adobe Arabic
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
