@@ -144,9 +144,17 @@
         <e p="Command" t="Include">
           <e p="BaseCommand.cs" t="Include" />
         </e>
+        <e p="Component" t="Include">
+          <e p="Actor" t="Include">
+            <e p="ActorBaseComponent.cs" t="Include" />
+          </e>
+          <e p="BaseComponent.cs" t="Include" />
+          <e p="ComponentFactory.cs" t="Include" />
+        </e>
         <e p="FSM" t="Include">
           <e p="BaseState.cs" t="Include" />
           <e p="GameMainStateDef" t="Include">
+            <e p="InGameState.cs" t="Include" />
             <e p="WaitScanState.cs" t="Include" />
           </e>
           <e p="GameMainStateEnum.cs" t="Include" />
@@ -155,6 +163,7 @@
         <e p="GameMain.cs" t="Include" />
         <e p="GamePlay" t="Include">
           <e p="Actor" t="Include">
+            <e p="Actor.cs" t="Include" />
             <e p="IActor.cs" t="Include" />
           </e>
         </e>
@@ -177,6 +186,9 @@
             <e p="IOnSyntax.cs" t="Include" />
             <e p="StateBuilder.cs" t="Include" />
           </e>
+        </e>
+        <e p="Wrapper" t="Include">
+          <e p="WeakRef.cs" t="Include" />
         </e>
       </e>
       <e p="Assets\Standard Assets" t="Include">

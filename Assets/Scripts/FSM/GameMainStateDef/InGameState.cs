@@ -1,26 +1,25 @@
 ﻿namespace FSM.GameMainStateDef
 {
-    public class WaitScanState : BaseState
+    // TODO
+    public class InGameState : BaseState
     {
         public void Enter()
         {
-            // TODO
+            
         }
 
         public void Execute()
         {
-            // TODO
         }
 
         public void Exit()
         {
-            // TODO
         }
 
         public void RegistToFsm(StateMachine<GameMainState, GameMainEvent> fsm)
         {
-            fsm.In(GameMainState.WaitScan)
-                .On(GameMainEvent.Begin).GoTo(GameMainState.InGame)
+            fsm.In(GameMainState.InGame)
+                .On(GameMainEvent.End).GoTo(GameMainState.WaitScan)
                 .Attach(this);
         }
     }
