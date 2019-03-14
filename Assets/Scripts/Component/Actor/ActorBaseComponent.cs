@@ -1,20 +1,35 @@
 ﻿using GamePlay.Actor;
 using UnityEngine;
+using Wrapper;
 
 namespace Component.Actor
 {
     public enum ActorComponentType
     {
-        MoveComponent,
+        PlayerMoveComponent,
         AttackComponent,
     }
     public class ActorBaseComponent : IBaseComponent
     {
-        private IActor _actor;
+        private WeakRef<IActor> _actor = new WeakRef<IActor>();
 
         #region 子类关注
+        public void InitTargetActor(IActor actor)
+        {
+            if (actor != null)
+            {
+                this._actor.Ref = actor;
+            }
+            else
+            {
+                Debug.LogError("actor is null !");
+                return;
+            }
+        }
+
         public virtual void Init()
         {
+            
         }
 
         public virtual void Start()
@@ -29,17 +44,5 @@ namespace Component.Actor
         {
         }
         #endregion
-
-        public ActorBaseComponent(IActor actor)
-        {
-            if (actor != null)
-            {
-                this._actor = actor;
-            }
-            else
-            {
-                Debug.LogError("actor is null !");
-            }
-        }
     }
 }

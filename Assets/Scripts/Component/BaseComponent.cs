@@ -1,4 +1,6 @@
-﻿namespace Component
+﻿using GamePlay.Actor;
+
+namespace Component
 {
     public interface IBaseComponent
     {

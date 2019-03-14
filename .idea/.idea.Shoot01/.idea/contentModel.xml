@@ -164,8 +164,12 @@
         <e p="GamePlay" t="Include">
           <e p="Actor" t="Include">
             <e p="Actor.cs" t="Include" />
+            <e p="ActorManager.cs" t="Include" />
             <e p="IActor.cs" t="Include" />
           </e>
+          <e p="GamePlayBuilder.cs" t="Include" />
+          <e p="IGamePlay.cs" t="Include" />
+          <e p="NormalGamePlay.cs" t="Include" />
         </e>
         <e p="SwiftFSM" t="Include">
           <e p="Internal" t="Include">
@@ -187,7 +191,11 @@
             <e p="StateBuilder.cs" t="Include" />
           </e>
         </e>
+        <e p="tools" t="Include">
+          <e p="Timer.cs" t="Include" />
+        </e>
         <e p="Wrapper" t="Include">
+          <e p="ClassPool.cs" t="Include" />
           <e p="WeakRef.cs" t="Include" />
         </e>
       </e>

@@ -24,6 +24,7 @@ namespace GamePlay.Actor
             if (!this.components.ContainsKey(type) && actorBaseComponent != null) 
             {
                 this.components.Add(type, actorBaseComponent);
+                actorBaseComponent.Init();
             }
         }
 
@@ -33,10 +34,22 @@ namespace GamePlay.Actor
             if (this.components.TryGetValue(type, out baseComponent))
             {
                 this.components.Remove(type);
+                baseComponent.Uninit();
                 return baseComponent;
             }
 
             return null;
+        }
+
+        public void Update(float deltaTime)
+        {
+            using (Dictionary<ActorComponentType, ActorBaseComponent>.Enumerator item = this.components.GetEnumerator())
+            {
+                while (item.MoveNext())
+                {
+                    item.Current.Value.Update(deltaTime);
+                }
+            }
         }
     }
 }

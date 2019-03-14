@@ -13,20 +13,20 @@ namespace Component
                 // TODO
                 case ActorComponentType.AttackComponent:
                     break;
-                case ActorComponentType.MoveComponent:
+                case ActorComponentType.PlayerMoveComponent:
                     break;
             }
 
             if (baseComponent != null)
             {
-                baseComponent.Init();
+                baseComponent.InitTargetActor(actor);
             }
             return null;
         }
 
         public static void DestoryComponent(IBaseComponent baseComponent)
         {
-            baseComponent.Uninit();
+            // baseComponent.Uninit(); 
         }
     }
 }
