@@ -1,12 +1,20 @@
 ﻿using System.Collections.Generic;
 using Component.Actor;
+using UnityEditor.Purchasing;
 using UnityEngine;
 
 namespace GamePlay.Actor
 {
+    public enum ActorType
+    {
+        LocalPlayer,
+        Enemy,
+    }
+    
     public class Actor : IActor
     {
-        public Dictionary<ActorComponentType, ActorBaseComponent> components =
+        public ActorType ActorType;
+        private Dictionary<ActorComponentType, ActorBaseComponent> components =
             new Dictionary<ActorComponentType, ActorBaseComponent>();
         public ActorBaseComponent GetActorComponent(ActorComponentType type)
         {

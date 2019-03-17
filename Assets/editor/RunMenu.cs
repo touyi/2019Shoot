@@ -1,4 +1,5 @@
 ﻿using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,18 +10,8 @@ namespace editor
         [MenuItem("Run/运行")]
         public static void Run()
         {
-            EditorApplication.playmodeStateChanged += RunMenu.OnChange;
+            EditorSceneManager.OpenScene("Assets/Scences/Start.unity");
             EditorApplication.isPlaying = true;
-            
-            
-        }
-
-        public static void OnChange()
-        {
-            if (EditorApplication.isPlaying == true && EditorApplication.isPlayingOrWillChangePlaymode == true)
-            {
-                SceneManager.LoadScene(0);
-            }
         }
     }
 }

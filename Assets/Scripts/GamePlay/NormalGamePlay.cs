@@ -35,13 +35,13 @@ namespace GamePlay
         public void Update(float deltaTime)
         {
             ActorManager.Update(deltaTime);
+            _fsmStarter.Update(deltaTime);
         }
 
         public void Init()
         {
             _levelManager.InitScence();
-            // TODO 创建角色
-            // _fsmStarter.Init();
+            _fsmStarter.Init();
         }
 
         public void Uninit()
