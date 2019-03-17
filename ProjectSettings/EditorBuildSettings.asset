@@ -7,37 +7,61 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 0
     path: Assets/OVRHarness/Scenes/Loading.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/SampleScenes/Cameras/Multiple Cameras/Multiple Cameras.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/SampleScenes/Cameras/Per-Eye Cameras/Per-Eye Cameras.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/SampleScenes/First Person/Crosshairs/Crosshairs.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/SampleScenes/First Person/Locomotion/Teleport/Teleport.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/SampleScenes/First Person/Mirror/Mirror.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/SampleScenes/First Person/Outdoor Motion.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/SampleScenes/First Person/Scale.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/SampleScenes/First Person/Stairs/Stairs.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/SampleScenes/Input/Input Tester/Input Tester.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/SampleScenes/Input/Keyboard/Keyboard.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/SampleScenes/Rendering/Movie Player/Movie Player.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/SampleScenes/Rendering/Render Frame Rate/Render Frame Rate.unity
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scences/Start.unity
+    guid: d5721d9f355b5144eabb4984ad3027bc
+  - enabled: 1
+    path: Assets/Scences/new.unity
+    guid: 085cc34ec3f476e4a99c3d88526aacf1
   - enabled: 1
     path: Assets/PFire/scences/fire01.unity
+    guid: 58b1cc779da7f2040ac4f8feee4d5217
   - enabled: 0
     path: Assets/SampleScenes/Rendering/Surface Detail/Surface Detail.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/SampleScenes/UI/Pointers/Pointers.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/SampleScenes/UI/Pointers - Gaze Click/Pointers - Gaze Click.unity
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/OVRHarness/Scenes/StartUp.unity
+    guid: 00000000000000000000000000000000

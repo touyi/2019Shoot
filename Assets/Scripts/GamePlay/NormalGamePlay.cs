@@ -1,14 +1,35 @@
-﻿using GamePlay.Actor;
+﻿using FSM;
+using GamePlay.Actor;
 
 namespace GamePlay
 {
     public class NormalGamePlay : IGamePlay
     {
-        public ActorManager ActorManager = null;
-        // TODO
+        private MainFSMStarter _fsmStarter = null;
+        private ActorManager _actorManager = null;
+        private LevelManager _levelManager = null;
+
+        public MainFSMStarter FsmStarter
+        {
+            get { return _fsmStarter; }
+            set { _fsmStarter = value; }
+        }
+
+        public ActorManager ActorManager
+        {
+            get { return _actorManager; }
+            set { _actorManager = value; }
+        }
+
+        public LevelManager LevelManager
+        {
+            get { return _levelManager; }
+            set { _levelManager = value; }
+        }
+
         public void Start()
         {
-            throw new System.NotImplementedException();
+            _fsmStarter.Start();
         }
 
         public void Update(float deltaTime)
@@ -18,12 +39,15 @@ namespace GamePlay
 
         public void Init()
         {
-            throw new System.NotImplementedException();
+            _levelManager.InitScence();
+            // TODO 创建角色
+            // _fsmStarter.Init();
         }
 
         public void Uninit()
         {
-            throw new System.NotImplementedException();
+            // 销毁
+            _fsmStarter.Uninit();
         }
     }
 }

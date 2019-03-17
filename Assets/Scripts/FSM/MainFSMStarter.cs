@@ -13,12 +13,17 @@ namespace FSM
             this.RegisterGlobalState(new InGameState());
             
             _mainFsm.Initialize(GameMainState.WaitScan);
-            _mainFsm.Start();
+            
         }
 
         public void Uninit()
         {
             _mainFsm.Stop();
+        }
+
+        public void Start()
+        {
+            _mainFsm.Start();
         }
 
         public void Update(float deltaTime)
