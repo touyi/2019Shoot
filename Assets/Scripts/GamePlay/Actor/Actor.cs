@@ -33,6 +33,7 @@ namespace GamePlay.Actor
             {
                 this.components.Add(type, actorBaseComponent);
                 actorBaseComponent.Init();
+                actorBaseComponent.Start();
             }
         }
 
@@ -58,6 +59,18 @@ namespace GamePlay.Actor
                     item.Current.Value.Update(deltaTime);
                 }
             }
+        }
+
+        public void Init()
+        {
+        }
+
+        public void Start()
+        {
+        }
+
+        public void Uninit()
+        {
         }
     }
 }

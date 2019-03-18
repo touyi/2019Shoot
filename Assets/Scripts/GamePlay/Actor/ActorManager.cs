@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using assets;
+using Component;
+using Component.Actor;
 using UnityEngine;
 
 namespace GamePlay.Actor
@@ -48,6 +51,9 @@ namespace GamePlay.Actor
 
         private Actor BuildLocalPlayer(Vector3 worldPos)
         {
+            Actor actor = new Actor();
+            // TODO组装
+//            actor.InsertActorComponent();
             return null;
         }
     }

@@ -8,5 +8,8 @@ namespace GamePlay.Actor
         void InsertActorComponent(ActorComponentType type, ActorBaseComponent actorBaseComponent);
         ActorBaseComponent RemoveActorComponent(ActorComponentType type);
         void Update(float deltaTime);
+        void Init();
+        void Start();
+        void Uninit();
     }
 }

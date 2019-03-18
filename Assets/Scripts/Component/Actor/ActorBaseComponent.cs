@@ -11,10 +11,9 @@ namespace Component.Actor
     }
     public class ActorBaseComponent : IBaseComponent
     {
-        private WeakRef<IActor> _actor = new WeakRef<IActor>();
+        protected WeakRef<IActor> _actor = new WeakRef<IActor>();
 
-        #region 子类关注
-        public void InitTargetActor(IActor actor)
+        public ActorBaseComponent(IActor actor)
         {
             if (actor != null)
             {
@@ -26,6 +25,8 @@ namespace Component.Actor
                 return;
             }
         }
+
+        #region 子类关注
 
         public virtual void Init()
         {

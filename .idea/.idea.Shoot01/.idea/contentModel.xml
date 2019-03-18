@@ -145,6 +145,9 @@
         </e>
       </e>
       <e p="Assets\Scripts" t="Include">
+        <e p="Assets" t="Include">
+          <e p="AssetsManager.cs" t="Include" />
+        </e>
         <e p="Command" t="Include">
           <e p="BaseCommand.cs" t="Include" />
         </e>
@@ -153,7 +156,6 @@
             <e p="ActorBaseComponent.cs" t="Include" />
           </e>
           <e p="BaseComponent.cs" t="Include" />
-          <e p="ComponentFactory.cs" t="Include" />
         </e>
         <e p="FSM" t="Include">
           <e p="BaseState.cs" t="Include" />
@@ -201,6 +203,7 @@
         </e>
         <e p="Wrapper" t="Include">
           <e p="ClassPool.cs" t="Include" />
+          <e p="Singleton.cs" t="Include" />
           <e p="WeakRef.cs" t="Include" />
         </e>
       </e>
