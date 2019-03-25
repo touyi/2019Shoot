@@ -1,4 +1,5 @@
-﻿using GamePlay.Actor;
+﻿using assets;
+using GamePlay.Actor;
 
 namespace Component.Actor
 {
@@ -10,7 +11,8 @@ namespace Component.Actor
         
         public override void Init()
         {
-            
+            // TODO 666
+            // AssetsManager.Instance.LoadPrefab()
         }
 
         public override void Start()

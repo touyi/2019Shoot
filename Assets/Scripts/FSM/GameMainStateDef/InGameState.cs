@@ -18,7 +18,11 @@ namespace FSM.GameMainStateDef
             }
 
             ActorManager actorManager = gamePlay.ActorManager;
-            // TODO actorManager.CreateActor();
+            ActorBuildData data = ActorBuildData.Get();
+            data.BornWorldPos = gamePlay.LevelManager.GetLocalPlayerPos(0);
+            data.type = ActorType.LocalPlayer;
+            Actor actor = actorManager.CreateActor(data);
+            data.Release();
         }
 
         public void Execute()
