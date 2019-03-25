@@ -13,6 +13,8 @@ namespace Component.Actor
     {
         protected WeakRef<IActor> _actor = new WeakRef<IActor>();
 
+        public bool Enable = true;
+
         public ActorBaseComponent(IActor actor)
         {
             if (actor != null)

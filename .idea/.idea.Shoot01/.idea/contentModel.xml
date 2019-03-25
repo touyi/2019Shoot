@@ -154,6 +154,7 @@
         <e p="Component" t="Include">
           <e p="Actor" t="Include">
             <e p="ActorBaseComponent.cs" t="Include" />
+            <e p="LocalPlayerMove.cs" t="Include" />
           </e>
           <e p="BaseComponent.cs" t="Include" />
         </e>
@@ -177,6 +178,9 @@
           <e p="IGamePlay.cs" t="Include" />
           <e p="LevelManager.cs" t="Include" />
           <e p="NormalGamePlay.cs" t="Include" />
+        </e>
+        <e p="NetInput" t="Include">
+          <e p="IInput.cs" t="Include" />
         </e>
         <e p="SwiftFSM" t="Include">
           <e p="Internal" t="Include">

@@ -32,8 +32,8 @@ namespace GamePlay.Actor
             if (!this.components.ContainsKey(type) && actorBaseComponent != null) 
             {
                 this.components.Add(type, actorBaseComponent);
-                actorBaseComponent.Init();
-                actorBaseComponent.Start();
+//                actorBaseComponent.Init();
+//                actorBaseComponent.Start();
             }
         }
 
@@ -63,14 +63,35 @@ namespace GamePlay.Actor
 
         public void Init()
         {
+            using (Dictionary<ActorComponentType, ActorBaseComponent>.Enumerator item = this.components.GetEnumerator())
+            {
+                while (item.MoveNext())
+                {
+                    item.Current.Value.Init();
+                }
+            }
         }
 
         public void Start()
         {
+            using (Dictionary<ActorComponentType, ActorBaseComponent>.Enumerator item = this.components.GetEnumerator())
+            {
+                while (item.MoveNext())
+                {
+                    item.Current.Value.Start();
+                }
+            }
         }
 
         public void Uninit()
         {
+            using (Dictionary<ActorComponentType, ActorBaseComponent>.Enumerator item = this.components.GetEnumerator())
+            {
+                while (item.MoveNext())
+                {
+                    item.Current.Value.Uninit();
+                }
+            }
         }
     }
 }
