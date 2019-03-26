@@ -22,5 +22,16 @@ namespace GamePlay
 
             return go.transform.position;
         }
+
+        public Transform GetLocalPlayerBase(int index = 0)
+        {
+            GameObject go = GameObject.Find(string.Format("LocalPlayerPos{0}", index));
+            if (go == null)
+            {
+                return null;
+            }
+
+            return go.transform;
+        }
     }
 }

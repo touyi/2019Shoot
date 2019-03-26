@@ -5,7 +5,7 @@ namespace GamePlay
 {
     public static class GamePlayBuilder
     {
-        public static IGamePlay BuildNormalGamePlay()
+        public static NormalGamePlay BuildNormalGamePlay()
         {
             NormalGamePlay gamePlay = new NormalGamePlay();
             gamePlay.ActorManager = new ActorManager();

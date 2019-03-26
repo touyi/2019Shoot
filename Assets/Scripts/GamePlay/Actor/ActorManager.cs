@@ -80,7 +80,7 @@ namespace GamePlay.Actor
         {
             Actor actor = new Actor();
             // TODO组装
-            actor.InsertActorComponent(ActorComponentType.PlayerMoveComponent, new LocalPlayerMove(actor));
+            actor.InsertActorComponent(ActorComponentType.PlayerMoveComponent, new LocalPlayerBehaviorComp(actor));
             actor.Init();
             actor.Start();
             return actor;

@@ -1,5 +1,6 @@
 ﻿using FSM;
 using GamePlay;
+using NetInput;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,9 +10,9 @@ public class GameMain : MonoBehaviour
     // private MainFSMStarter _mainFsmStarter = new MainFSMStarter();
     public static GameMain Instance = null;
 
-    private IGamePlay _currentGamePlay = null;
+    private NormalGamePlay _currentGamePlay = null;
 
-    public IGamePlay CurrentGamePlay
+    public NormalGamePlay CurrentGamePlay
     {
         get { return this._currentGamePlay; }
     }
@@ -34,12 +35,15 @@ public class GameMain : MonoBehaviour
     {
         float deltaTime = Time.time - lastFrameTime;
         lastFrameTime = Time.time;
-        // _mainFsmStarter.Update(lastFrameTime);
+        
+        CurrentInput.CurInput.Update(deltaTime);
         if (CurrentGamePlay != null)
         {
             CurrentGamePlay.Update(deltaTime);
         }
+    }
 
-        
+    private void Update()
+    {
     }
 }

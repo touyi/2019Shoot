@@ -8,6 +8,7 @@ namespace Component.Actor
     {
         PlayerMoveComponent,
         AttackComponent,
+        ActorGameObjectComponent,
     }
     public class ActorBaseComponent : IBaseComponent
     {
@@ -30,11 +31,17 @@ namespace Component.Actor
 
         #region 子类关注
 
+        /// <summary>
+        /// 做自己数据的初始化 尽量避免获取其他组件的数据
+        /// </summary>
         public virtual void Init()
         {
             
         }
 
+        /// <summary>
+        /// 所有组件已经初始化完成 可以获取其他组件数据
+        /// </summary>
         public virtual void Start()
         {
         }

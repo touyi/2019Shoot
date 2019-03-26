@@ -18,8 +18,8 @@ namespace assets
                 return null;
             }
 
-            path = "Prefabs/" + path.Replace("//", "/").Replace("\\", "/");
-            GameObject go = this.LoadPrefab(path) as GameObject;
+            path = "prefabs/" + path.Replace("//", "/").Replace("\\", "/");
+            GameObject go = this.Load(path) as GameObject;
             if (go == null)
             {
                 Debug.LogError(string.Format("LoadPrefab error path:{0}", path));

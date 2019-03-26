@@ -29,6 +29,9 @@ namespace GamePlay
 
         public void Start()
         {
+            _actorManager.Init();
+            _fsmStarter.Init();
+            
             _actorManager.Start();
             _fsmStarter.Start();
         }
@@ -42,8 +45,6 @@ namespace GamePlay
         public void Init()
         {
             _levelManager.InitScence();
-            _fsmStarter.Init();
-            _actorManager.Init();
         }
 
         public void Uninit()
