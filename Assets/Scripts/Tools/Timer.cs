@@ -7,7 +7,7 @@ namespace Tools
     /// <summary>
     /// 定时器
     /// </summary>
-    public class Timer
+    public class Timer : Singleton<Timer>
     {
         private long _idGenerator = 0;
         private Dictionary<long, FunctionParam> _functions = new Dictionary<long, FunctionParam>();
@@ -18,14 +18,14 @@ namespace Tools
             public object Param;
             public float CallTime;
 
-            public override void Init()
+            protected override void Init()
             {
                 this.CallTime = -1;
                 this.Param = null;
                 this.Functon = null;
             }
 
-            public override void Uninit()
+            protected override void Uninit()
             {
                 this.Init();
             }
@@ -39,7 +39,7 @@ namespace Tools
             {
                 while (item.MoveNext())
                 {
-                    if (item.Current.Value.CallTime >= Time.time)
+                    if (item.Current.Value.CallTime <= Time.time)
                     {
                         removeList.Add(item.Current.Key);
                         FunctionParam fp = item.Current.Value;

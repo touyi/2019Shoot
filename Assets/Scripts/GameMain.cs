@@ -1,7 +1,6 @@
-﻿using FSM;
+﻿
 using GamePlay;
 using NetInput;
-using UnityEditor;
 using UnityEngine;
 
 public class GameMain : MonoBehaviour
@@ -16,6 +15,7 @@ public class GameMain : MonoBehaviour
     {
         get { return this._currentGamePlay; }
     }
+    
 
     private void Awake()
     {
@@ -28,8 +28,19 @@ public class GameMain : MonoBehaviour
         //_mainFsmStarter.Init();
         // TODO 异步加载
         this._currentGamePlay = GamePlayBuilder.BuildNormalGamePlay();
-        this._currentGamePlay.Start();
+        this._currentGamePlay.Init();
+        Tools.Timer.Instance.DelayCall(0.03f, this.DelayStart, null);
     }
+
+    private void DelayStart(object param)
+    {
+        if (this._currentGamePlay != null)
+        {
+            this._currentGamePlay.Start();
+        }
+    }
+    
+    
 
     private void FixedUpdate()
     {
@@ -37,7 +48,8 @@ public class GameMain : MonoBehaviour
         lastFrameTime = Time.time;
         
         CurrentInput.CurInput.Update(deltaTime);
-        if (CurrentGamePlay != null)
+        Tools.Timer.Instance.Update(deltaTime);
+        if (CurrentGamePlay != null && CurrentGamePlay.IsRunning)
         {
             CurrentGamePlay.Update(deltaTime);
         }

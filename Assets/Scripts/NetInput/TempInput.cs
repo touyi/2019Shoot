@@ -24,13 +24,13 @@ namespace NetInput
             throw new System.NotImplementedException();
         }
 
-        private Vector3 dir = Vector3.zero;
+        private Vector3 dir = Vector3.forward;
         public Vector3 GetAxis3D(InputKeyCode key)
         {
             switch (key)
             {
                     case InputKeyCode.DirVector:
-                        return dir;
+                        return dir.normalized;
                         break;
             }
 
@@ -48,8 +48,8 @@ namespace NetInput
         {
             float x = Input.GetAxis("Mouse X") * deltaTime;
             float y = Input.GetAxis("Mouse Y") * deltaTime;
-            dir.x += x;
             dir.y += y;
+            dir.x += x;
         }
     }
 }

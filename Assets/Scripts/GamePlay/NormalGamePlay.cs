@@ -8,6 +8,12 @@ namespace GamePlay
         private MainFSMStarter _fsmStarter = null;
         private ActorManager _actorManager = null;
         private LevelManager _levelManager = null;
+        private bool _isRunning = false;
+
+        public bool IsRunning
+        {
+            get { return _isRunning; }
+        }
 
         public MainFSMStarter FsmStarter
         {
@@ -34,6 +40,8 @@ namespace GamePlay
             
             _actorManager.Start();
             _fsmStarter.Start();
+
+            _isRunning = true;
         }
 
         public void Update(float deltaTime)

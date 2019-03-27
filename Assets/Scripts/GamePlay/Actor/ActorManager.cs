@@ -62,7 +62,16 @@ namespace GamePlay.Actor
 
         public void Update(float deltaTime)
         {
-            
+            using (List<Actor>.Enumerator item = this._actors.GetEnumerator())
+            {
+                while (item.MoveNext())
+                {
+                    if (item.Current != null)
+                    {
+                        item.Current.Update(deltaTime);
+                    }
+                }
+            }
         }
 
         public void Uninit()

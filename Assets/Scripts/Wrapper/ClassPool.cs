@@ -31,12 +31,12 @@ namespace Wrapper
     }
     public class Poolable<T> where T : Poolable<T>, new()
     {
-        public virtual void Init()
+        protected virtual void Init()
         {
             
         }
 
-        public virtual void Uninit()
+        protected virtual void Uninit()
         {
             
         }

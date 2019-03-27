@@ -1,4 +1,5 @@
-﻿using assets;
+﻿using System.Globalization;
+using assets;
 using GamePlay.Actor;
 using NetInput;
 using Tools;
@@ -20,9 +21,14 @@ namespace Component.Actor
             GameObject prefab = AssetsManager.Instance.LoadPrefab("Actor/KeyBordMainPlayer");
             if (prefab != null)
             {
-                GameMain.Instance.CurrentGamePlay.LevelManager.GetLocalPlayerBase(0);
-                GameObject go = GameObject.Instantiate(prefab, GameMain.Instance.CurrentGamePlay.LevelManager.GetLocalPlayerBase(0));
+                Transform parent = GameMain.Instance.CurrentGamePlay.LevelManager.GetLocalPlayerBase(0);
+                GameObject go = GameObject.Instantiate(prefab, parent);
                 this._targetTrans = go.transform;
+                if (this._targetTrans)
+                {
+                    this._targetTrans.localPosition = Vector3.zero;
+                    this._targetTrans.rotation = Quaternion.identity;
+                }
             }
 
             this._weapen = this._targetTrans.CustomFind("weapenPos");
