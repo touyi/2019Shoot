@@ -6,12 +6,32 @@ namespace NetInput
     {
         public bool GetKeyDown(InputKeyCode key)
         {
-            throw new System.NotImplementedException();
+            switch (key)
+            {
+                    case InputKeyCode.Fire:
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            return true;
+                        }
+                        break;
+            }
+
+            return false;
         }
 
         public bool GetKey(InputKeyCode key)
         {
-            throw new System.NotImplementedException();
+            switch (key)
+            {
+                case InputKeyCode.Fire:
+                    if (Input.GetMouseButton(0))
+                    {
+                        return true;
+                    }
+                    break;
+            }
+
+            return false;
         }
 
         public float GetAxis(InputKeyCode key)

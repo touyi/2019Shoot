@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class blueline : MonoBehaviour {
 
     public float MaxBeamLength = 1000;
@@ -13,7 +12,8 @@ public class blueline : MonoBehaviour {
     RaycastHit hitpoint;
     LineRenderer linereder = null;
     float beamlength;
-    void OnEnable()
+
+    private void Awake()
     {
         linereder = GetComponent<LineRenderer>();
         linereder.SetPosition(0, Vector3.zero);

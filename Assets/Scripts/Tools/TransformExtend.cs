@@ -23,5 +23,13 @@ namespace Tools
 
             return transform.GetComponent<T>();
         }
+
+        public static void CustomSetActive(this Transform transform, bool isActive)
+        {
+            if (transform != null && transform.gameObject.activeInHierarchy != isActive)
+            {
+                transform.gameObject.SetActive(isActive);
+            }
+        }
     }
 }

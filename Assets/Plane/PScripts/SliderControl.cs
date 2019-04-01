@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[ExecuteInEditMode]
 public class SliderControl : MonoBehaviour {
 
+    [SerializeField]
+    [Range(0,1.0f)]
     float value = 0.5f;
     public Transform back;
     public Transform forward;

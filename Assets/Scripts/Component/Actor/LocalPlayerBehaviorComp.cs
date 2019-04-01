@@ -15,7 +15,12 @@ namespace Component.Actor
         public LocalPlayerBehaviorComp(IActor actor) : base(actor)
         {
         }
-        
+
+        public Transform WeapenTrans
+        {
+            get { return _weapen; }
+        }
+
         public override void Init()
         {
             GameObject prefab = AssetsManager.Instance.LoadPrefab("Actor/KeyBordMainPlayer");

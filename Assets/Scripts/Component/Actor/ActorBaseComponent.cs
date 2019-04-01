@@ -6,7 +6,8 @@ namespace Component.Actor
 {
     public enum ActorComponentType
     {
-        PlayerMoveComponent,
+        PlayerBehaviorComponent,
+        WeapenComponent,
         AttackComponent,
         ActorGameObjectComponent,
     }

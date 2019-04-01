@@ -155,8 +155,12 @@
           <e p="Actor" t="Include">
             <e p="ActorBaseComponent.cs" t="Include" />
             <e p="LocalPlayerBehaviorComp.cs" t="Include" />
+            <e p="WeapenComp.cs" t="Include" />
           </e>
           <e p="BaseComponent.cs" t="Include" />
+          <e p="Widget" t="Include">
+            <e p="Gun.cs" t="Include" />
+          </e>
         </e>
         <e p="FSM" t="Include">
           <e p="BaseState.cs" t="Include" />

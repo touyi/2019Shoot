@@ -89,7 +89,8 @@ namespace GamePlay.Actor
         {
             Actor actor = new Actor();
             // TODO组装
-            actor.InsertActorComponent(ActorComponentType.PlayerMoveComponent, new LocalPlayerBehaviorComp(actor));
+            actor.InsertActorComponent(ActorComponentType.PlayerBehaviorComponent, new LocalPlayerBehaviorComp(actor));
+            actor.InsertActorComponent(ActorComponentType.WeapenComponent, new WeapenComp(actor));
             actor.Init();
             actor.Start();
             return actor;
