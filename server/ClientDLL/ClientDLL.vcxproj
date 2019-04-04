@@ -115,11 +115,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="DLLTest.h" />
+    <ClInclude Include="client.h" />
+    <ClInclude Include="ClientWarp.h" />
+    <ClInclude Include="Tools.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DLLTest.cpp" />
-    <ClCompile Include="DLLTest_wrap.cxx" />
+    <ClCompile Include="client.cpp" />
+    <ClCompile Include="ClientWarp.cpp" />
+    <ClCompile Include="Tools.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="DLLTest.idl" />

@@ -300,44 +300,76 @@ SWIGEXPORT void SWIGSTDCALL SWIGRegisterStringCallback_ClientDLL(SWIG_CSharpStri
 
 
     /* 在包装代码中包含头文件 */
-    #include "DLLTest.h"  
+    #include "ClientWarp.h"  
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-SWIGEXPORT int SWIGSTDCALL CSharp_DLLTest_Add(void * jarg1, int jarg2, int jarg3) {
-  int jresult ;
-  DLLTest *arg1 = (DLLTest *) 0 ;
-  int arg2 ;
-  int arg3 ;
-  int result;
-  
-  arg1 = (DLLTest *)jarg1; 
-  arg2 = (int)jarg2; 
-  arg3 = (int)jarg3; 
-  result = (int)(arg1)->Add(arg2,arg3);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void * SWIGSTDCALL CSharp_new_DLLTest() {
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_ClientWarp() {
   void * jresult ;
-  DLLTest *result = 0 ;
+  ClientWarp *result = 0 ;
   
-  result = (DLLTest *)new DLLTest();
+  result = (ClientWarp *)new ClientWarp();
   jresult = (void *)result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_delete_DLLTest(void * jarg1) {
-  DLLTest *arg1 = (DLLTest *) 0 ;
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_ClientWarp(void * jarg1) {
+  ClientWarp *arg1 = (ClientWarp *) 0 ;
   
-  arg1 = (DLLTest *)jarg1; 
+  arg1 = (ClientWarp *)jarg1; 
   delete arg1;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_ClientWarp_InitClient(void * jarg1, char * jarg2, int jarg3) {
+  int jresult ;
+  ClientWarp *arg1 = (ClientWarp *) 0 ;
+  char *arg2 = (char *) 0 ;
+  int arg3 ;
+  int result;
+  
+  arg1 = (ClientWarp *)jarg1; 
+  arg2 = (char *)jarg2; 
+  arg3 = (int)jarg3; 
+  result = (int)(arg1)->InitClient((char const *)arg2,arg3);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_ClientWarp_ConnectServer(void * jarg1) {
+  int jresult ;
+  ClientWarp *arg1 = (ClientWarp *) 0 ;
+  int result;
+  
+  arg1 = (ClientWarp *)jarg1; 
+  result = (int)(arg1)->ConnectServer();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ClientWarp_ExitClient(void * jarg1) {
+  ClientWarp *arg1 = (ClientWarp *) 0 ;
+  
+  arg1 = (ClientWarp *)jarg1; 
+  (arg1)->ExitClient();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_ClientWarp_SendData(void * jarg1, int jarg2, char * jarg3) {
+  ClientWarp *arg1 = (ClientWarp *) 0 ;
+  int arg2 ;
+  char *arg3 = (char *) 0 ;
+  
+  arg1 = (ClientWarp *)jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (char *)jarg3; 
+  (arg1)->SendData(arg2,arg3);
 }
 
 

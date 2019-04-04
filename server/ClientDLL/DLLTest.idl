@@ -1,7 +1,7 @@
 %module ClientDLL
 %{
     /* 在包装代码中包含头文件 */
-    #include "DLLTest.h"  
+    #include "ClientWarp.h"  
 %}
 /* 解析头文件生成包装代码 */
-%include "DLLTest.h"
+%include "ClientWarp.h"

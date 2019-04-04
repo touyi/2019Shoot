@@ -15,15 +15,24 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DLLTest.h">
+    <ClInclude Include="client.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientWarp.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DLLTest.cpp">
+    <ClCompile Include="client.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="DLLTest_wrap.cxx">
+    <ClCompile Include="Tools.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientWarp.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
