@@ -76,6 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -122,6 +123,7 @@
   <ItemGroup>
     <ClCompile Include="client.cpp" />
     <ClCompile Include="ClientWarp.cpp" />
+    <ClCompile Include="DLLTest_wrap.cxx" />
     <ClCompile Include="Tools.cpp" />
   </ItemGroup>
   <ItemGroup>

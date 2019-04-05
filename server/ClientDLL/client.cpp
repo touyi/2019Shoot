@@ -92,15 +92,14 @@ BOOL Client::ConnectServer(void)
 				return FALSE;
 			}
 		}
-
-        if (!this->CreateSendAndRecvThread()) {
-            this->ExitClient();
-            return FALSE;
-        }
-
 		if ( reVal == 0 )//连接成功
 			break;
 	}
+
+    if (!this->CreateSendAndRecvThread()) {
+        this->ExitClient();
+        return FALSE;
+    }
 
 	bConnecting = TRUE;
 
@@ -277,7 +276,7 @@ void Client::ExitClient(void)
 void Client::SendData(int proto, char * content)
 {
     
-    while (bConnecting)			//连接状态
+    if (bConnecting)			//连接状态
     {
         char cInput[MAX_NUM_BUF];	//用户输入缓冲区
         Int32ToChar(cInput, proto);

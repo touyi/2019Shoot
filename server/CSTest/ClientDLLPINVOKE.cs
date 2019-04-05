@@ -187,12 +187,21 @@ class ClientDLLPINVOKE {
   }
 
 
-  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_DLLTest_Add")]
-  public static extern int DLLTest_Add(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3);
+  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_new_ClientWarp")]
+  public static extern global::System.IntPtr new_ClientWarp();
 
-  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_new_DLLTest")]
-  public static extern global::System.IntPtr new_DLLTest();
+  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_delete_ClientWarp")]
+  public static extern void delete_ClientWarp(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_delete_DLLTest")]
-  public static extern void delete_DLLTest(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_ClientWarp_InitClient")]
+  public static extern int ClientWarp_InitClient(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2, int jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_ClientWarp_ConnectServer")]
+  public static extern int ClientWarp_ConnectServer(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_ClientWarp_ExitClient")]
+  public static extern void ClientWarp_ExitClient(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_ClientWarp_SendData")]
+  public static extern void ClientWarp_SendData(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, string jarg3);
 }

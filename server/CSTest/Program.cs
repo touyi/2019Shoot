@@ -10,8 +10,12 @@ namespace CSTest
     {
         static void Main(string[] args)
         {
-            DLLTest test = new DLLTest();
-            Console.WriteLine(test.Add(5, 7));
+            ClientWarp warp = new ClientWarp();
+            warp.InitClient("127.0.0.1", 6666);
+            Console.WriteLine(warp.ConnectServer());
+            string con = Console.ReadLine();
+            warp.SendData(123, con);
+            Console.ReadLine();
         }
     }
 }

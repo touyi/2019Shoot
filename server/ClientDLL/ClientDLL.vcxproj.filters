@@ -35,6 +35,9 @@
     <ClCompile Include="ClientWarp.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="DLLTest_wrap.cxx">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="DLLTest.idl">
