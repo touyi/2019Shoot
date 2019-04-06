@@ -60,4 +60,9 @@ public class ClientWarp : global::System.IDisposable {
     ClientDLLPINVOKE.ClientWarp_SendData(swigCPtr, proto, content);
   }
 
+  public DataItem PopNextData() {
+    DataItem ret = new DataItem(ClientDLLPINVOKE.ClientWarp_PopNextData(swigCPtr), true);
+    return ret;
+  }
+
 }

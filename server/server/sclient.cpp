@@ -55,7 +55,7 @@ BOOL CClient::StartRuning(void)
 	}
 
 	//创建接收客户端数据的线程
-	m_hThreadSend =  CreateThread(NULL, 0, SendDataThread, this, 0, &ulThreadId);
+	m_hThreadSend =  CreateThread(NULL, 0, FrameSendDataThread, this, 0, &ulThreadId);
 	if(NULL == m_hThreadSend)
 	{
 		return FALSE;
@@ -66,6 +66,51 @@ BOOL CClient::StartRuning(void)
 	return TRUE;
 }
 
+
+void CClient::SetFrameSend(UShort proto, char * buffer, UShort bufferlen)
+{
+    // TODO 这里会有大量GC
+    DataBuffer* datapack = new DataBuffer();
+    datapack->Package.head.proto = proto;
+    datapack->Package.head.Length = bufferlen + 4; // 加上头部4个字节
+    memcpy(datapack->Package.datas, buffer, bufferlen);
+    this->m_sendBufferQuene.push(datapack);
+
+    m_bSend = TRUE;
+}
+
+bool CClient::InnerSendData(DataBuffer * buffer)
+{
+    bool flag = true;
+    //进入临界区
+    EnterCriticalSection(&this->m_cs);
+    //发送数据
+    int val = send(this->m_socket, buffer->buffer, buffer->Package.head.Length, 0);
+    //处理返回错误
+    if (SOCKET_ERROR == val)
+    {
+        int nErrCode = WSAGetLastError();
+        if (nErrCode == WSAEWOULDBLOCK)//发送数据缓冲区不可用
+        {
+            LogManager::Error("发送数据缓冲区不可用");
+        }
+        else if (WSAENETDOWN == nErrCode ||
+            WSAETIMEDOUT == nErrCode ||
+            WSAECONNRESET == nErrCode)//客户端关闭了连接
+        {
+            this->m_bConning = FALSE;	//连接断开
+            this->m_bSend = FALSE;
+        }
+        else {
+            this->m_bConning = FALSE;	//连接断开
+            this->m_bSend = FALSE;
+        }
+        flag = false;
+    }
+    //离开临界区
+    LeaveCriticalSection(&this->m_cs);
+    return flag;
+}
 
 /*
  * 接收客户端数据
@@ -110,7 +155,9 @@ DWORD  CClient::RecvDataThread(void* pParam)
 		    EnterCriticalSection(&pClient->m_cs);
 		    char *pClientIP = inet_ntoa(pClient->m_addr.sin_addr);
             u_short  clientPort = ntohs(pClient->m_addr.sin_port);
-			cout<<"IP: "<<pClientIP<<"\tPort: "<<clientPort<<":"<<temp<<endl;      //输出显示数据
+            std::stringstream ss;
+            ss << "IP: " << pClientIP << "\tPort: " << clientPort << ":" << temp;
+            LogManager::Log(ss.str());
             LeaveCriticalSection(&pClient->m_cs);
 
 			memset(temp, 0, MAX_NUM_BUF);	//清空临时变量
@@ -125,48 +172,17 @@ DWORD  CClient::RecvDataThread(void* pParam)
 /*
  * @des: 向客户端发送数据
  */
-DWORD CClient::SendDataThread(void* pParam)
+DWORD CClient::FrameSendDataThread(void* pParam)
 {
 	CClient *pClient = (CClient*)pParam;//转换数据类型为CClient指针
 	while(pClient->m_bConning)//连接状态
 	{
-        if(pClient->m_bSend || bSend)
+        Sleep(FRAME_TIME);
+        if(pClient->m_bSend || bSend || !pClient->m_sendBufferQuene.empty())
         {
-			//进入临界区
-			EnterCriticalSection(&pClient->m_cs);
-			//发送数据
-			int val = send(pClient->m_socket, dataBuf, strlen(dataBuf),0);
-			//处理返回错误
-			if (SOCKET_ERROR == val)
-			{
-				int nErrCode = WSAGetLastError();
-				if (nErrCode == WSAEWOULDBLOCK)//发送数据缓冲区不可用
-				{
-					continue;
-				}else if ( WSAENETDOWN == nErrCode ||
-						  WSAETIMEDOUT == nErrCode ||
-						  WSAECONNRESET == nErrCode)//客户端关闭了连接
-				{
-					//离开临界区
-					LeaveCriticalSection(&pClient->m_cs);
-
-					pClient->m_bConning = FALSE;	//连接断开
-//					pClient->m_bExit = TRUE;		//线程退出
-					pClient->m_bSend = FALSE;
-					break;
-				}else {
-					//离开临界区
-					LeaveCriticalSection(&pClient->m_cs);
-					pClient->m_bConning = FALSE;	//连接断开
-//					pClient->m_bExit = TRUE;		//线程退出
-					pClient->m_bSend = FALSE;
-					break;
-				}
-			}
-			//成功发送数据
-			//离开临界区
-			memset(dataBuf, 0, MAX_NUM_BUF);		//清空接收缓冲区
-			LeaveCriticalSection(&pClient->m_cs);
+            if (!pClient->InnerSendData(pClient->m_sendBufferQuene.wait_and_pop())) {
+                break;
+            }
 			//设置事件为无信号状态
 			pClient->m_bSend = FALSE;
 			bSend = FALSE;

@@ -118,11 +118,14 @@
   <ItemGroup>
     <ClInclude Include="client.h" />
     <ClInclude Include="ClientWarp.h" />
+    <ClInclude Include="DataItem.h" />
+    <ClInclude Include="ThreadSafeQuene.h" />
     <ClInclude Include="Tools.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="client.cpp" />
     <ClCompile Include="ClientWarp.cpp" />
+    <ClCompile Include="DataItem.cpp" />
     <ClCompile Include="DLLTest_wrap.cxx" />
     <ClCompile Include="Tools.cpp" />
   </ItemGroup>

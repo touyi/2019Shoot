@@ -187,6 +187,24 @@ class ClientDLLPINVOKE {
   }
 
 
+  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_DataItem_protocol_set")]
+  public static extern void DataItem_protocol_set(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_DataItem_protocol_get")]
+  public static extern int DataItem_protocol_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_DataItem_buffer_set")]
+  public static extern void DataItem_buffer_set(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_DataItem_buffer_get")]
+  public static extern string DataItem_buffer_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_new_DataItem")]
+  public static extern global::System.IntPtr new_DataItem();
+
+  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_delete_DataItem")]
+  public static extern void delete_DataItem(global::System.Runtime.InteropServices.HandleRef jarg1);
+
   [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_new_ClientWarp")]
   public static extern global::System.IntPtr new_ClientWarp();
 
@@ -204,4 +222,7 @@ class ClientDLLPINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_ClientWarp_SendData")]
   public static extern void ClientWarp_SendData(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, string jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_ClientWarp_PopNextData")]
+  public static extern global::System.IntPtr ClientWarp_PopNextData(global::System.Runtime.InteropServices.HandleRef jarg1);
 }

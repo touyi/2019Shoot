@@ -1,11 +1,10 @@
 #include "server.h"
 #include "sclient.h"
-
+#include "Log.h"
 
 /**
  * 全局变量
  */
-char	dataBuf[MAX_NUM_BUF];				//写缓冲区
 BOOL	bConning;							//与客户端的连接状态
 BOOL    bSend;                              //发送标记位
 BOOL    clientConn;                         //连接客户端标记
@@ -36,7 +35,6 @@ BOOL initSever(void)
 void	initMember(void)
 {
 	InitializeCriticalSection(&cs);				            //初始化临界区
-	memset(dataBuf, 0, MAX_NUM_BUF);
 	bSend = FALSE;
 	clientConn = FALSE;
 	bConning = FALSE;									    //服务器为没有运行状态
@@ -64,10 +62,10 @@ bool initSocket(void)
 		return FALSE;
 
 	//设置套接字非阻塞模式
-	unsigned long ul = 1;
-	reVal = ioctlsocket(sServer, FIONBIO, (unsigned long*)&ul);
-	if (SOCKET_ERROR == reVal)
-		return FALSE;
+	//unsigned long ul = 1;
+	//reVal = ioctlsocket(sServer, FIONBIO, (unsigned long*)&ul);
+	//if (SOCKET_ERROR == reVal)
+	//	return FALSE;
 
 	//绑定套接字
 	sockaddr_in serAddr;
@@ -92,29 +90,35 @@ bool initSocket(void)
 bool startService(void)
 {
     BOOL reVal = TRUE;	//返回值
+	//char cInput;		//输入字符
+	//do
+	//{
+	//	cin >> cInput;
+	//	if ('s' == cInput || 'S' == cInput)
+	//	{
+	//		if (createCleanAndAcceptThread())	//接受客户端请求的线程
+	//		{
+	//			showServerStartMsg(TRUE);		//创建线程成功信息
+	//		}else{
+	//			reVal = FALSE;
+	//		}
+	//		break;//跳出循环体
+	//	}else{
+	//		showTipMsg(START_SERVER);
+	//	}
 
-	showTipMsg(START_SERVER);	//提示用户输入
+	//} while(cInput != 's' && cInput != 'S'); //必须输入's'或者'S'字符
 
-	char cInput;		//输入字符
-	do
-	{
-		cin >> cInput;
-		if ('s' == cInput || 'S' == cInput)
-		{
-			if (createCleanAndAcceptThread())	//接受客户端请求的线程
-			{
-				showServerStartMsg(TRUE);		//创建线程成功信息
-			}else{
-				reVal = FALSE;
-			}
-			break;//跳出循环体
-		}else{
-			showTipMsg(START_SERVER);
-		}
+ //   cin.sync();                     //清空输入缓冲区
 
-	} while(cInput != 's' && cInput != 'S'); //必须输入's'或者'S'字符
-
-    cin.sync();                     //清空输入缓冲区
+    if (createCleanAndAcceptThread())	//接受客户端请求的线程
+    {
+        LogManager::Log("服务器启动成功！！");
+    }
+    else {
+        LogManager::Log("服务器启动失败！！");
+        reVal = FALSE;
+    }
 
 	return reVal;
 
@@ -188,7 +192,9 @@ DWORD __stdcall acceptThread(void* pParam)
             //显示客户端的IP和端口
             char *pClientIP = inet_ntoa(addrClient.sin_addr);
             u_short  clientPort = ntohs(addrClient.sin_port);
-            cout<<"Accept a client IP: "<<pClientIP<<"\tPort: "<<clientPort<<endl;
+            std::stringstream ss;
+            ss <<"Accept a client IP: "<<pClientIP<<"\tPort: "<< clientPort;
+            LogManager::Log(ss.str());
 			clientvector.push_back(pClient);            //加入容器
             LeaveCriticalSection(&cs);
 
@@ -214,7 +220,8 @@ DWORD __stdcall cleanThread(void* pParam)
 			CClient *pClient = (CClient*)*iter;
 			if (!pClient->IsConning())			//客户端线程已经退出
 			{
-				clientvector.erase(iter);	//删除节点
+				iter = clientvector.erase(iter);	//删除节点
+                LogManager::Log("连接断开：" + string(*pClient));
 				delete pClient;				//释放内存
 				pClient = NULL;
 			}else{
@@ -264,18 +271,16 @@ DWORD __stdcall cleanThread(void* pParam)
 /**
  * 处理数据
  */
- void inputAndOutput(void)
+ void Run(void)
  {
     char sendBuf[MAX_NUM_BUF];
-
-    showTipMsg(INPUT_DATA);
 
     while(bConning)
     {
         memset(sendBuf, 0, MAX_NUM_BUF);		//清空接收缓冲区
-        cin.getline(sendBuf,MAX_NUM_BUF);	//输入数据
+        std::cin.getline(sendBuf,MAX_NUM_BUF);	//输入数据
         //发送数据
-        handleData(sendBuf);
+        handleData(123, sendBuf, strlen(sendBuf), 0);
     }
  }
 
@@ -283,57 +288,48 @@ DWORD __stdcall cleanThread(void* pParam)
 /**
  *  选择模式处理数据
  */
- void handleData(char* str)
+ void handleData(UShort proto, char* buffer, UShort bufferlen, ClientID id)
  {
-    CClient *sClient ;
-    string recvsting;
-    char cnum;                //显示几号字套接字
-    int num;
-
-    if(str != NULL)
+    if(buffer == NULL)
     {
-       if(!strncmp(WRITE, str, strlen(WRITE))) //判断输入指令是否为
-        {
-            EnterCriticalSection(&cs);
-            str += strlen(WRITE);
-            cnum = *str++;
-            num = cnum - '1';
-            //增加容量处理
-            if(num<clientvector.size())
-            {
-                sClient = clientvector.at(num);     //发送到指定客户端
-                strcpy(dataBuf, str);
-                sClient->SetSend();
-                LeaveCriticalSection(&cs);
-            }
-            else                                    //不在范围
-            {
-                cout<<"The client isn't in scope!"<<endl;
-                LeaveCriticalSection(&cs);
-            }
-
-        }
-        else if(!strncmp(WRITE_ALL, str, strlen(WRITE_ALL)))
-        {
-            EnterCriticalSection(&cs);
-            str += strlen(WRITE_ALL);
-            strcpy(dataBuf, str);
-            bSend = TRUE;
-            LeaveCriticalSection(&cs);
-        }
-        else if('e'==str[0] || 'E'== str[0])     //判断是否退出
-        {
-            bConning = FALSE;
-            showServerExitMsg();
-            Sleep(TIMEFOR_THREAD_EXIT);
-            exitServer();
-        }
-        else
-        {
-            cout <<"Input error!!"<<endl;
-        }
-
+        return;
     }
+    if(id >= 0)
+    {
+        CClient *sClient;
+        EnterCriticalSection(&cs);
+        if(id < clientvector.size())
+        {
+            sClient = clientvector.at(id);     //发送到指定客户端
+            sClient->SetFrameSend(proto, buffer, bufferlen);
+        }
+        else                                    //不在范围
+        {
+            LogManager::Error("The client isn't in scope!");
+        }
+        LeaveCriticalSection(&cs);
+    }
+    else
+    {
+        // TODO 全部发送
+        EnterCriticalSection(&cs);
+        buffer += strlen(WRITE_ALL);
+        bSend = TRUE;
+        LeaveCriticalSection(&cs);
+    }
+    //else if('e'==buffer[0] || 'E'== buffer[0])     //判断是否退出
+    //{
+    //    bConning = FALSE;
+    //    showServerExitMsg();
+    //    Sleep(TIMEFOR_THREAD_EXIT);
+    //    exitServer();
+    //}
+    //else
+    //{
+    //    cout <<"Input error!!"<<endl;
+    //}
+
+    
  }
 
 /**
@@ -345,57 +341,57 @@ void  exitServer(void)
 	WSACleanup();							//卸载Windows Sockets DLL
 }
 
-void showTipMsg(int input)
-{
-    EnterCriticalSection(&cs);
-	if (START_SERVER == input)          //启动服务器
-	{
-		cout << "**********************" << endl;
-		cout << "* s(S): Start server *" << endl;
-		cout << "* e(E): Exit  server *" << endl;
-		cout << "**********************" << endl;
-		cout << "Please input:" ;
-
-	}
-	else if(INPUT_DATA == input)
-    {
-        cout << "*******************************************" << endl;
-        cout << "* please connect clients,then send data   *" << endl;
-		cout << "* write+num+data:Send data to client-num  *" << endl;
-		cout << "*   all+data:Send data to all clients     *" << endl;
-		cout << "*          e(E): Exit  server             *" << endl;
-		cout << "*******************************************" << endl;
-		cout << "Please input:" <<endl;
-    }
-	 LeaveCriticalSection(&cs);
-}
+//void showTipMsg(int input)
+//{
+//    EnterCriticalSection(&cs);
+//	if (START_SERVER == input)          //启动服务器
+//	{
+//		cout << "**********************" << endl;
+//		cout << "* s(S): Start server *" << endl;
+//		cout << "* e(E): Exit  server *" << endl;
+//		cout << "**********************" << endl;
+//		cout << "Please input:" ;
+//
+//	}
+//	else if(INPUT_DATA == input)
+//    {
+//        cout << "*******************************************" << endl;
+//        cout << "* please connect clients,then send data   *" << endl;
+//		cout << "* write+num+data:Send data to client-num  *" << endl;
+//		cout << "*   all+data:Send data to all clients     *" << endl;
+//		cout << "*          e(E): Exit  server             *" << endl;
+//		cout << "*******************************************" << endl;
+//		cout << "Please input:" <<endl;
+//    }
+//	 LeaveCriticalSection(&cs);
+//}
 
 /**
  * 显示启动服务器成功与失败消息
  */
-void  showServerStartMsg(BOOL bSuc)
-{
-	if (bSuc)
-	{
-		cout << "**********************" << endl;
-		cout << "* Server succeeded!  *" << endl;
-		cout << "**********************" << endl;
-	}else{
-		cout << "**********************" << endl;
-		cout << "* Server failed   !  *" << endl;
-		cout << "**********************" << endl;
-	}
-
-}
+//void  showServerStartMsg(BOOL bSuc)
+//{
+//	if (bSuc)
+//	{
+//		cout << "**********************" << endl;
+//		cout << "* Server succeeded!  *" << endl;
+//		cout << "**********************" << endl;
+//	}else{
+//		cout << "**********************" << endl;
+//		cout << "* Server failed   !  *" << endl;
+//		cout << "**********************" << endl;
+//	}
+//
+//}
 
 /**
  * 显示服务器退出消息
  */
-void  showServerExitMsg(void)
-{
-
-	cout << "**********************" << endl;
-	cout << "* Server exit...     *" << endl;
-	cout << "**********************" << endl;
-}
+//void  showServerExitMsg(void)
+//{
+//
+//	cout << "**********************" << endl;
+//	cout << "* Server exit...     *" << endl;
+//	cout << "**********************" << endl;
+//}
 

@@ -116,10 +116,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Log.h" />
     <ClInclude Include="sclient.h" />
     <ClInclude Include="server.h" />
+    <ClInclude Include="ThreadSafeQuene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Log.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="sclient.cpp" />
     <ClCompile Include="server.cpp" />

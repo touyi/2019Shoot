@@ -9,20 +9,20 @@
 //------------------------------------------------------------------------------
 
 
-public class ClientWarp : global::System.IDisposable {
+public class DataItem : global::System.IDisposable {
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   protected bool swigCMemOwn;
 
-  internal ClientWarp(global::System.IntPtr cPtr, bool cMemoryOwn) {
+  internal DataItem(global::System.IntPtr cPtr, bool cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
   }
 
-  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(ClientWarp obj) {
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(DataItem obj) {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
-  ~ClientWarp() {
+  ~DataItem() {
     Dispose();
   }
 
@@ -31,7 +31,7 @@ public class ClientWarp : global::System.IDisposable {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          ClientDLLPINVOKE.delete_ClientWarp(swigCPtr);
+          ClientDLLPINVOKE.delete_DataItem(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -39,25 +39,27 @@ public class ClientWarp : global::System.IDisposable {
     }
   }
 
-  public ClientWarp() : this(ClientDLLPINVOKE.new_ClientWarp(), true) {
+  public int protocol {
+    set {
+      ClientDLLPINVOKE.DataItem_protocol_set(swigCPtr, value);
+    } 
+    get {
+      int ret = ClientDLLPINVOKE.DataItem_protocol_get(swigCPtr);
+      return ret;
+    } 
   }
 
-  public int InitClient(string ip, int port) {
-    int ret = ClientDLLPINVOKE.ClientWarp_InitClient(swigCPtr, ip, port);
-    return ret;
+  public string buffer {
+    set {
+      ClientDLLPINVOKE.DataItem_buffer_set(swigCPtr, value);
+    } 
+    get {
+      string ret = ClientDLLPINVOKE.DataItem_buffer_get(swigCPtr);
+      return ret;
+    } 
   }
 
-  public int ConnectServer() {
-    int ret = ClientDLLPINVOKE.ClientWarp_ConnectServer(swigCPtr);
-    return ret;
-  }
-
-  public void ExitClient() {
-    ClientDLLPINVOKE.ClientWarp_ExitClient(swigCPtr);
-  }
-
-  public void SendData(int proto, string content) {
-    ClientDLLPINVOKE.ClientWarp_SendData(swigCPtr, proto, content);
+  public DataItem() : this(ClientDLLPINVOKE.new_DataItem(), true) {
   }
 
 }

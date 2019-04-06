@@ -300,12 +300,83 @@ SWIGEXPORT void SWIGSTDCALL SWIGRegisterStringCallback_ClientDLL(SWIG_CSharpStri
 
 
     /* 在包装代码中包含头文件 */
-    #include "ClientWarp.h"  
+    #include "DataItem.h"
+    #include "ClientWarp.h"
+    
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+SWIGEXPORT void SWIGSTDCALL CSharp_DataItem_protocol_set(void * jarg1, int jarg2) {
+  DataItem *arg1 = (DataItem *) 0 ;
+  int arg2 ;
+  
+  arg1 = (DataItem *)jarg1; 
+  arg2 = (int)jarg2; 
+  if (arg1) (arg1)->protocol = arg2;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_DataItem_protocol_get(void * jarg1) {
+  int jresult ;
+  DataItem *arg1 = (DataItem *) 0 ;
+  int result;
+  
+  arg1 = (DataItem *)jarg1; 
+  result = (int) ((arg1)->protocol);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_DataItem_buffer_set(void * jarg1, char * jarg2) {
+  DataItem *arg1 = (DataItem *) 0 ;
+  char *arg2 ;
+  
+  arg1 = (DataItem *)jarg1; 
+  arg2 = (char *)jarg2; 
+  {
+    if(arg2) {
+      strncpy((char*)arg1->buffer, (const char *)arg2, MAX_NUM_BUF-1);
+      arg1->buffer[MAX_NUM_BUF-1] = 0;
+    } else {
+      arg1->buffer[0] = 0;
+    }
+  }
+}
+
+
+SWIGEXPORT char * SWIGSTDCALL CSharp_DataItem_buffer_get(void * jarg1) {
+  char * jresult ;
+  DataItem *arg1 = (DataItem *) 0 ;
+  char *result = 0 ;
+  
+  arg1 = (DataItem *)jarg1; 
+  result = (char *)(char *) ((arg1)->buffer);
+  jresult = SWIG_csharp_string_callback((const char *)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_DataItem() {
+  void * jresult ;
+  DataItem *result = 0 ;
+  
+  result = (DataItem *)new DataItem();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_DataItem(void * jarg1) {
+  DataItem *arg1 = (DataItem *) 0 ;
+  
+  arg1 = (DataItem *)jarg1; 
+  delete arg1;
+}
+
 
 SWIGEXPORT void * SWIGSTDCALL CSharp_new_ClientWarp() {
   void * jresult ;
@@ -370,6 +441,18 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ClientWarp_SendData(void * jarg1, int jarg2, 
   arg2 = (int)jarg2; 
   arg3 = (char *)jarg3; 
   (arg1)->SendData(arg2,arg3);
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_ClientWarp_PopNextData(void * jarg1) {
+  void * jresult ;
+  ClientWarp *arg1 = (ClientWarp *) 0 ;
+  DataItem result;
+  
+  arg1 = (ClientWarp *)jarg1; 
+  result = (arg1)->PopNextData();
+  jresult = new DataItem((const DataItem &)result); 
+  return jresult;
 }
 
 

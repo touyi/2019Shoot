@@ -2,14 +2,31 @@
 #include <iostream>
 #include <winsock2.h>
 #include <process.h>
-
+#include "ThreadSafeQuene.h"
 #pragma comment(lib, "WS2_32.lib")
 using namespace std;
+using namespace ThreadSafe;
 
 //宏定义
-//#define	SERVERIP			"127.0.0.1"		//服务器IP
-//#define	SERVERPORT			6666			//服务器TCP端口
 #define	MAX_NUM_BUF			60				//缓冲区的最大长度
+#define	MAX_NUM_DATA		(60 + sizeof(ProtoHead))	//数据包的最大长度
+#define FRAME_TIME           67
+typedef unsigned short UShort;
+
+//数据包头结构，该结构在win32下为4byte
+struct ProtoHead
+{
+    UShort	proto;	//类型
+    UShort	Length;	//数据包的长度(包括头的长度)
+};
+
+union DataBuffer {
+    struct DataPackage {
+        ProtoHead head;
+        char datas[MAX_NUM_BUF];
+    } Package;
+    char buffer[MAX_NUM_DATA];
+};
 
 
 class Client {
@@ -26,6 +43,7 @@ private:
 
     char* serverIp = NULL;
     int serverPort = 0;
+    ThreadSafe_Queue<DataBuffer*> m_safeQueue;
 public:
     //函数声明
     BOOL InitClient(const char* ip, int port);              //初始化
@@ -33,6 +51,8 @@ public:
     void ExitClient(void);              //退出服务器
 
     void SendData(int proto, char* content);
+
+    DataBuffer* PopNextPackageData();
     
     void InputAndOutput(void);
 

@@ -24,6 +24,12 @@
     <ClInclude Include="ClientWarp.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DataItem.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadSafeQuene.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="client.cpp">
@@ -36,6 +42,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DLLTest_wrap.cxx">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DataItem.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

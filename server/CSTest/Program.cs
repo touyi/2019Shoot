@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CSTest
@@ -14,8 +15,13 @@ namespace CSTest
             warp.InitClient("127.0.0.1", 6666);
             Console.WriteLine(warp.ConnectServer());
             string con = Console.ReadLine();
-            warp.SendData(123, con);
-            Console.ReadLine();
+            while (true)
+            {
+                DataItem item = warp.PopNextData();
+                
+                Console.WriteLine(item.protocol + "+" + item.buffer);
+                Thread.Sleep(1000);
+            }
         }
     }
 }

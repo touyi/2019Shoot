@@ -136,12 +136,13 @@ DWORD __stdcall	Client::RecvDataThread(void* pParam)
         return 0;
     }
 	int		reVal;				    //返回值
-	char    bufRecv[MAX_NUM_BUF];   //接收数据缓冲区
+	char    bufRecv[MAX_NUM_DATA];   //接收数据缓冲区
 
 	while(client->bConnecting)			    //连接状态
 	{
-        memset(bufRecv, 0, MAX_NUM_BUF);
-		reVal = recv(client->sClient, bufRecv, MAX_NUM_BUF, 0);//接收数据
+        Sleep(FRAME_TIME);
+        memset(bufRecv, 0, MAX_NUM_DATA);
+		reVal = recv(client->sClient, bufRecv, MAX_NUM_DATA, 0);//接收数据
 		if (SOCKET_ERROR == reVal)
 		{
 			int nErrCode = WSAGetLastError();
@@ -165,15 +166,18 @@ DWORD __stdcall	Client::RecvDataThread(void* pParam)
 		if(reVal > 0)
         {
 
-            if(('E'==bufRecv[0] || 'e'==bufRecv[0]))     //判断是否退出
-            {
-                client->bConnecting = FALSE;
-                client->bSend = FALSE;
-                memset(bufRecv, 0, MAX_NUM_BUF);		//清空接收缓冲区
-                client->ExitClient();
-            }
+            //if(('E'==bufRecv[0] || 'e'==bufRecv[0]))     //判断是否退出
+            //{
+            //    client->bConnecting = FALSE;
+            //    client->bSend = FALSE;
+            //    memset(bufRecv, 0, MAX_NUM_BUF);		//清空接收缓冲区
+            //    client->ExitClient();
+            //}
             //显示数据
-            cout<<bufRecv<<endl;
+            DataBuffer* data = new DataBuffer();
+            memset(data, 0, sizeof(DataBuffer));
+            memcpy(data->buffer, bufRecv, MAX_NUM_DATA);
+            client->m_safeQueue.push(data);
         }
 	}
 	return 0;
@@ -288,4 +292,14 @@ void Client::SendData(int proto, char * content)
         bSend = TRUE;
     }
 }
+
+DataBuffer * Client::PopNextPackageData()
+{
+    DataBuffer* data = NULL;
+    if (!m_safeQueue.try_pop(data)) {
+        data = NULL;
+    }
+    return data;
+}
+
 
