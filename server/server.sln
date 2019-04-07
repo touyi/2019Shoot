@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSTest", "CSTest\CSTest.csp
 		{6BD2BF49-DD6D-4912-8EFB-7181198AB117} = {6BD2BF49-DD6D-4912-8EFB-7181198AB117}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Project1", "Project1\Project1.vcxproj", "{765123BE-6EBE-4F73-8E92-D0861E79FB6F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +68,16 @@ Global
 		{F9CB1F32-0C2A-423E-83E6-765B2D1BF8D1}.Release|x64.Build.0 = Release|Any CPU
 		{F9CB1F32-0C2A-423E-83E6-765B2D1BF8D1}.Release|x86.ActiveCfg = Release|Any CPU
 		{F9CB1F32-0C2A-423E-83E6-765B2D1BF8D1}.Release|x86.Build.0 = Release|Any CPU
+		{765123BE-6EBE-4F73-8E92-D0861E79FB6F}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{765123BE-6EBE-4F73-8E92-D0861E79FB6F}.Debug|x64.ActiveCfg = Debug|x64
+		{765123BE-6EBE-4F73-8E92-D0861E79FB6F}.Debug|x64.Build.0 = Debug|x64
+		{765123BE-6EBE-4F73-8E92-D0861E79FB6F}.Debug|x86.ActiveCfg = Debug|Win32
+		{765123BE-6EBE-4F73-8E92-D0861E79FB6F}.Debug|x86.Build.0 = Debug|Win32
+		{765123BE-6EBE-4F73-8E92-D0861E79FB6F}.Release|Any CPU.ActiveCfg = Release|Win32
+		{765123BE-6EBE-4F73-8E92-D0861E79FB6F}.Release|x64.ActiveCfg = Release|x64
+		{765123BE-6EBE-4F73-8E92-D0861E79FB6F}.Release|x64.Build.0 = Release|x64
+		{765123BE-6EBE-4F73-8E92-D0861E79FB6F}.Release|x86.ActiveCfg = Release|Win32
+		{765123BE-6EBE-4F73-8E92-D0861E79FB6F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -38,7 +38,6 @@ private:
     char    bufSend[MAX_NUM_BUF];				//发送数据缓冲区
     BOOL    bSend = FALSE;                      //发送标记位
     BOOL	bConnecting;						//与服务器的连接状态
-    HANDLE	arrThread[2];						//子线程数组
     CRITICAL_SECTION cs;					//临界区对象，锁定bufSend
 
     char* serverIp = NULL;
@@ -53,6 +52,7 @@ public:
     void SendData(int proto, char* content);
 
     DataBuffer* PopNextPackageData();
+    bool IsDataEmpty();
     
     void InputAndOutput(void);
 

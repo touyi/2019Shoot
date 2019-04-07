@@ -4,5 +4,6 @@
     {
         DirVector,
         Fire,
+        Count,
     }
 }

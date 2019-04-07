@@ -32,7 +32,6 @@ void Client::InitMember(void)
 
     //初始化数据缓冲区
 	memset(bufSend, 0, MAX_NUM_BUF);
-	memset(arrThread, 0, 2);
 }
 
 /**
@@ -121,9 +120,6 @@ BOOL Client::CreateSendAndRecvThread(void)
 	if (NULL == hThreadSend)
 		return FALSE;
 
-	//添加到线程数组
-	arrThread[0] = hThreadRecv;
-	arrThread[1] = hThreadSend;
 	return TRUE;
 }
 /**
@@ -300,6 +296,11 @@ DataBuffer * Client::PopNextPackageData()
         data = NULL;
     }
     return data;
+}
+
+bool Client::IsDataEmpty()
+{
+    return m_safeQueue.empty();
 }
 
 

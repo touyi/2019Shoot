@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Administrator\.Rider2018.1\system\resharper-host\local\Transient\ReSharperHost\v12\SolutionCaches\_PCUnityClient.797754463.00" t="ExcludeRecursive" />
+    <e p="F:\毕业设计\project_code\Shoot01\PCUnityClient" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets\editor" t="Include">
+        <e p="RunMenu.cs" t="Include" />
+      </e>
+      <e p="Assets\Encryption.cs" t="Include" />
+      <e p="Assets\LICENSE.txt" t="Include" />
+      <e p="Assets\Parse" t="Include">
+        <e p="Parse.Unity.xml" t="Include" />
+      </e>
+      <e p="Assets\PFire" t="Include">
+        <e p="Rader" t="Include">
+          <e p="Itemagent.cs" t="Include" />
+          <e p="RadarManage.cs" t="Include" />
+          <e p="RaderAgent.cs" t="Include" />
+          <e p="RotaSelf.cs" t="Include" />
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="Enemy" t="Include">
+            <e p="EnemyContorl.cs" t="Include" />
+            <e p="EnemyInfo.cs" t="Include" />
+            <e p="EnemyScaleView.cs" t="Include" />
+            <e p="EnemySpawn.cs" t="Include" />
+            <e p="PlaneDestoryMessage.cs" t="Include" />
+            <e p="WingRota.cs" t="Include" />
+          </e>
+          <e p="FGameInfo.cs" t="Include" />
+          <e p="FGameManage.cs" t="Include" />
+          <e p="FGameObjectBar.cs" t="Include" />
+          <e p="FShakeCamera.cs" t="Include" />
+          <e p="MainBase" t="Include">
+            <e p="PlayerBase.cs" t="Include" />
+          </e>
+          <e p="Plot" t="Include">
+            <e p="CircleGame.cs" t="Include" />
+            <e p="FPlot.cs" t="Include" />
+            <e p="mainPlot" t="Include">
+              <e p="PlotEndGame.cs" t="Include" />
+              <e p="PlotFirstWar.cs" t="Include" />
+            </e>
+          </e>
+          <e p="UI" t="Include">
+            <e p="encode" t="Include">
+              <e p="BarcodeCam.cs" t="Include" />
+              <e p="EncodedControl.cs" t="Include" />
+            </e>
+            <e p="EndScoreControl.cs" t="Include" />
+            <e p="PC" t="Include">
+              <e p="HealthySlider.cs" t="Include" />
+              <e p="PCBar.cs" t="Include" />
+              <e p="PCScreen.cs" t="Include" />
+              <e p="PCSled.cs" t="Include" />
+            </e>
+            <e p="PScreenControl.cs" t="Include" />
+            <e p="PShine.cs" t="Include" />
+            <e p="ReadText.cs" t="Include" />
+            <e p="ScoreControl.cs" t="Include" />
+            <e p="tools" t="Include">
+              <e p="MITween.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="Assets\Plane" t="Include">
+        <e p="PScripts" t="Include">
+          <e p="bullet" t="Include">
+            <e p="blueline.cs" t="Include" />
+            <e p="bulelineControl.cs" t="Include" />
+            <e p="BulletCountListen.cs" t="Include" />
+            <e p="FaintPlaneBar.cs" t="Include" />
+            <e p="FireBullet.cs" t="Include" />
+            <e p="GunAim.cs" t="Include" />
+            <e p="GunRotationControl.cs" t="Include" />
+          </e>
+          <e p="GamePool" t="Include">
+            <e p="GPGameObjectPool.cs" t="Include" />
+            <e p="GPObject.cs" t="Include" />
+            <e p="object" t="Include">
+              <e p="GPExplosion.cs" t="Include" />
+              <e p="GPFireBullet.cs" t="Include" />
+              <e p="GPSpark.cs" t="Include" />
+            </e>
+          </e>
+          <e p="LineEnergyCount.cs" t="Include" />
+          <e p="LineGunDelegate.cs" t="Include" />
+          <e p="MouseKeyBord" t="Include">
+            <e p="TempCameraMove.cs" t="Include" />
+            <e p="TempFire.cs" t="Include" />
+          </e>
+          <e p="PreduceObject.cs" t="Include" />
+          <e p="Sever" t="Include">
+            <e p="AnyMessage.cs" t="Include" />
+            <e p="Client.cs" t="Include" />
+            <e p="ClientKeyInfo.cs" t="Include" />
+            <e p="PServer.cs" t="Include" />
+            <e p="TTest.cs" t="Include" />
+          </e>
+          <e p="SliderControl.cs" t="Include" />
+          <e p="structure" t="Include">
+            <e p="CreatBullet.cs" t="Include" />
+            <e p="FTweenSca.cs" t="Include" />
+            <e p="InputInterface" t="Include">
+              <e p="InterfaceGun.cs" t="Include" />
+            </e>
+            <e p="PInput.cs" t="Include" />
+            <e p="Timer.cs" t="Include" />
+          </e>
+        </e>
+        <e p="PShader" t="Include">
+          <e p="3DText.shader" t="Include" />
+          <e p="Additive.shader" t="Include" />
+          <e p="AlphaBlended.shader" t="Include" />
+          <e p="Debris.shader" t="Include" />
+        </e>
+      </e>
+      <e p="Assets\plugin" t="Include">
+        <e p="encode" t="Include">
+          <e p="zxing.unity.xml" t="Include" />
+        </e>
+      </e>
+      <e p="Assets\Plugins" t="Include">
+        <e p="Android" t="Include">
+          <e p="Assets" t="Include">
+            <e p="placeholder.txt" t="Include" />
+          </e>
+        </e>
+        <e p="Pixelplacement" t="Include">
+          <e p="iTween" t="Include">
+            <e p="iTween.cs" t="Include" />
+            <e p="ReadMe!" t="Include">
+              <e p="ReadMe!.txt" t="Include" />
+            </e>
+            <e p="Sample" t="Include">
+              <e p="MoveSample.cs" t="Include" />
+              <e p="RotateSample.cs" t="Include" />
+              <e p="SampleInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="Assets\Scripts" t="Include">
+        <e p="Assets" t="Include">
+          <e p="AssetsManager.cs" t="Include" />
+        </e>
+        <e p="Command" t="Include">
+          <e p="BaseCommand.cs" t="Include" />
+        </e>
+        <e p="Component" t="Include">
+          <e p="Actor" t="Include">
+            <e p="ActorBaseComponent.cs" t="Include" />
+            <e p="LocalPlayerBehaviorComp.cs" t="Include" />
+            <e p="WeapenComp.cs" t="Include" />
+          </e>
+          <e p="BaseComponent.cs" t="Include" />
+          <e p="Widget" t="Include">
+            <e p="Gun.cs" t="Include" />
+          </e>
+        </e>
+        <e p="FSM" t="Include">
+          <e p="BaseState.cs" t="Include" />
+          <e p="GameMainStateDef" t="Include">
+            <e p="InGameState.cs" t="Include" />
+            <e p="WaitScanState.cs" t="Include" />
+          </e>
+          <e p="GameMainStateEnum.cs" t="Include" />
+          <e p="MainFSMStarter.cs" t="Include" />
+        </e>
+        <e p="GameMain.cs" t="Include" />
+        <e p="GamePlay" t="Include">
+          <e p="Actor" t="Include">
+            <e p="Actor.cs" t="Include" />
+            <e p="ActorManager.cs" t="Include" />
+            <e p="IActor.cs" t="Include" />
+          </e>
+          <e p="GamePlayBuilder.cs" t="Include" />
+          <e p="IGamePlay.cs" t="Include" />
+          <e p="LevelManager.cs" t="Include" />
+          <e p="NormalGamePlay.cs" t="Include" />
+        </e>
+        <e p="Net" t="Include">
+          <e p="ClientDLL.cs" t="Include" />
+          <e p="ClientDLLPINVOKE.cs" t="Include" />
+          <e p="ClientWarp.cs" t="Include" />
+          <e p="DataItem.cs" t="Include" />
+        </e>
+        <e p="NetInput" t="Include">
+          <e p="IInput.cs" t="Include" />
+          <e p="InputKeyCode.cs" t="Include" />
+          <e p="SInput.cs" t="Include" />
+          <e p="TempInput.cs" t="Include" />
+        </e>
+        <e p="SwiftFSM" t="Include">
+          <e p="Internal" t="Include">
+            <e p="Factory.cs" t="Include" />
+            <e p="IFactory.cs" t="Include" />
+            <e p="IInnerState.cs" t="Include" />
+            <e p="InnerState.cs" t="Include" />
+            <e p="ITransition.cs" t="Include" />
+            <e p="StateDictionary.cs" t="Include" />
+            <e p="Transition.cs" t="Include" />
+            <e p="TransitionResult.cs" t="Include" />
+          </e>
+          <e p="IState.cs" t="Include" />
+          <e p="IStateMachine.cs" t="Include" />
+          <e p="StateMachine.cs" t="Include" />
+          <e p="Syntax" t="Include">
+            <e p="IInSyntax.cs" t="Include" />
+            <e p="IOnSyntax.cs" t="Include" />
+            <e p="StateBuilder.cs" t="Include" />
+          </e>
+        </e>
+        <e p="tools" t="Include">
+          <e p="IProcess.cs" t="Include" />
+          <e p="Timer.cs" t="Include" />
+          <e p="TransformExtend.cs" t="Include" />
+        </e>
+        <e p="Wrapper" t="Include">
+          <e p="ClassPool.cs" t="Include" />
+          <e p="Singleton.cs" t="Include" />
+          <e p="WeakRef.cs" t="Include" />
+        </e>
+      </e>
+      <e p="Assets\Standard Assets" t="Include">
+        <e p="Characters" t="Include">
+          <e p="ThirdPersonCharacter" t="Include">
+            <e p="Scripts" t="Include">
+              <e p="AICharacterControl.cs" t="Include" />
+              <e p="ThirdPersonCharacter.cs" t="Include" />
+            </e>
+            <e p="ThirdPersonCharacterGuidelines.txt" t="Include" />
+          </e>
+        </e>
+        <e p="CrossPlatformInput" t="Include">
+          <e p="CrossPlatformInputGuidelines.txt" t="Include" />
+          <e p="Scripts" t="Include">
+            <e p="AxisTouchButton.cs" t="Include" />
+            <e p="ButtonHandler.cs" t="Include" />
+            <e p="CrossPlatformInputManager.cs" t="Include" />
+            <e p="InputAxisScrollbar.cs" t="Include" />
+            <e p="Joystick.cs" t="Include" />
+            <e p="MobileControlRig.cs" t="Include" />
+            <e p="PlatformSpecific" t="Include">
+              <e p="MobileInput.cs" t="Include" />
+              <e p="StandaloneInput.cs" t="Include" />
+            </e>
+            <e p="TiltInput.cs" t="Include" />
+            <e p="TouchPad.cs" t="Include" />
+            <e p="VirtualInput.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Effects" t="Include">
+          <e p="Projectors" t="Include">
+            <e p="Guidelines.txt" t="Include" />
+            <e p="Shaders" t="Include">
+              <e p="ProjectorLight.shader" t="Include" />
+              <e p="ProjectorMultiply.shader" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Utility" t="Include">
+          <e p="ActivateTrigger.cs" t="Include" />
+          <e p="AutoMobileShaderSwitch.cs" t="Include" />
+          <e p="AutoMoveAndRotate.cs" t="Include" />
+          <e p="CameraRefocus.cs" t="Include" />
+          <e p="CurveControlledBob.cs" t="Include" />
+          <e p="DragRigidbody.cs" t="Include" />
+          <e p="DynamicShadowSettings.cs" t="Include" />
+          <e p="FollowTarget.cs" t="Include" />
+          <e p="ForcedReset.cs" t="Include" />
+          <e p="FOVKick.cs" t="Include" />
+          <e p="FPSCounter.cs" t="Include" />
+          <e p="LerpControlledBob.cs" t="Include" />
+          <e p="ObjectResetter.cs" t="Include" />
+          <e p="ParticleSystemDestroyer.cs" t="Include" />
+          <e p="PlatformSpecificContent.cs" t="Include" />
+          <e p="SimpleActivatorMenu.cs" t="Include" />
+          <e p="SimpleMouseRotator.cs" t="Include" />
+          <e p="SmoothFollow.cs" t="Include" />
+          <e p="TimedObjectActivator.cs" t="Include" />
+          <e p="TimedObjectDestructor.cs" t="Include" />
+          <e p="WaypointCircuit.cs" t="Include" />
+          <e p="WaypointProgressTracker.cs" t="Include" />
+        </e>
+      </e>
+      <e p="Assets\StreamingAssets" t="Include">
+        <e p="text" t="Include">
+          <e p="enemyNumber" t="Include">
+            <e p="1.txt" t="Include" />
+          </e>
+          <e p="ip" t="Include">
+            <e p="ButtonSocketip.txt" t="Include" />
+            <e p="MoveSocketip.txt" t="Include" />
+          </e>
+          <e p="password" t="Include">
+            <e p="password.txt" t="Include" />
+          </e>
+          <e p="task" t="Include">
+            <e p="die.txt" t="Include" />
+            <e p="end1.txt" t="Include" />
+            <e p="task01.txt" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="Library" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="PCUnityClient.sln" t="IncludeFlat" />
+      <e p="Temp" t="ExcludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+      </e>
+    </e>
+  </component>
+</project>

@@ -31,6 +31,11 @@ void ClientWarp::SendData(int proto, char * content)
     this->client.SendData(proto, content);
 }
 
+bool ClientWarp::IsDataEmpty()
+{
+    return this->client.IsDataEmpty();
+}
+
 DataItem ClientWarp::PopNextData()
 {
     DataItem data;

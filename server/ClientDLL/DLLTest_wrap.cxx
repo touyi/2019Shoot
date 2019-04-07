@@ -444,6 +444,18 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ClientWarp_SendData(void * jarg1, int jarg2, 
 }
 
 
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ClientWarp_IsDataEmpty(void * jarg1) {
+  unsigned int jresult ;
+  ClientWarp *arg1 = (ClientWarp *) 0 ;
+  bool result;
+  
+  arg1 = (ClientWarp *)jarg1; 
+  result = (bool)(arg1)->IsDataEmpty();
+  jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT void * SWIGSTDCALL CSharp_ClientWarp_PopNextData(void * jarg1) {
   void * jresult ;
   ClientWarp *arg1 = (ClientWarp *) 0 ;
