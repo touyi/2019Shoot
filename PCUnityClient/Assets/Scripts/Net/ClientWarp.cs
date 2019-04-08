@@ -65,6 +65,11 @@ public class ClientWarp : global::System.IDisposable {
     return ret;
   }
 
+  public bool IsConnected() {
+    bool ret = ClientDLLPINVOKE.ClientWarp_IsConnected(swigCPtr);
+    return ret;
+  }
+
   public DataItem PopNextData() {
     DataItem ret = new DataItem(ClientDLLPINVOKE.ClientWarp_PopNextData(swigCPtr), true);
     return ret;

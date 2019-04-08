@@ -13,6 +13,7 @@ public:
     void ExitClient(void);              //退出服务器
     void SendData(int proto, char* content); // 发送数据
     bool IsDataEmpty();
+    bool IsConnected();
     DataItem PopNextData();
 };
 

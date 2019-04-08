@@ -243,7 +243,7 @@ static void SWIGUNUSED SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpExcepti
 #ifdef __cplusplus
 extern "C" 
 #endif
-SWIGEXPORT void SWIGSTDCALL SWIGRegisterExceptionCallbacks_ClientDLL(
+SWIGEXPORT void SWIGSTDCALL SWIGRegisterExceptionCallbacks_TypeCastHelp(
                                                 SWIG_CSharpExceptionCallback_t applicationCallback,
                                                 SWIG_CSharpExceptionCallback_t arithmeticCallback,
                                                 SWIG_CSharpExceptionCallback_t divideByZeroCallback, 
@@ -271,7 +271,7 @@ SWIGEXPORT void SWIGSTDCALL SWIGRegisterExceptionCallbacks_ClientDLL(
 #ifdef __cplusplus
 extern "C" 
 #endif
-SWIGEXPORT void SWIGSTDCALL SWIGRegisterExceptionArgumentCallbacks_ClientDLL(
+SWIGEXPORT void SWIGSTDCALL SWIGRegisterExceptionArgumentCallbacks_TypeCastHelp(
                                                 SWIG_CSharpExceptionArgumentCallback_t argumentCallback,
                                                 SWIG_CSharpExceptionArgumentCallback_t argumentNullCallback,
                                                 SWIG_CSharpExceptionArgumentCallback_t argumentOutOfRangeCallback) {
@@ -289,7 +289,7 @@ static SWIG_CSharpStringHelperCallback SWIG_csharp_string_callback = NULL;
 #ifdef __cplusplus
 extern "C" 
 #endif
-SWIGEXPORT void SWIGSTDCALL SWIGRegisterStringCallback_ClientDLL(SWIG_CSharpStringHelperCallback callback) {
+SWIGEXPORT void SWIGSTDCALL SWIGRegisterStringCallback_TypeCastHelp(SWIG_CSharpStringHelperCallback callback) {
   SWIG_csharp_string_callback = callback;
 }
 
@@ -300,182 +300,64 @@ SWIGEXPORT void SWIGSTDCALL SWIGRegisterStringCallback_ClientDLL(SWIG_CSharpStri
 
 
     /* 在包装代码中包含头文件 */
-    #include "DataItem.h"
-    #include "ClientWarp.h"
-    
+    #include "TypeCastHelper.h"
+
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-SWIGEXPORT void SWIGSTDCALL CSharp_DataItem_protocol_set(void * jarg1, int jarg2) {
-  DataItem *arg1 = (DataItem *) 0 ;
-  int arg2 ;
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_TypeCastHelper() {
+  void * jresult ;
+  TypeCastHelper *result = 0 ;
   
-  arg1 = (DataItem *)jarg1; 
-  arg2 = (int)jarg2; 
-  if (arg1) (arg1)->protocol = arg2;
+  result = (TypeCastHelper *)new TypeCastHelper();
+  jresult = (void *)result; 
+  return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_DataItem_protocol_get(void * jarg1) {
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_TypeCastHelper(void * jarg1) {
+  TypeCastHelper *arg1 = (TypeCastHelper *) 0 ;
+  
+  arg1 = (TypeCastHelper *)jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_TypeCastHelper_CastInt(void * jarg1, char * jarg2) {
   int jresult ;
-  DataItem *arg1 = (DataItem *) 0 ;
+  TypeCastHelper *arg1 = (TypeCastHelper *) 0 ;
+  char *arg2 = (char *) 0 ;
   int result;
   
-  arg1 = (DataItem *)jarg1; 
-  result = (int) ((arg1)->protocol);
+  arg1 = (TypeCastHelper *)jarg1; 
+  arg2 = (char *)jarg2; 
+  result = (int)(arg1)->CastInt(arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_DataItem_buffer_set(void * jarg1, char * jarg2) {
-  DataItem *arg1 = (DataItem *) 0 ;
-  char *arg2 ;
+SWIGEXPORT void SWIGSTDCALL CSharp_TypeCastHelper_Put(void * jarg1, char * jarg2) {
+  TypeCastHelper *arg1 = (TypeCastHelper *) 0 ;
+  char *arg2 = (char *) 0 ;
   
-  arg1 = (DataItem *)jarg1; 
+  arg1 = (TypeCastHelper *)jarg1; 
   arg2 = (char *)jarg2; 
-  {
-    if(arg2) {
-      strncpy((char*)arg1->buffer, (const char *)arg2, MAX_NUM_BUF-1);
-      arg1->buffer[MAX_NUM_BUF-1] = 0;
-    } else {
-      arg1->buffer[0] = 0;
-    }
-  }
+  (arg1)->Put(arg2);
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_DataItem_buffer_get(void * jarg1) {
+SWIGEXPORT char * SWIGSTDCALL CSharp_TypeCastHelper_Get(void * jarg1) {
   char * jresult ;
-  DataItem *arg1 = (DataItem *) 0 ;
+  TypeCastHelper *arg1 = (TypeCastHelper *) 0 ;
   char *result = 0 ;
   
-  arg1 = (DataItem *)jarg1; 
-  result = (char *)(char *) ((arg1)->buffer);
+  arg1 = (TypeCastHelper *)jarg1; 
+  result = (char *)(arg1)->Get();
   jresult = SWIG_csharp_string_callback((const char *)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT void * SWIGSTDCALL CSharp_new_DataItem() {
-  void * jresult ;
-  DataItem *result = 0 ;
-  
-  result = (DataItem *)new DataItem();
-  jresult = (void *)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_delete_DataItem(void * jarg1) {
-  DataItem *arg1 = (DataItem *) 0 ;
-  
-  arg1 = (DataItem *)jarg1; 
-  delete arg1;
-}
-
-
-SWIGEXPORT void * SWIGSTDCALL CSharp_new_ClientWarp() {
-  void * jresult ;
-  ClientWarp *result = 0 ;
-  
-  result = (ClientWarp *)new ClientWarp();
-  jresult = (void *)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_delete_ClientWarp(void * jarg1) {
-  ClientWarp *arg1 = (ClientWarp *) 0 ;
-  
-  arg1 = (ClientWarp *)jarg1; 
-  delete arg1;
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_ClientWarp_InitClient(void * jarg1, char * jarg2, int jarg3) {
-  int jresult ;
-  ClientWarp *arg1 = (ClientWarp *) 0 ;
-  char *arg2 = (char *) 0 ;
-  int arg3 ;
-  int result;
-  
-  arg1 = (ClientWarp *)jarg1; 
-  arg2 = (char *)jarg2; 
-  arg3 = (int)jarg3; 
-  result = (int)(arg1)->InitClient((char const *)arg2,arg3);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_ClientWarp_ConnectServer(void * jarg1) {
-  int jresult ;
-  ClientWarp *arg1 = (ClientWarp *) 0 ;
-  int result;
-  
-  arg1 = (ClientWarp *)jarg1; 
-  result = (int)(arg1)->ConnectServer();
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_ClientWarp_ExitClient(void * jarg1) {
-  ClientWarp *arg1 = (ClientWarp *) 0 ;
-  
-  arg1 = (ClientWarp *)jarg1; 
-  (arg1)->ExitClient();
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_ClientWarp_SendData(void * jarg1, int jarg2, char * jarg3) {
-  ClientWarp *arg1 = (ClientWarp *) 0 ;
-  int arg2 ;
-  char *arg3 = (char *) 0 ;
-  
-  arg1 = (ClientWarp *)jarg1; 
-  arg2 = (int)jarg2; 
-  arg3 = (char *)jarg3; 
-  (arg1)->SendData(arg2,arg3);
-}
-
-
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ClientWarp_IsDataEmpty(void * jarg1) {
-  unsigned int jresult ;
-  ClientWarp *arg1 = (ClientWarp *) 0 ;
-  bool result;
-  
-  arg1 = (ClientWarp *)jarg1; 
-  result = (bool)(arg1)->IsDataEmpty();
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ClientWarp_IsConnected(void * jarg1) {
-  unsigned int jresult ;
-  ClientWarp *arg1 = (ClientWarp *) 0 ;
-  bool result;
-  
-  arg1 = (ClientWarp *)jarg1; 
-  result = (bool)(arg1)->IsConnected();
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void * SWIGSTDCALL CSharp_ClientWarp_PopNextData(void * jarg1) {
-  void * jresult ;
-  ClientWarp *arg1 = (ClientWarp *) 0 ;
-  DataItem result;
-  
-  arg1 = (ClientWarp *)jarg1; 
-  result = (arg1)->PopNextData();
-  jresult = new DataItem((const DataItem &)result); 
   return jresult;
 }
 

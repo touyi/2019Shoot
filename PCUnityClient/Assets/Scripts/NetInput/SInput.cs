@@ -11,11 +11,9 @@ namespace NetInput
             Up,
             KeepUp,
         }
-        private ClientWarp _clientWarp = null;
         private KeyState[] isKeyDown;
         public SInput()
         {
-            _clientWarp = new ClientWarp();
             isKeyDown = new KeyState[(int)InputKeyCode.Count];
             for (int i = 0; i < isKeyDown.Length; i++)
             {

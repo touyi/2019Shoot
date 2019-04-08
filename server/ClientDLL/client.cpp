@@ -255,7 +255,7 @@ int Client::SetServerInfo(const char * ip, int port)
         }
         serverIp = new char[len + 1]{ 0 };
         strcpy(serverIp, ip);
-        serverPort = port;
+        serverPort = port ;
         return 1;
     }
 }
@@ -301,6 +301,11 @@ DataBuffer * Client::PopNextPackageData()
 bool Client::IsDataEmpty()
 {
     return m_safeQueue.empty();
+}
+
+bool Client::IsConnected()
+{
+    return this->bConnecting;
 }
 
 

@@ -36,6 +36,11 @@ bool ClientWarp::IsDataEmpty()
     return this->client.IsDataEmpty();
 }
 
+bool ClientWarp::IsConnected()
+{
+    return this->client.IsConnected();
+}
+
 DataItem ClientWarp::PopNextData()
 {
     DataItem data;

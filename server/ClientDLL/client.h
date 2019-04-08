@@ -53,6 +53,7 @@ public:
 
     DataBuffer* PopNextPackageData();
     bool IsDataEmpty();
+    bool IsConnected();
     
     void InputAndOutput(void);
 

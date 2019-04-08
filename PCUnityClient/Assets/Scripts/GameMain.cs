@@ -1,6 +1,7 @@
 ﻿
 using GamePlay;
 using NetInput;
+using Protocol;
 using UnityEngine;
 
 public class GameMain : MonoBehaviour
@@ -26,10 +27,20 @@ public class GameMain : MonoBehaviour
     private void Start()
     {
         //_mainFsmStarter.Init();
+        ClientSocket.Instance.Init();
         // TODO 异步加载
         this._currentGamePlay = GamePlayBuilder.BuildNormalGamePlay();
         this._currentGamePlay.Init();
         Tools.Timer.Instance.DelayCall(0.03f, this.DelayStart, null);
+    }
+
+    private void OnDestroy()
+    {
+        ClientSocket.Instance.Uninit();
+        if (this._currentGamePlay != null)
+        {
+            this._currentGamePlay.Uninit();
+        }
     }
 
     private void DelayStart(object param)
@@ -46,7 +57,7 @@ public class GameMain : MonoBehaviour
     {
         float deltaTime = Time.time - lastFrameTime;
         lastFrameTime = Time.time;
-        
+        ClientSocket.Instance.Update(deltaTime);
         CurrentInput.CurInput.Update(deltaTime);
         Tools.Timer.Instance.Update(deltaTime);
         if (CurrentGamePlay != null && CurrentGamePlay.IsRunning)

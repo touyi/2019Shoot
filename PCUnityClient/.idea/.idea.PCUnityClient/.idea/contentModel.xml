@@ -195,6 +195,9 @@
           <e p="SInput.cs" t="Include" />
           <e p="TempInput.cs" t="Include" />
         </e>
+        <e p="Protocol" t="Include">
+          <e p="ClientSocket.cs" t="Include" />
+        </e>
         <e p="SwiftFSM" t="Include">
           <e p="Internal" t="Include">
             <e p="Factory.cs" t="Include" />

@@ -1,0 +1,8 @@
+%module TypeCastHelp
+%{
+    /* 在包装代码中包含头文件 */
+    #include "TypeCastHelper.h"
+
+%}
+/* 解析头文件生成包装代码 */
+%include "TypeCastHelper.h"

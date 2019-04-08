@@ -54,6 +54,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="TypeCastHelp.cs" />
+    <Compile Include="TypeCastHelper.cs" />
+    <Compile Include="TypeCastHelpPINVOKE.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

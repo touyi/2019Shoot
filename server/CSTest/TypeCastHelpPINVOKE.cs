@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 
-class ClientDLLPINVOKE {
+class TypeCastHelpPINVOKE {
 
   protected class SWIGExceptionHelper {
 
@@ -32,8 +32,8 @@ class ClientDLLPINVOKE {
     static ExceptionArgumentDelegate argumentNullDelegate = new ExceptionArgumentDelegate(SetPendingArgumentNullException);
     static ExceptionArgumentDelegate argumentOutOfRangeDelegate = new ExceptionArgumentDelegate(SetPendingArgumentOutOfRangeException);
 
-    [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="SWIGRegisterExceptionCallbacks_ClientDLL")]
-    public static extern void SWIGRegisterExceptionCallbacks_ClientDLL(
+    [global::System.Runtime.InteropServices.DllImport("TypeCastHelp", EntryPoint="SWIGRegisterExceptionCallbacks_TypeCastHelp")]
+    public static extern void SWIGRegisterExceptionCallbacks_TypeCastHelp(
                                 ExceptionDelegate applicationDelegate,
                                 ExceptionDelegate arithmeticDelegate,
                                 ExceptionDelegate divideByZeroDelegate, 
@@ -46,8 +46,8 @@ class ClientDLLPINVOKE {
                                 ExceptionDelegate overflowDelegate, 
                                 ExceptionDelegate systemExceptionDelegate);
 
-    [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="SWIGRegisterExceptionArgumentCallbacks_ClientDLL")]
-    public static extern void SWIGRegisterExceptionCallbacksArgument_ClientDLL(
+    [global::System.Runtime.InteropServices.DllImport("TypeCastHelp", EntryPoint="SWIGRegisterExceptionArgumentCallbacks_TypeCastHelp")]
+    public static extern void SWIGRegisterExceptionCallbacksArgument_TypeCastHelp(
                                 ExceptionArgumentDelegate argumentDelegate,
                                 ExceptionArgumentDelegate argumentNullDelegate,
                                 ExceptionArgumentDelegate argumentOutOfRangeDelegate);
@@ -101,7 +101,7 @@ class ClientDLLPINVOKE {
     }
 
     static SWIGExceptionHelper() {
-      SWIGRegisterExceptionCallbacks_ClientDLL(
+      SWIGRegisterExceptionCallbacks_TypeCastHelp(
                                 applicationDelegate,
                                 arithmeticDelegate,
                                 divideByZeroDelegate,
@@ -114,7 +114,7 @@ class ClientDLLPINVOKE {
                                 overflowDelegate,
                                 systemDelegate);
 
-      SWIGRegisterExceptionCallbacksArgument_ClientDLL(
+      SWIGRegisterExceptionCallbacksArgument_TypeCastHelp(
                                 argumentDelegate,
                                 argumentNullDelegate,
                                 argumentOutOfRangeDelegate);
@@ -142,7 +142,7 @@ class ClientDLLPINVOKE {
       if (pendingException != null)
         throw new global::System.ApplicationException("FATAL: An earlier pending exception from unmanaged code was missed and thus not thrown (" + pendingException.ToString() + ")", e);
       pendingException = e;
-      lock(typeof(ClientDLLPINVOKE)) {
+      lock(typeof(TypeCastHelpPINVOKE)) {
         numExceptionsPending++;
       }
     }
@@ -153,7 +153,7 @@ class ClientDLLPINVOKE {
         if (pendingException != null) {
           e = pendingException;
           pendingException = null;
-          lock(typeof(ClientDLLPINVOKE)) {
+          lock(typeof(TypeCastHelpPINVOKE)) {
             numExceptionsPending--;
           }
         }
@@ -168,67 +168,37 @@ class ClientDLLPINVOKE {
     public delegate string SWIGStringDelegate(string message);
     static SWIGStringDelegate stringDelegate = new SWIGStringDelegate(CreateString);
 
-    [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="SWIGRegisterStringCallback_ClientDLL")]
-    public static extern void SWIGRegisterStringCallback_ClientDLL(SWIGStringDelegate stringDelegate);
+    [global::System.Runtime.InteropServices.DllImport("TypeCastHelp", EntryPoint="SWIGRegisterStringCallback_TypeCastHelp")]
+    public static extern void SWIGRegisterStringCallback_TypeCastHelp(SWIGStringDelegate stringDelegate);
 
     static string CreateString(string cString) {
       return cString;
     }
 
     static SWIGStringHelper() {
-      SWIGRegisterStringCallback_ClientDLL(stringDelegate);
+      SWIGRegisterStringCallback_TypeCastHelp(stringDelegate);
     }
   }
 
   static protected SWIGStringHelper swigStringHelper = new SWIGStringHelper();
 
 
-  static ClientDLLPINVOKE() {
+  static TypeCastHelpPINVOKE() {
   }
 
 
-  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_DataItem_protocol_set")]
-  public static extern void DataItem_protocol_set(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  [global::System.Runtime.InteropServices.DllImport("TypeCastHelp", EntryPoint="CSharp_new_TypeCastHelper")]
+  public static extern global::System.IntPtr new_TypeCastHelper();
 
-  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_DataItem_protocol_get")]
-  public static extern int DataItem_protocol_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("TypeCastHelp", EntryPoint="CSharp_delete_TypeCastHelper")]
+  public static extern void delete_TypeCastHelper(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_DataItem_buffer_set")]
-  public static extern void DataItem_buffer_set(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);
+  [global::System.Runtime.InteropServices.DllImport("TypeCastHelp", EntryPoint="CSharp_TypeCastHelper_CastInt")]
+  public static extern int TypeCastHelper_CastInt(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);
 
-  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_DataItem_buffer_get")]
-  public static extern string DataItem_buffer_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("TypeCastHelp", EntryPoint="CSharp_TypeCastHelper_Put")]
+  public static extern void TypeCastHelper_Put(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);
 
-  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_new_DataItem")]
-  public static extern global::System.IntPtr new_DataItem();
-
-  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_delete_DataItem")]
-  public static extern void delete_DataItem(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_new_ClientWarp")]
-  public static extern global::System.IntPtr new_ClientWarp();
-
-  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_delete_ClientWarp")]
-  public static extern void delete_ClientWarp(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_ClientWarp_InitClient")]
-  public static extern int ClientWarp_InitClient(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2, int jarg3);
-
-  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_ClientWarp_ConnectServer")]
-  public static extern int ClientWarp_ConnectServer(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_ClientWarp_ExitClient")]
-  public static extern void ClientWarp_ExitClient(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_ClientWarp_SendData")]
-  public static extern void ClientWarp_SendData(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, string jarg3);
-
-  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_ClientWarp_IsDataEmpty")]
-  public static extern bool ClientWarp_IsDataEmpty(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_ClientWarp_IsConnected")]
-  public static extern bool ClientWarp_IsConnected(global::System.Runtime.InteropServices.HandleRef jarg1);
-
-  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_ClientWarp_PopNextData")]
-  public static extern global::System.IntPtr ClientWarp_PopNextData(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("TypeCastHelp", EntryPoint="CSharp_TypeCastHelper_Get")]
+  public static extern string TypeCastHelper_Get(global::System.Runtime.InteropServices.HandleRef jarg1);
 }

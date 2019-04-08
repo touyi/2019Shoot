@@ -226,6 +226,9 @@ class ClientDLLPINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_ClientWarp_IsDataEmpty")]
   public static extern bool ClientWarp_IsDataEmpty(global::System.Runtime.InteropServices.HandleRef jarg1);
 
+  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_ClientWarp_IsConnected")]
+  public static extern bool ClientWarp_IsConnected(global::System.Runtime.InteropServices.HandleRef jarg1);
+
   [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_ClientWarp_PopNextData")]
   public static extern global::System.IntPtr ClientWarp_PopNextData(global::System.Runtime.InteropServices.HandleRef jarg1);
 }

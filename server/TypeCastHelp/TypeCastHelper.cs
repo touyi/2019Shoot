@@ -9,20 +9,20 @@
 //------------------------------------------------------------------------------
 
 
-public class ClientWarp : global::System.IDisposable {
+public class TypeCastHelper : global::System.IDisposable {
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   protected bool swigCMemOwn;
 
-  internal ClientWarp(global::System.IntPtr cPtr, bool cMemoryOwn) {
+  internal TypeCastHelper(global::System.IntPtr cPtr, bool cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
   }
 
-  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(ClientWarp obj) {
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(TypeCastHelper obj) {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
-  ~ClientWarp() {
+  ~TypeCastHelper() {
     Dispose();
   }
 
@@ -31,7 +31,7 @@ public class ClientWarp : global::System.IDisposable {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          ClientDLLPINVOKE.delete_ClientWarp(swigCPtr);
+          TypeCastHelpPINVOKE.delete_TypeCastHelper(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -39,39 +39,20 @@ public class ClientWarp : global::System.IDisposable {
     }
   }
 
-  public ClientWarp() : this(ClientDLLPINVOKE.new_ClientWarp(), true) {
+  public TypeCastHelper() : this(TypeCastHelpPINVOKE.new_TypeCastHelper(), true) {
   }
 
-  public int InitClient(string ip, int port) {
-    int ret = ClientDLLPINVOKE.ClientWarp_InitClient(swigCPtr, ip, port);
+  public int CastInt(string buffer) {
+    int ret = TypeCastHelpPINVOKE.TypeCastHelper_CastInt(swigCPtr, buffer);
     return ret;
   }
 
-  public int ConnectServer() {
-    int ret = ClientDLLPINVOKE.ClientWarp_ConnectServer(swigCPtr);
-    return ret;
+  public void Put(string buffer) {
+    TypeCastHelpPINVOKE.TypeCastHelper_Put(swigCPtr, buffer);
   }
 
-  public void ExitClient() {
-    ClientDLLPINVOKE.ClientWarp_ExitClient(swigCPtr);
-  }
-
-  public void SendData(int proto, string content) {
-    ClientDLLPINVOKE.ClientWarp_SendData(swigCPtr, proto, content);
-  }
-
-  public bool IsDataEmpty() {
-    bool ret = ClientDLLPINVOKE.ClientWarp_IsDataEmpty(swigCPtr);
-    return ret;
-  }
-
-  public bool IsConnected() {
-    bool ret = ClientDLLPINVOKE.ClientWarp_IsConnected(swigCPtr);
-    return ret;
-  }
-
-  public DataItem PopNextData() {
-    DataItem ret = new DataItem(ClientDLLPINVOKE.ClientWarp_PopNextData(swigCPtr), true);
+  public string Get() {
+    string ret = TypeCastHelpPINVOKE.TypeCastHelper_Get(swigCPtr);
     return ret;
   }
 
