@@ -1,0 +1,1 @@
+swig -csharp -c++ TypeCast.idl

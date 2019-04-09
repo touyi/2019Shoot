@@ -7,6 +7,6 @@ public:
 public:
     int CastInt(char* buffer);
     void Put(char* buffer);
-    //char* Get();
+    char* Get();
 };
 

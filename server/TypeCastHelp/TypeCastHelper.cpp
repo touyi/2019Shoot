@@ -29,10 +29,10 @@ void TypeCastHelper::Put(char * buffer)
     cout << ((int)buffer[0]) << "+" << ((int)buffer[1]) << endl;
 }
 
-//char * TypeCastHelper::Get()
-//{
-//    char* data = new char[2];
-//    data[0] = -1;
-//    data[1] = 2;
-//    return data;
-//}
+char * TypeCastHelper::Get()
+{
+    char* data = new char[2];
+    data[0] = -1;
+    data[1] = 2;
+    return data;
+}

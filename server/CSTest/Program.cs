@@ -24,9 +24,10 @@ namespace CSTest
             //}
             TypeCastHelper helper = new TypeCastHelper();
             string str = helper.Get();
+
             byte[] b = Encoding.ASCII.GetBytes(str);
             Console.WriteLine(string.Format("c# {0} {1}", (int)b[0], (int)b[1]));
-            helper.Put(b.ToString());
+            helper.Put(str);
         }
     }
 }
