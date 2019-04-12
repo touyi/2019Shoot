@@ -67,7 +67,7 @@ BOOL CClient::StartRuning(void)
 }
 
 
-void CClient::SetFrameSend(UShort proto, char * buffer, UShort bufferlen)
+void CClient::SetFrameSend(UShort proto, const char * buffer, UShort bufferlen)
 {
     // TODO 这里会有大量GC
     DataBuffer* datapack = new DataBuffer();

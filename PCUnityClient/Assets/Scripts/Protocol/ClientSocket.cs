@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Text;
+using Message;
 using UnityEngine;
 using Wrapper;
 
@@ -51,8 +53,22 @@ namespace Protocol
         private void HandleData(DataItem item)
         {
             Debug.Log(string.Format("协议：{0} 内容：{1}",item.protocol,item.buffer));
-            byte[] bytes = Encoding.ASCII.GetBytes(item.buffer);
+            // TODO 重用stream 防止GC
+            using (MemoryStream stream = new MemoryStream(Encoding.ASCII.GetBytes(item.buffer)))
+            {
+                try
+                {
+                    KeyChange change = ProtoBuf.Serializer.Deserialize<KeyChange>(stream);
+                    Debug.Log(string.Format("key:{0}, keyState:{1}", change.keyDatas[0].key,
+                        change.keyDatas[1].keyState));
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError(ex.Message);
+                }
+            }
             
+
         }
     }
 }

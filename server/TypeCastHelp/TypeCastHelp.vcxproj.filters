@@ -28,8 +28,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="TypeCast.idl">
+    <CustomBuild Include="TypeCast.idl">
       <Filter>源文件</Filter>
-    </Midl>
+    </CustomBuild>
   </ItemGroup>
 </Project>

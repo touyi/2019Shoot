@@ -1,0 +1,11 @@
+syntax = "proto2";
+package Message;
+
+message KeyData {
+    required int32 key = 1;
+    required int32 keyState = 2;
+}
+
+message KeyChange {
+    repeated KeyData keyDatas = 1;
+}

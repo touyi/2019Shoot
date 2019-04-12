@@ -56,7 +56,7 @@ bool startService(void);					//启动服务器
 void Run(void);                  //处理数据
 //void showServerStartMsg(BOOL bSuc);         //显示错误信息
 //void showServerExitMsg(void);               //显示退出消息
-void handleData(UShort proto, char* buffer, UShort bufferlen, ClientID id);                 //数据处理
+void handleData(UShort proto, const char* buffer, UShort bufferlen, ClientID id);                 //数据处理
 //void showTipMsg(BOOL bFirstInput);          //显示输入提示信息
 BOOL createCleanAndAcceptThread(void);      //开启监控函数
 DWORD __stdcall acceptThread(void* pParam); //开启客户端请求线程

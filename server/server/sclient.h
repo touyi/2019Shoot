@@ -69,7 +69,7 @@ public:
     BOOL IsExit(void) {						//接收和发送线程是否已经退出
         return m_bExit;
     }
-    void SetFrameSend(UShort proto, char* buffer, UShort bufferlen);
+    void SetFrameSend(UShort proto, const char* buffer, UShort bufferlen);
 
 private:
     bool InnerSendData(DataBuffer* buffer);

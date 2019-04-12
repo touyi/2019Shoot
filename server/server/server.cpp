@@ -1,6 +1,7 @@
 #include "server.h"
 #include "sclient.h"
 #include "Log.h"
+#include "protocol/Protocol.pb.h"
 
 /**
  * 全局变量
@@ -278,9 +279,14 @@ DWORD __stdcall cleanThread(void* pParam)
     while(bConning)
     {
         memset(sendBuf, 0, MAX_NUM_BUF);		//清空接收缓冲区
-        std::cin.getline(sendBuf,MAX_NUM_BUF);	//输入数据
+        //std::cin.getline(sendBuf,MAX_NUM_BUF);	//输入数据
+        Message::KeyChange keychange;
+        auto keydata = keychange.add_keydatas();
+        keydata->set_key(0);
+        keydata->set_keystate(1);
         //发送数据
-        handleData(123, sendBuf, strlen(sendBuf), 0);
+        handleData(123, keychange.SerializeAsString().c_str(), strlen(sendBuf), 0);
+        Sleep(5000);
     }
  }
 
@@ -288,7 +294,7 @@ DWORD __stdcall cleanThread(void* pParam)
 /**
  *  选择模式处理数据
  */
- void handleData(UShort proto, char* buffer, UShort bufferlen, ClientID id)
+ void handleData(UShort proto, const char* buffer, UShort bufferlen, ClientID id)
  {
     if(buffer == NULL)
     {

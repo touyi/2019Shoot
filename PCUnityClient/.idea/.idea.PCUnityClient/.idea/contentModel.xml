@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\Administrator\.Rider2018.1\system\resharper-host\local\Transient\ReSharperHost\v12\SolutionCaches\_PCUnityClient.797754463.00" t="ExcludeRecursive" />
-    <e p="F:\毕业设计\project_code\Shoot01\PCUnityClient" t="IncludeRecursive">
+    <e p="C:\Users\Administrator\.Rider2018.1\system\resharper-host\local\Transient\ReSharperHost\v12\SolutionCaches\_PCUnityClient.921482428.00" t="ExcludeRecursive" />
+    <e p="F:\graduate\project_code\Shoot01\PCUnityClient" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
@@ -197,6 +197,9 @@
         </e>
         <e p="Protocol" t="Include">
           <e p="ClientSocket.cs" t="Include" />
+          <e p="GenProtocol" t="Include">
+            <e p="Protocol.cs" t="Include" />
+          </e>
         </e>
         <e p="SwiftFSM" t="Include">
           <e p="Internal" t="Include">
