@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using Message;
 using UnityEngine;
@@ -7,8 +8,9 @@ using Wrapper;
 
 namespace Protocol
 {
-    public class ClientSocket : Singleton<ClientSocket>
+public unsafe class ClientSocket : Singleton<ClientSocket>
     {
+        public const int BYTE_LENGTH = 60;
         private ClientWarp _warp = null;
         private bool isConnect = false;
 
@@ -49,26 +51,25 @@ namespace Protocol
             }
         }
 
-        private byte[] memBytes = new byte[64];
-        private void HandleData(DataItem item)
+        private byte[] memBytes = new byte[BYTE_LENGTH];
+        private unsafe void HandleData(DataItem item)
         {
-            Debug.Log(string.Format("协议：{0} 内容：{1}",item.protocol,item.buffer));
-            // TODO 重用stream 防止GC
-            using (MemoryStream stream = new MemoryStream(Encoding.ASCII.GetBytes(item.buffer)))
+            Debug.Log(string.Format("协议：{0} ",item.protocol));
+            // TODO 重用stream 防止GC  BYTE_LENGTH应该在协议中带 这里临时使用
+            try
             {
-                try
+                Marshal.Copy(item.GetBuffer(), memBytes, 0, BYTE_LENGTH);
+                using (MemoryStream stream = new MemoryStream(memBytes, 0, item.bufferLength)) 
                 {
                     KeyChange change = ProtoBuf.Serializer.Deserialize<KeyChange>(stream);
                     Debug.Log(string.Format("key:{0}, keyState:{1}", change.keyDatas[0].key,
-                        change.keyDatas[1].keyState));
-                }
-                catch (Exception ex)
-                {
-                    Debug.LogError(ex.Message);
+                        change.keyDatas[0].keyState));
                 }
             }
-            
-
+            catch (Exception ex)
+            {
+                Debug.LogError(ex.Message);
+            }
         }
     }
 }

@@ -331,31 +331,64 @@ SWIGEXPORT int SWIGSTDCALL CSharp_DataItem_protocol_get(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_DataItem_buffer_set(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_DataItem_bufferLength_set(void * jarg1, int jarg2) {
   DataItem *arg1 = (DataItem *) 0 ;
-  char *arg2 ;
+  int arg2 ;
   
   arg1 = (DataItem *)jarg1; 
-  arg2 = (char *)jarg2; 
-  {
-    if(arg2) {
-      strncpy((char*)arg1->buffer, (const char *)arg2, MAX_NUM_BUF-1);
-      arg1->buffer[MAX_NUM_BUF-1] = 0;
-    } else {
-      arg1->buffer[0] = 0;
-    }
-  }
+  arg2 = (int)jarg2; 
+  if (arg1) (arg1)->bufferLength = arg2;
 }
 
 
-SWIGEXPORT char * SWIGSTDCALL CSharp_DataItem_buffer_get(void * jarg1) {
-  char * jresult ;
+SWIGEXPORT int SWIGSTDCALL CSharp_DataItem_bufferLength_get(void * jarg1) {
+  int jresult ;
   DataItem *arg1 = (DataItem *) 0 ;
-  char *result = 0 ;
+  int result;
   
   arg1 = (DataItem *)jarg1; 
-  result = (char *)(char *) ((arg1)->buffer);
-  jresult = SWIG_csharp_string_callback((const char *)result); 
+  result = (int) ((arg1)->bufferLength);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_DataItem_GetBuffer(void * jarg1) {
+  void * jresult ;
+  DataItem *arg1 = (DataItem *) 0 ;
+  void *result = 0 ;
+  
+  arg1 = (DataItem *)jarg1; 
+  result = (void *)(arg1)->GetBuffer();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT long long SWIGSTDCALL CSharp_DataItem_SetBuffer(void * jarg1, void * jarg2) {
+  long long jresult ;
+  DataItem *arg1 = (DataItem *) 0 ;
+  void *arg2 = (void *) 0 ;
+  long long result;
+  
+  arg1 = (DataItem *)jarg1; 
+  arg2 = jarg2; 
+  result = (long long)(arg1)->SetBuffer(arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_DataItem_ByteRead(void * jarg1, void * jarg2) {
+  int jresult ;
+  DataItem *arg1 = (DataItem *) 0 ;
+  void *arg2 = (void *) 0 ;
+  int result;
+  
+  arg1 = (DataItem *)jarg1; 
+  arg2 = jarg2; 
+  result = (int)(arg1)->ByteRead(arg2);
+  jresult = result; 
   return jresult;
 }
 

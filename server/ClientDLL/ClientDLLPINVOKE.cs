@@ -193,11 +193,20 @@ class ClientDLLPINVOKE {
   [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_DataItem_protocol_get")]
   public static extern int DataItem_protocol_get(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_DataItem_buffer_set")]
-  public static extern void DataItem_buffer_set(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);
+  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_DataItem_bufferLength_set")]
+  public static extern void DataItem_bufferLength_set(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
-  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_DataItem_buffer_get")]
-  public static extern string DataItem_buffer_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_DataItem_bufferLength_get")]
+  public static extern int DataItem_bufferLength_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_DataItem_GetBuffer")]
+  public static extern System.IntPtr DataItem_GetBuffer(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_DataItem_SetBuffer")]
+  public static extern long DataItem_SetBuffer(global::System.Runtime.InteropServices.HandleRef jarg1, System.IntPtr jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_DataItem_ByteRead")]
+  public static extern int DataItem_ByteRead(global::System.Runtime.InteropServices.HandleRef jarg1, System.IntPtr jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_new_DataItem")]
   public static extern global::System.IntPtr new_DataItem();

@@ -8,9 +8,11 @@ using namespace std;
 using namespace ThreadSafe;
 
 //宏定义
+#define DATA_HEAD_NUM       (sizeof(ProtoHead))
 #define	MAX_NUM_BUF			60				//缓冲区的最大长度
-#define	MAX_NUM_DATA		(60 + sizeof(ProtoHead))	//数据包的最大长度
+#define	MAX_NUM_DATA		(60 + DATA_HEAD_NUM)	//数据包的最大长度
 #define FRAME_TIME           67
+
 typedef unsigned short UShort;
 
 //数据包头结构，该结构在win32下为4byte

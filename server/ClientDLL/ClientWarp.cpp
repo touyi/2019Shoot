@@ -43,11 +43,13 @@ bool ClientWarp::IsConnected()
 
 DataItem ClientWarp::PopNextData()
 {
+    // TODO 对象池优化
     DataItem data;
     DataBuffer* buffer = this->client.PopNextPackageData();
     if (buffer != NULL) {
         data.protocol = buffer->Package.head.proto;
-        memcpy(data.buffer, buffer->Package.datas, sizeof(buffer->Package.datas));
+        data.bufferLength = buffer->Package.head.Length - DATA_HEAD_NUM;
+        memcpy(data.GetBuffer(), buffer->Package.datas, sizeof(buffer->Package.datas));
         delete buffer;
     }
     else {

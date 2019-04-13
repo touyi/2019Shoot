@@ -284,8 +284,10 @@ DWORD __stdcall cleanThread(void* pParam)
         auto keydata = keychange.add_keydatas();
         keydata->set_key(0);
         keydata->set_keystate(1);
+        int size = keychange.ByteSize();
+        keychange.SerializeToArray(sendBuf, size);
         //·¢ËÍÊý¾Ý
-        handleData(123, keychange.SerializeAsString().c_str(), strlen(sendBuf), 0);
+        handleData(123, sendBuf, keychange.ByteSize(), 0);
         Sleep(5000);
     }
  }
