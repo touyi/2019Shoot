@@ -17,7 +17,7 @@ public unsafe class ClientSocket : Singleton<ClientSocket>
         public void Init()
         {
             _warp = new ClientWarp();
-            _warp.InitClient("127.0.0.1", 6666);
+            _warp.InitClient("127.0.0.1", 7000);
             if (_warp.ConnectServer() != 1)
             {
                 Debug.LogError("网络连接初始化失败");

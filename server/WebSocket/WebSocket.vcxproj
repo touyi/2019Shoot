@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{9C42D65F-2C1F-4AED-A889-7A7FE3A0AE3E}</ProjectGuid>
-    <RootNamespace>client</RootNamespace>
+    <ProjectGuid>{A8DC0F7B-EA15-4B15-BF9A-A13F39615B6E}</ProjectGuid>
+    <RootNamespace>WebSocket</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -70,16 +70,15 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
@@ -116,11 +115,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="client.h" />
+    <ClInclude Include="base64.h" />
+    <ClInclude Include="debug_log.h" />
+    <ClInclude Include="network_interface.h" />
+    <ClInclude Include="sha1.h" />
+    <ClInclude Include="sockhead.h" />
+    <ClInclude Include="websocket_handler.h" />
+    <ClInclude Include="websocket_request.h" />
+    <ClInclude Include="websocket_respond.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="client.cpp" />
+    <ClCompile Include="base64.cpp" />
+    <ClCompile Include="debug_log.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="network_interface.cpp" />
+    <ClCompile Include="sha1.cpp" />
+    <ClCompile Include="websocket_handler.cpp" />
+    <ClCompile Include="websocket_request.cpp" />
+    <ClCompile Include="websocket_respond.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

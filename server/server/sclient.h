@@ -46,7 +46,7 @@ typedef struct _data
 class CClient : public IClassInfo
 {
 public:
-    CClient(const SOCKET sClient, const sockaddr_in &addrClient);
+    CClient(const SOCKET sClient, const sockaddr_in &addrClient, BOOL isWebSocket = FALSE);
     virtual ~CClient();
 
     operator string() override {
@@ -69,6 +69,12 @@ public:
     BOOL IsExit(void) {						//接收和发送线程是否已经退出
         return m_bExit;
     }
+    BOOL IsWebSocket() {
+        return m_bIsWebSocket;
+    }
+    SOCKET Socket() {
+        return m_socket;
+    }
     void SetFrameSend(UShort proto, const char* buffer, UShort bufferlen);
 
 private:
@@ -76,6 +82,8 @@ private:
 public:
     static DWORD __stdcall	 RecvDataThread(void* pParam);		//接收客户端数据
     static DWORD __stdcall	 FrameSendDataThread(void* pParam);		//向客户端发送数据
+    static void	RecvDataNormal(CClient* pClient);		//接收客户端数据
+    static void	RecvDataWeb(CClient* pClient);		//向客户端发送数据
 
 private:
     CClient();
@@ -115,6 +123,7 @@ private:
     BOOL		m_bConning;			//客户端连接状态
     BOOL        m_bSend;            //数据发送状态
     BOOL		m_bExit;			//线程退出
+    BOOL        m_bIsWebSocket;
     // char m_buffer[MAX_NUM_BUF];
 };
 

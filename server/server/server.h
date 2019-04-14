@@ -18,7 +18,7 @@
 #define START_SERVER                1       //显示开始输入提示
 #define INPUT_DATA                  2       //提示输入什么数据
 
-#define SERVERPORT			6666			//服务器TCP端口
+#define SERVERPORT			7000			//服务器TCP端口
 #define CONN_NUM            10              //连接客户端数量
 #define TIMEFOR_THREAD_SLEEP		500		//等待客户端请求线程睡眠时间
 #define TIMEFOR_THREAD_HELP			1500	//清理资源线程退出时间
@@ -37,7 +37,7 @@ typedef std::vector<string> SVECTOR;             //内容字符
 /**
  * 全局变量
  */
-extern BOOL	bConning;							//与客户端的连接状态
+extern BOOL	bRunning;							//与客户端的连接状态
 extern BOOL    bSend;                              //发送标记位
 extern BOOL    clientConn;                         //连接客户端标记
 extern SOCKET	sServer;							//服务器监听套接字

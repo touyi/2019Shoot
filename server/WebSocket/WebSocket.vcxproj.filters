@@ -15,75 +15,54 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="sclient.h">
+    <ClInclude Include="base64.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="server.h">
+    <ClInclude Include="debug_log.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Log.h">
+    <ClInclude Include="network_interface.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ThreadSafeQuene.h">
+    <ClInclude Include="sha1.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="protocol\Protocol.pb.h">
+    <ClInclude Include="websocket_handler.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="WebSocketHelper.h">
+    <ClInclude Include="websocket_request.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="WebSocket\base64.h">
+    <ClInclude Include="websocket_respond.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="WebSocket\sha1.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="WebSocket\sockhead.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="WebSocket\websocket_handler.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="WebSocket\websocket_request.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="WebSocket\websocket_respond.h">
+    <ClInclude Include="sockhead.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="base64.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="debug_log.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="sclient.cpp">
+    <ClCompile Include="network_interface.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="server.cpp">
+    <ClCompile Include="sha1.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Log.cpp">
+    <ClCompile Include="websocket_handler.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="protocol\Protocol.pb.cc">
+    <ClCompile Include="websocket_request.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="WebSocketHelper.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="WebSocket\base64.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="WebSocket\sha1.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="WebSocket\websocket_handler.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="WebSocket\websocket_request.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="WebSocket\websocket_respond.cpp">
+    <ClCompile Include="websocket_respond.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

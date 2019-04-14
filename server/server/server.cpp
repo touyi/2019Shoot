@@ -6,7 +6,7 @@
 /**
  * 全局变量
  */
-BOOL	bConning;							//与客户端的连接状态
+BOOL	bRunning;							//与客户端的连接状态
 BOOL    bSend;                              //发送标记位
 BOOL    clientConn;                         //连接客户端标记
 SOCKET	sServer;							//服务器监听套接字
@@ -38,7 +38,7 @@ void	initMember(void)
 	InitializeCriticalSection(&cs);				            //初始化临界区
 	bSend = FALSE;
 	clientConn = FALSE;
-	bConning = FALSE;									    //服务器为没有运行状态
+	bRunning = FALSE;									    //服务器为没有运行状态
 	hAcceptThread = NULL;									//设置为NULL
 	hCleanThread = NULL;
 	sServer = INVALID_SOCKET;								//设置为无效的套接字
@@ -130,7 +130,7 @@ bool startService(void)
  */
 BOOL createCleanAndAcceptThread(void)
 {
-    bConning = TRUE;//设置服务器为运行状态
+    bRunning = TRUE;//设置服务器为运行状态
 
 	//创建释放资源线程
 	unsigned long ulThreadId;
@@ -138,7 +138,7 @@ BOOL createCleanAndAcceptThread(void)
 	hAcceptThread = CreateThread(NULL, 0, acceptThread, NULL, 0, &ulThreadId);
 	if( NULL == hAcceptThread)
 	{
-		bConning = FALSE;
+		bRunning = FALSE;
 		return FALSE;
 	}
 	else
@@ -166,7 +166,7 @@ DWORD __stdcall acceptThread(void* pParam)
     SOCKET  sAccept;							                        //接受客户端连接的套接字
 	sockaddr_in addrClient;						                        //客户端SOCKET地址
 
-	while(bConning)						                                //服务器的状态
+	while(bRunning)						                                //服务器的状态
 	{
 		memset(&addrClient, 0, sizeof(sockaddr_in));					//初始化
 		int	lenClient = sizeof(sockaddr_in);				        	//地址长度
@@ -188,7 +188,7 @@ DWORD __stdcall acceptThread(void* pParam)
 		else//接受客户端的请求
 		{
 		    clientConn = TRUE;          //已经连接上客户端
-		    CClient *pClient = new CClient(sAccept, addrClient);
+		    CClient *pClient = new CClient(sAccept, addrClient, true);
 		    EnterCriticalSection(&cs);
             //显示客户端的IP和端口
             char *pClientIP = inet_ntoa(addrClient.sin_addr);
@@ -210,7 +210,7 @@ DWORD __stdcall acceptThread(void* pParam)
  */
 DWORD __stdcall cleanThread(void* pParam)
  {
-    while (bConning)                  //服务器正在运行
+    while (bRunning)                  //服务器正在运行
 	{
 		EnterCriticalSection(&cs);//进入临界区
 
@@ -241,7 +241,7 @@ DWORD __stdcall cleanThread(void* pParam)
 
 
 	//服务器停止工作
-	if (!bConning)
+	if (!bRunning)
 	{
 		//断开每个连接,线程退出
 		EnterCriticalSection(&cs);
@@ -276,18 +276,20 @@ DWORD __stdcall cleanThread(void* pParam)
  {
     char sendBuf[MAX_NUM_BUF];
 
-    while(bConning)
+    while(bRunning)
     {
-        memset(sendBuf, 0, MAX_NUM_BUF);		//清空接收缓冲区
-        //std::cin.getline(sendBuf,MAX_NUM_BUF);	//输入数据
-        Message::KeyChange keychange;
-        auto keydata = keychange.add_keydatas();
-        keydata->set_key(0);
-        keydata->set_keystate(1);
-        int size = keychange.ByteSize();
-        keychange.SerializeToArray(sendBuf, size);
-        //发送数据
-        handleData(123, sendBuf, keychange.ByteSize(), 0);
+        if (/* TODO clientConn*/ false) {
+            memset(sendBuf, 0, MAX_NUM_BUF);		//清空接收缓冲区
+            Message::KeyChange keychange;
+            auto keydata = keychange.add_keydatas();
+            keydata->set_key(0);
+            keydata->set_keystate(1);
+            int size = keychange.ByteSize();
+            keychange.SerializeToArray(sendBuf, size);
+            //发送数据
+            handleData(123, sendBuf, keychange.ByteSize(), 0);
+        }
+        
         Sleep(5000);
     }
  }

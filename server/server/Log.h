@@ -18,4 +18,6 @@ public:
     virtual operator string() = 0;
 };
 
+void DEBUG_LOG(const char *msg, ...);
+
 

@@ -2,13 +2,15 @@
 #include <stdio.h>
 #include "sclient.h"
 #include "server.h"
+#include "WebSocket/websocket_handler.h"
+#include "WebSocket/sockhead.h"
 
 //extern BOOL bSend;
 //extern char	dataBuf[MAX_NUM_BUF];
 /*
  * 构造函数
  */
-CClient::CClient(const SOCKET sClient, const sockaddr_in &addrClient)
+CClient::CClient(const SOCKET sClient, const sockaddr_in &addrClient, BOOL isWebSocket)
 {
 	//初始化变量
 	m_hThreadRecv = NULL;
@@ -18,6 +20,7 @@ CClient::CClient(const SOCKET sClient, const sockaddr_in &addrClient)
 	m_bConning = FALSE;
 	m_bExit = FALSE;
 	m_bSend = FALSE;
+    m_bIsWebSocket = isWebSocket;
 	memset(m_data.buf, 0, MAX_NUM_BUF);
 
 	//创建事件
@@ -118,53 +121,13 @@ bool CClient::InnerSendData(DataBuffer * buffer)
 DWORD  CClient::RecvDataThread(void* pParam)
 {
 	CClient *pClient = (CClient*)pParam;	//客户端对象指针
-	int		reVal;							//返回值
-	char	temp[MAX_NUM_BUF];				//临时变量
-
-
-	while(pClient->m_bConning)				//连接状态
-	{
-	    memset(temp, 0, MAX_NUM_BUF);
-		reVal = recv(pClient->m_socket, temp, MAX_NUM_BUF, 0);	//接收数据
-
-		//处理错误返回值
-		if (SOCKET_ERROR == reVal)
-		{
-			int nErrCode = WSAGetLastError();
-
-			if ( WSAEWOULDBLOCK == nErrCode )	//接受数据缓冲区不可用
-			{
-				continue;						//继续循环
-			}else if (WSAENETDOWN == nErrCode ||//客户端关闭了连接
-					 WSAETIMEDOUT == nErrCode ||
-					WSAECONNRESET == nErrCode )
-			{
-				break;							//线程退出
-			}
-		}
-
-		//客户端关闭了连接
-		if ( reVal == 0)
-		{
-			break;
-		}
-
-		//收到数据
-		if (reVal > 0)
-		{
-		    EnterCriticalSection(&pClient->m_cs);
-		    char *pClientIP = inet_ntoa(pClient->m_addr.sin_addr);
-            u_short  clientPort = ntohs(pClient->m_addr.sin_port);
-            std::stringstream ss;
-            ss << "IP: " << pClientIP << "\tPort: " << clientPort << ":" << temp;
-            LogManager::Log(ss.str());
-            LeaveCriticalSection(&pClient->m_cs);
-
-			memset(temp, 0, MAX_NUM_BUF);	//清空临时变量
-		}
-		
-
-	}
+    if (pClient->IsWebSocket()) {
+        CClient::RecvDataWeb(pClient);
+    }
+    else {
+        CClient::RecvDataNormal(pClient);
+    }
+	
 	pClient->m_bConning = FALSE;			//与客户端的连接断开
 	return 0;								//线程退出
 }
@@ -191,5 +154,68 @@ DWORD CClient::FrameSendDataThread(void* pParam)
 	}
 
 	return 0;
+}
+
+void CClient::RecvDataNormal(CClient * pClient)
+{
+    int		reVal;							//返回值
+    char	temp[MAX_NUM_BUF];				//临时变量
+
+    while (pClient->m_bConning)				//连接状态
+    {
+        memset(temp, 0, MAX_NUM_BUF);
+        reVal = recv(pClient->m_socket, temp, MAX_NUM_BUF, 0);	//接收数据
+
+        //处理错误返回值
+        if (SOCKET_ERROR == reVal)
+        {
+            int nErrCode = WSAGetLastError();
+
+            if (WSAEWOULDBLOCK == nErrCode)	//接受数据缓冲区不可用
+            {
+                continue;						//继续循环
+            }
+            else if (WSAENETDOWN == nErrCode ||//客户端关闭了连接
+                WSAETIMEDOUT == nErrCode ||
+                WSAECONNRESET == nErrCode)
+            {
+                break;							//线程退出
+            }
+        }
+
+        //客户端关闭了连接
+        if (reVal == 0)
+        {
+            break;
+        }
+
+        //收到数据
+        if (reVal > 0)
+        {
+            EnterCriticalSection(&pClient->m_cs);
+            char *pClientIP = inet_ntoa(pClient->m_addr.sin_addr);
+            u_short  clientPort = ntohs(pClient->m_addr.sin_port);
+            std::stringstream ss;
+            ss << "IP: " << pClientIP << "\tPort: " << clientPort << ":" << temp;
+            LogManager::Log(ss.str());
+            LeaveCriticalSection(&pClient->m_cs);
+
+            memset(temp, 0, MAX_NUM_BUF);	//清空临时变量
+        }
+    }
+}
+
+void CClient::RecvDataWeb(CClient * pClient)
+{
+    Websocket_Handler handler(pClient->Socket());
+    while (pClient->m_bConning) {
+        // NEXT TODO
+        int bufflen = 0;
+        if ((bufflen = recv(pClient->m_socket, handler.getbuff(), /*TODO Temp value*/2048, 0)) <= 0) {
+            // 连接断开
+            break;
+        }
+        handler.process();
+    }
 }
 

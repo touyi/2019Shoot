@@ -187,6 +187,13 @@
     <ClInclude Include="sclient.h" />
     <ClInclude Include="server.h" />
     <ClInclude Include="ThreadSafeQuene.h" />
+    <ClInclude Include="WebSocketHelper.h" />
+    <ClInclude Include="WebSocket\base64.h" />
+    <ClInclude Include="WebSocket\sha1.h" />
+    <ClInclude Include="WebSocket\sockhead.h" />
+    <ClInclude Include="WebSocket\websocket_handler.h" />
+    <ClInclude Include="WebSocket\websocket_request.h" />
+    <ClInclude Include="WebSocket\websocket_respond.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Log.cpp" />
@@ -194,6 +201,12 @@
     <ClCompile Include="protocol\Protocol.pb.cc" />
     <ClCompile Include="sclient.cpp" />
     <ClCompile Include="server.cpp" />
+    <ClCompile Include="WebSocketHelper.cpp" />
+    <ClCompile Include="WebSocket\base64.cpp" />
+    <ClCompile Include="WebSocket\sha1.cpp" />
+    <ClCompile Include="WebSocket\websocket_handler.cpp" />
+    <ClCompile Include="WebSocket\websocket_request.cpp" />
+    <ClCompile Include="WebSocket\websocket_respond.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

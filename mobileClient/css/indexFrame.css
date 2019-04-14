@@ -1,0 +1,59 @@
+body{
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+	background: url(../img/background.png) no-repeat;
+	background-size:100% 100%;
+	overflow: hidden;
+	-webkit-user-select: none;/*禁用手机浏览器的用户选择功能 */
+    -moz-user-select: none;
+}
+#container{
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	height: 100%;
+	transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	/* IE 9 */
+	-moz-transform: rotate(0deg);
+	/* Firefox */
+	-webkit-transform: rotate(0deg);
+	/* Safari 和 Chrome */
+	-o-transform: rotate(0deg);
+	/* Opera */
+	
+}
+#introduce{
+	width: 65%;
+	height: 36%;
+	margin: 20% auto 0px auto;
+	padding: 5%;
+	border-radius: 15%;
+	-webkit-user-select: none;/*禁用手机浏览器的用户选择功能 */
+    -moz-user-select: none;
+}
+#introduce p{
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	text-indent: 0rem;
+	font-size: 1.6rem;
+	color:blanchedalmond;
+}
+#introduce p span{
+	max-width: 90%;
+	margin: 0px;
+	padding: 0px;
+}
+#start{
+	width: 52%;
+	height: 15%;
+	margin: 16% auto 0px auto;
+	/*background-color: rgba(255,123,125,0.5);*/
+	border-radius: 20%;
+	overflow: hidden;
+	-webkit-user-select: none;/*禁用手机浏览器的用户选择功能 */
+    -moz-user-select: none;
+}
