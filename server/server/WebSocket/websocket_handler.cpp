@@ -1,5 +1,6 @@
 #include "sockhead.h"
 #include "websocket_handler.h"
+#include"../Log.h"
 Websocket_Handler::Websocket_Handler(int fd):
 		buff_(),
 		status_(WEBSOCKET_UNCONNECT),
@@ -25,6 +26,7 @@ int Websocket_Handler::process(){
 int Websocket_Handler::handshark(){
 	char request[1024] = {};
 	status_ = WEBSOCKET_HANDSHARKED;
+    LogManager::Debug(this->buff_);
 	fetch_http_info();
 	parse_str(request);
 	memset(buff_, 0, sizeof(buff_));

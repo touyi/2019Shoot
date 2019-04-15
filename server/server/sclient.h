@@ -34,6 +34,11 @@ union DataBuffer {
         char datas[MAX_NUM_BUF];
     } Package;
     char buffer[MAX_NUM_DATA];
+public:
+    DataBuffer() = default;
+    DataBuffer(char* _buffer) {
+        memcpy(this->buffer, _buffer, MAX_NUM_DATA);
+    }
 };
 
 //数据包中的数据结构
@@ -46,7 +51,7 @@ typedef struct _data
 class CClient : public IClassInfo
 {
 public:
-    CClient(const SOCKET sClient, const sockaddr_in &addrClient, BOOL isWebSocket = FALSE);
+    CClient(const SOCKET sClient, const sockaddr_in &addrClient);
     virtual ~CClient();
 
     operator string() override {
@@ -57,6 +62,7 @@ public:
             << this->m_addr.sin_port;
         return ss.str();
     }
+    
 public:
     BOOL	 StartRuning(void);					//创建发送和接收数据线程
     //void	 HandleData(const char* pExpr);		//计算表达式
@@ -69,9 +75,6 @@ public:
     BOOL IsExit(void) {						//接收和发送线程是否已经退出
         return m_bExit;
     }
-    BOOL IsWebSocket() {
-        return m_bIsWebSocket;
-    }
     SOCKET Socket() {
         return m_socket;
     }
@@ -79,11 +82,13 @@ public:
 
 private:
     bool InnerSendData(DataBuffer* buffer);
+    
 public:
     static DWORD __stdcall	 RecvDataThread(void* pParam);		//接收客户端数据
     static DWORD __stdcall	 FrameSendDataThread(void* pParam);		//向客户端发送数据
     static void	RecvDataNormal(CClient* pClient);		//接收客户端数据
-    static void	RecvDataWeb(CClient* pClient);		//向客户端发送数据
+    static int	RecvDataInner(CClient* pClient, char* buffer);		//向客户端发送数据
+    static void CheckSocketType(CClient* pClient);
 
 private:
     CClient();
@@ -112,6 +117,7 @@ private:
         }
     };*/
     ThreadSafe_Queue<DataBuffer*> m_sendBufferQuene; // 数据发送队列
+    ThreadSafe_Queue<DataBuffer*> m_RecvBufferQuene; // 数据接收队列
 
     SOCKET		m_socket;			//套接字
     sockaddr_in	m_addr;				//地址
@@ -123,8 +129,6 @@ private:
     BOOL		m_bConning;			//客户端连接状态
     BOOL        m_bSend;            //数据发送状态
     BOOL		m_bExit;			//线程退出
-    BOOL        m_bIsWebSocket;
-    // char m_buffer[MAX_NUM_BUF];
 };
 
 
