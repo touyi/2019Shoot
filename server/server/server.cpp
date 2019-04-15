@@ -188,7 +188,7 @@ DWORD __stdcall acceptThread(void* pParam)
 		else//接受客户端的请求
 		{
 		    clientConn = TRUE;          //已经连接上客户端
-		    CClient *pClient = new CClient(sAccept, addrClient, true);
+		    CClient *pClient = new CClient(sAccept, addrClient);
 		    EnterCriticalSection(&cs);
             //显示客户端的IP和端口
             char *pClientIP = inet_ntoa(addrClient.sin_addr);

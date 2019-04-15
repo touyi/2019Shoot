@@ -21,6 +21,8 @@ CClient::CClient(const SOCKET sClient, const sockaddr_in &addrClient)
 	m_bConning = FALSE;
 	m_bExit = FALSE;
 	m_bSend = FALSE;
+    m_webSocketHandler = NULL;
+    m_socketType = SocketConnType::Unknow;
 	memset(m_data.buf, 0, MAX_NUM_BUF);
 
 	//创建事件
@@ -38,10 +40,27 @@ CClient::~CClient()
 	m_socket = INVALID_SOCKET;		//套接字无效
 	DeleteCriticalSection(&m_cs);	//释放临界区对象
 	CloseHandle(m_hEvent);			//释放事件对象
+    if (m_webSocketHandler != NULL) {
+        delete m_webSocketHandler;
+    }
 }
 
-void CClient::CheckSocketType(CClient* pClient)
+int CClient::CheckSocketType(CClient* pClient)
 {
+    char buffer[MAX_NUM_WEB_ALL];
+    memset(buffer, 0, MAX_NUM_WEB_ALL);
+    int recVal = CClient::RecvDataInner(pClient, buffer);
+    if (recVal <= 0) {
+        return -1;
+    }
+    if (strstr(buffer, "GET") || strstr(buffer, "HTTP")) {
+        // websocket
+        pClient->m_socketType = SocketConnType::Web;
+        pClient->m_webSocketHandler = new Websocket_Handler(pClient->Socket());
+        memcpy(pClient->m_webSocketHandler->getbuff(), buffer, MAX_NUM_WEB_ALL);
+        pClient->m_webSocketHandler->process();
+    }
+    return 1;
 }
 
 /*
@@ -125,15 +144,9 @@ bool CClient::InnerSendData(DataBuffer * buffer)
 DWORD  CClient::RecvDataThread(void* pParam)
 {
 	CClient *pClient = (CClient*)pParam;	//客户端对象指针
-    // Next TODO 检查socket连接属性 websocket normal？
-    // TODO
-    /*if (pClient->IsWebSocket()) {
-        CClient::RecvDataWeb(pClient);
-    }
-    else {
+    if (CClient::CheckSocketType(pClient) > 0) {
         CClient::RecvDataNormal(pClient);
-    }*/
-	
+    }
 	pClient->m_bConning = FALSE;			//与客户端的连接断开
 	return 0;								//线程退出
 }
@@ -165,11 +178,11 @@ DWORD CClient::FrameSendDataThread(void* pParam)
 void CClient::RecvDataNormal(CClient * pClient)
 {
     int		reVal;							//返回值
-    char	tempBuffer[MAX_NUM_DATA];				//临时变量
+    char	tempBuffer[MAX_NUM_WEB_ALL];				//临时变量
 
     while (pClient->m_bConning)				//连接状态
     {
-        memset(tempBuffer, 0, MAX_NUM_DATA);
+        memset(tempBuffer, 0, MAX_NUM_WEB_ALL);
         reVal = CClient::RecvDataInner(pClient, tempBuffer);
         if (reVal <= 0) {
             break;
@@ -183,7 +196,7 @@ void CClient::RecvDataNormal(CClient * pClient)
             pClient->m_RecvBufferQuene.push(databuffer);
             LeaveCriticalSection(&pClient->m_cs);
 
-            memset(tempBuffer, 0, MAX_NUM_BUF);	//清空临时变量
+            memset(tempBuffer, 0, MAX_NUM_WEB_ALL);	//清空临时变量
         }
     }
 }
@@ -198,27 +211,23 @@ int CClient::RecvDataInner(CClient * pClient, char* buffer)
 
     if (pClient->m_bConning)				//连接状态
     {
-        memset(buffer, 0, MAX_NUM_BUF);
-        reVal = recv(pClient->m_socket, buffer, MAX_NUM_BUF, 0);	//接收数据
+        memset(buffer, 0, MAX_NUM_WEB_ALL);
+        reVal = recv(pClient->m_socket, buffer, MAX_NUM_WEB_ALL, 0);	//接收数据
+        
         if (reVal <= 0) {
             return -1;
         }
         //收到数据
         else if (reVal > 0)
         {
+            if (pClient->WebSocketType() == SocketConnType::Web && pClient->m_webSocketHandler != NULL) {
+                // TODO 解析web数据
+                memcpy(pClient->m_webSocketHandler->getbuff(), buffer, MAX_NUM_WEB_ALL);
+                pClient->m_webSocketHandler->process();
+            }
             return 1;
         }
     }
     return 1;
-    //Websocket_Handler handler(pClient->Socket());
-    //while (pClient->m_bConning) {
-    //    // NEXT TODO
-    //    int bufflen = 0;
-    //    if ((bufflen = recv(pClient->m_socket, handler.getbuff(), /*TODO Temp value*/2048, 0)) <= 0) {
-    //        // 连接断开
-    //        break;
-    //    }
-    //    handler.process();
-    //}
 }
 

@@ -7,6 +7,7 @@
 #include "base64.h"
 #include "sha1.h"
 #include "websocket_request.h"
+#include "../define.h"
 
 #define MAGIC_KEY "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
 
@@ -29,7 +30,7 @@ private:
 	int fetch_http_info();
 	int send_data(char *buff);
 private:
-	char buff_[2048];
+	char buff_[MAX_NUM_WEB_ALL];
 	WEBSOCKET_STATUS status_;
 	HEADER_MAP header_map_;
 	int fd_;

@@ -5,47 +5,11 @@
 #include "ThreadSafeQuene.h"
 #include <iostream>
 #include<sstream>
+#include "WebSocket/websocket_handler.h"
 using namespace ThreadSafe;
 
+#include "define.h"
 
-#define TIMEFOR_THREAD_CLIENT		500		//线程睡眠时间
-
-#define	MAX_NUM_CLIENT		10				//接受的客户端连接最多数量
-#define	MAX_NUM_BUF			60				//缓冲区的最大长度
-#define	MAX_NUM_DATA		(60 + sizeof(ProtoHead))	//数据包的最大长度
-#define INVALID_OPERATOR	1				//无效的操作符
-#define INVALID_NUM			2				//分母为零
-#define ZERO				0				//零
-#define FRAME_TIME           67
-
-typedef int ClientID;
-typedef unsigned short UShort;
-
-//数据包头结构，该结构在win32下为4byte
-struct ProtoHead
-{
-    UShort	proto;	//类型
-    UShort	Length;	//数据包的长度(包括头的长度)
-};
-
-union DataBuffer {
-    struct DataPackage {
-        ProtoHead head;
-        char datas[MAX_NUM_BUF];
-    } Package;
-    char buffer[MAX_NUM_DATA];
-public:
-    DataBuffer() = default;
-    DataBuffer(char* _buffer) {
-        memcpy(this->buffer, _buffer, MAX_NUM_DATA);
-    }
-};
-
-//数据包中的数据结构
-typedef struct _data
-{
-    char	buf[MAX_NUM_BUF];//数据
-}DATABUF, *pDataBuf;
 
 
 class CClient : public IClassInfo
@@ -78,6 +42,9 @@ public:
     SOCKET Socket() {
         return m_socket;
     }
+    SocketConnType WebSocketType() {
+        return m_socketType;
+    }
     void SetFrameSend(UShort proto, const char* buffer, UShort bufferlen);
 
 private:
@@ -88,34 +55,11 @@ public:
     static DWORD __stdcall	 FrameSendDataThread(void* pParam);		//向客户端发送数据
     static void	RecvDataNormal(CClient* pClient);		//接收客户端数据
     static int	RecvDataInner(CClient* pClient, char* buffer);		//向客户端发送数据
-    static void CheckSocketType(CClient* pClient);
+    static int CheckSocketType(CClient* pClient);
 
 private:
     CClient();
 private:
-    /*struct DataPack {
-    public:
-        INT32 proto;
-        char* buffer;
-        int bufferLen;
-
-        DataPack(const DataPack& src) {
-            *this = src;
-        }
-        DataPack& operator=(const DataPack& rhs) {
-            this->proto = rhs.proto;
-            this->buffer = new char[rhs.bufferLen];
-            memcpy(this->buffer, rhs.buffer, rhs.bufferLen);
-            this->bufferLen = rhs.bufferLen;
-        }
-
-        DataPack(): proto(0),  buffer(NULL), bufferLen(0) {}
-        ~DataPack() {
-            if (buffer != NULL) {
-                delete[] buffer;
-            }
-        }
-    };*/
     ThreadSafe_Queue<DataBuffer*> m_sendBufferQuene; // 数据发送队列
     ThreadSafe_Queue<DataBuffer*> m_RecvBufferQuene; // 数据接收队列
 
@@ -129,6 +73,8 @@ private:
     BOOL		m_bConning;			//客户端连接状态
     BOOL        m_bSend;            //数据发送状态
     BOOL		m_bExit;			//线程退出
+    Websocket_Handler* m_webSocketHandler;
+    SocketConnType m_socketType;
 };
 
 

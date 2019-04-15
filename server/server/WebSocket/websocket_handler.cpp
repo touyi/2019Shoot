@@ -24,9 +24,8 @@ int Websocket_Handler::process(){
 }
 
 int Websocket_Handler::handshark(){
-	char request[1024] = {};
+	char request[MAX_NUM_WEB_ALL] = {};
 	status_ = WEBSOCKET_HANDSHARKED;
-    LogManager::Debug(this->buff_);
 	fetch_http_info();
 	parse_str(request);
 	memset(buff_, 0, sizeof(buff_));
