@@ -3,6 +3,33 @@
 #include "Log.h"
 #include "protocol/Protocol.pb.h"
 
+struct ScreenPartner {
+public:
+    void SetScreen(CClient* client) {
+        std::lock_guard<std::mutex>lk(mut);
+        Screen = client;
+    }
+    
+    void SetMobilde(CClient* client) {
+        std::lock_guard<std::mutex>lk(mut);
+        Mobile = client;
+    }
+    CClient* GetScreen() {
+        return Screen;
+    }
+    CClient* GetMobile() {
+        return Mobile;
+    }
+
+    bool IsPair() {
+        return Mobile != NULL && Screen != NULL;
+    }
+private:
+    mutable std::mutex mut;
+    CClient* Screen = NULL;
+    CClient* Mobile = NULL;
+};
+
 /**
  * 全局变量
  */
@@ -14,6 +41,7 @@ CRITICAL_SECTION  cs;			            //保护数据的临界区对象
 HANDLE	hAcceptThread;						//数据处理线程句柄
 HANDLE	hCleanThread;						//数据接收线程
 ClIENTVECTOR clientvector;                  //存储子套接字
+ScreenPartner OnlyPartner;                  //唯一配对项
 
 /**
  * 初始化
@@ -214,7 +242,7 @@ DWORD __stdcall cleanThread(void* pParam)
 	{
 		EnterCriticalSection(&cs);//进入临界区
 
-		//清理已经断开的连接客户端内存空间
+		//清理已经断开的未配对连接客户端内存空间
 		ClIENTVECTOR::iterator iter = clientvector.begin();
 		for (iter; iter != clientvector.end();)
 		{
@@ -229,6 +257,9 @@ DWORD __stdcall cleanThread(void* pParam)
 				iter++;						//指针下移
 			}
 		}
+        // 清理已经断开的配对连接客户端内存空间<-这个在每次循环（Run()）中判断清理 防止取空
+        
+
 		if(clientvector.size() == 0)
         {
             clientConn = FALSE;
@@ -268,7 +299,41 @@ DWORD __stdcall cleanThread(void* pParam)
 
 	return 0;
  }
-
+/*
+* 清理链接断开的
+*/
+bool PartnerStateRight() {
+    // 清理连接断开的
+    CClient* mobile = OnlyPartner.GetMobile();
+    CClient* screen = OnlyPartner.GetScreen();
+    bool iserase = false;
+    if (mobile == NULL || screen == NULL || !mobile->IsConning() || !screen->IsConning()) {
+        iserase = true;
+    }
+    EnterCriticalSection(&cs);//进入临界区
+    if (mobile != NULL && iserase) {
+        OnlyPartner.SetMobilde(NULL);
+        if (!mobile->IsConning()) {
+            LogManager::Log("连接断开：" + string(*mobile));
+            delete mobile;
+        }
+        else {
+            clientvector.push_back(mobile);
+        }
+    }
+    if (screen != NULL && iserase) {
+        OnlyPartner.SetScreen(NULL);
+        if (!screen->IsConning()) {
+            LogManager::Log("连接断开：" + string(*screen));
+            delete screen;
+        }
+        else {
+            clientvector.push_back(screen);
+        }
+    }
+    LeaveCriticalSection(&cs);
+    return !iserase;
+}
 /**
  * 处理数据
  */
@@ -278,8 +343,11 @@ DWORD __stdcall cleanThread(void* pParam)
 
     while(bRunning)
     {
-        if (/* TODO clientConn*/ false) {
-            memset(sendBuf, 0, MAX_NUM_BUF);		//清空接收缓冲区
+        if (OnlyPartner.IsPair()) {
+            if (!PartnerStateRight()) {
+                continue;
+            }
+            memset(sendBuf, 0, MAX_NUM_BUF);//清空接收缓冲区
             Message::KeyChange keychange;
             auto keydata = keychange.add_keydatas();
             keydata->set_key(0);
@@ -288,6 +356,22 @@ DWORD __stdcall cleanThread(void* pParam)
             keychange.SerializeToArray(sendBuf, size);
             //发送数据
             handleData(123, sendBuf, keychange.ByteSize(), 0);
+        }
+        else {
+            // 尝试大小屏幕配对
+            for (ClIENTVECTOR::iterator iter = clientvector.begin(); iter != clientvector.end();) {
+                if (OnlyPartner.GetMobile() == NULL && (*iter)->WebSocketType() == SocketConnType::Web) {
+                    OnlyPartner.SetMobilde(*iter);
+                    iter = clientvector.erase(iter);
+                }
+                else if (OnlyPartner.GetScreen() == NULL && (*iter)->WebSocketType() == SocketConnType::Normal) {
+                    OnlyPartner.SetScreen(*iter);
+                    iter = clientvector.erase(iter);
+                }
+                else {
+                    iter++;
+                }
+            }
         }
         
         Sleep(5000);

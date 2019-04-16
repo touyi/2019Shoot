@@ -27,8 +27,9 @@
 #define WRITE       "write"                 //发送标志
 #define READ        "read"                  //接收显示标志
 #define READ_ALL    "read all"              //接收所有客户端数据
-typedef std::vector<CClient*> ClIENTVECTOR;		//向量容器
-typedef std::vector<string> SVECTOR;             //内容字符
+// TODO 这个vector不是线程安全的 配对删除调用可能会有问题
+typedef std::vector<CClient*> ClIENTVECTOR;	//向量容器
+typedef std::vector<string> SVECTOR;        //内容字符
 
 
 
@@ -54,6 +55,7 @@ bool initSocket(void);						//初始化非阻塞套接字
 void exitServer(void);						//释放资源
 bool startService(void);					//启动服务器
 void Run(void);                  //处理数据
+bool PartnerStateRight();
 //void showServerStartMsg(BOOL bSuc);         //显示错误信息
 //void showServerExitMsg(void);               //显示退出消息
 void handleData(UShort proto, const char* buffer, UShort bufferlen, ClientID id);                 //数据处理

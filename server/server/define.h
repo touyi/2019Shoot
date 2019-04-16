@@ -14,6 +14,8 @@
 typedef int ClientID;
 typedef unsigned short UShort;
 
+#include<memory.h>
+
 //数据包头结构，该结构在win32下为4byte
 struct ProtoHead
 {

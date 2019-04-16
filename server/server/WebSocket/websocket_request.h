@@ -1,6 +1,6 @@
 #ifndef __WEBSOCKET_REQUEST__
 #define __WEBSOCKET_REQUEST__
-
+#include"../define.h"
 #include <stdint.h>
 
 class Websocket_Request {
@@ -24,7 +24,7 @@ private:
 	uint8_t mask_;
 	uint8_t masking_key_[4];
 	uint64_t payload_length_;
-	char payload_[2048];
+	char payload_[MAX_NUM_WEB_ALL - MAX_NUM_WEB_HEAD];
 };
 
 #endif
