@@ -59,8 +59,25 @@ int CClient::CheckSocketType(CClient* pClient)
         pClient->m_webSocketHandler = new Websocket_Handler(pClient->Socket());
         memcpy(pClient->m_webSocketHandler->getbuff(), buffer, MAX_NUM_WEB_ALL);
         pClient->m_webSocketHandler->process();
+        LogManager::Debug("Web 端连接");
+    }
+    else if(strstr(buffer, "PCUnity")){
+        pClient->m_socketType = SocketConnType::Normal;
+        LogManager::Debug("PC 端连接");
     }
     return 1;
+}
+
+DataBuffer * CClient::PopNextData()
+{
+    DataBuffer* buffer = NULL;
+    this->m_RecvBufferQuene.try_pop(buffer);
+    return buffer;
+}
+
+bool CClient::isEmpty()
+{
+    return this->m_RecvBufferQuene.empty();
 }
 
 /*
@@ -221,9 +238,10 @@ int CClient::RecvDataInner(CClient * pClient, char* buffer)
         else if (reVal > 0)
         {
             if (pClient->WebSocketType() == SocketConnType::Web && pClient->m_webSocketHandler != NULL) {
-                // TODO 解析web数据
+                // 解析web数据
                 memcpy(pClient->m_webSocketHandler->getbuff(), buffer, MAX_NUM_WEB_ALL);
                 pClient->m_webSocketHandler->process();
+                pClient->m_webSocketHandler->GetParseData(buffer);
             }
             return 1;
         }

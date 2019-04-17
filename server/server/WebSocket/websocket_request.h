@@ -8,7 +8,7 @@ public:
 	Websocket_Request();
 	~Websocket_Request();
 	int fetch_websocket_info(char *msg);
-	void print();
+	void print(char* buffer);
 	void reset();
 
 private:
@@ -24,7 +24,7 @@ private:
 	uint8_t mask_;
 	uint8_t masking_key_[4];
 	uint64_t payload_length_;
-	char payload_[MAX_NUM_WEB_ALL - MAX_NUM_WEB_HEAD];
+	char payload_[MAX_NUM_DATA];
 };
 
 #endif

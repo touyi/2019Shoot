@@ -102,6 +102,8 @@ BOOL Client::ConnectServer(void)
 
 	bConnecting = TRUE;
 
+    // 发送握手消息
+    this->SendData(0, "PCUnity");
 	return TRUE;
 }
 /**
@@ -273,7 +275,7 @@ void Client::ExitClient(void)
 	WSACleanup();
 }
 
-void Client::SendData(int proto, char * content)
+void Client::SendData(int proto, const char * content)
 {
     
     if (bConnecting)			//连接状态
@@ -284,6 +286,8 @@ void Client::SendData(int proto, char * content)
         EnterCriticalSection(&cs);		//进入临界区
         memset(bufSend, 0, sizeof(bufSend));
         memcpy(bufSend, cInput, strlen(cInput));
+        // Temp TODO
+        memcpy(bufSend, "PCUnity", strlen("PCUnity")); // Temp
         LeaveCriticalSection(&cs);		//离开临界区
         bSend = TRUE;
     }

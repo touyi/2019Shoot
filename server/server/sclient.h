@@ -23,7 +23,9 @@ public:
         ss << "IP:"
             << string(inet_ntoa(this->m_addr.sin_addr))
             << " Port:"
-            << this->m_addr.sin_port;
+            << this->m_addr.sin_port
+            << " SocketType:"
+            << this->CheckSocketType;
         return ss.str();
     }
     
@@ -56,6 +58,9 @@ public:
     static void	RecvDataNormal(CClient* pClient);		//接收客户端数据
     static int	RecvDataInner(CClient* pClient, char* buffer);		//向客户端发送数据
     static int CheckSocketType(CClient* pClient);
+
+    DataBuffer* PopNextData();
+    bool isEmpty();
 
 private:
     CClient();

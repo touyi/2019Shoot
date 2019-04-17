@@ -18,7 +18,6 @@ int Websocket_Handler::process(){
 		return handshark();
 	}
 	request_->fetch_websocket_info(buff_);
-	request_->print();
 	memset(buff_, 0, sizeof(buff_));
 	return 0;
 }
@@ -88,4 +87,12 @@ int Websocket_Handler::fetch_http_info(){
 
 int Websocket_Handler::send_data(char *buff){
 	return send(fd_, buff, strlen(buff), 0);
+}
+
+/*
+* 获取后数据会清空 不能再次获取
+*/
+void Websocket_Handler::GetParseData(char * buffer)
+{
+    this->request_->print(buffer);
 }

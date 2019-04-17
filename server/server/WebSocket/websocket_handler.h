@@ -24,6 +24,7 @@ public:
 	~Websocket_Handler();
 	int process();
 	inline char *getbuff();
+    void GetParseData(char* buffer);
 private:
 	int handshark();
 	void parse_str(char *request);
@@ -37,8 +38,8 @@ private:
 	Websocket_Request *request_;
 };
 
-inline char *Websocket_Handler::getbuff(){
-	return buff_;
+inline char *Websocket_Handler::getbuff() {
+    return buff_;
 }
 
 #endif

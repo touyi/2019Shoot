@@ -184,6 +184,8 @@
   <ItemGroup>
     <ClInclude Include="define.h" />
     <ClInclude Include="Log.h" />
+    <ClInclude Include="PartnerProcess.h" />
+    <ClInclude Include="protocolnumber.h" />
     <ClInclude Include="protocol\Protocol.pb.h" />
     <ClInclude Include="sclient.h" />
     <ClInclude Include="server.h" />
@@ -199,6 +201,7 @@
   <ItemGroup>
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PartnerProcess.cpp" />
     <ClCompile Include="protocol\Protocol.pb.cc" />
     <ClCompile Include="sclient.cpp" />
     <ClCompile Include="server.cpp" />

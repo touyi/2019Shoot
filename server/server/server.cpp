@@ -1,34 +1,34 @@
-#include "server.h"
+#include "PartnerProcess.h"
 #include "sclient.h"
 #include "Log.h"
 #include "protocol/Protocol.pb.h"
 
-struct ScreenPartner {
-public:
-    void SetScreen(CClient* client) {
-        std::lock_guard<std::mutex>lk(mut);
-        Screen = client;
-    }
-    
-    void SetMobilde(CClient* client) {
-        std::lock_guard<std::mutex>lk(mut);
-        Mobile = client;
-    }
-    CClient* GetScreen() {
-        return Screen;
-    }
-    CClient* GetMobile() {
-        return Mobile;
-    }
-
-    bool IsPair() {
-        return Mobile != NULL && Screen != NULL;
-    }
-private:
-    mutable std::mutex mut;
-    CClient* Screen = NULL;
-    CClient* Mobile = NULL;
-};
+//struct ScreenPartner {
+//public:
+//    void SetScreen(CClient* client) {
+//        std::lock_guard<std::mutex>lk(mut);
+//        Screen = client;
+//    }
+//    
+//    void SetMobilde(CClient* client) {
+//        std::lock_guard<std::mutex>lk(mut);
+//        Mobile = client;
+//    }
+//    CClient* GetScreen() {
+//        return Screen;
+//    }
+//    CClient* GetMobile() {
+//        return Mobile;
+//    }
+//
+//    bool IsPair() {
+//        return Mobile != NULL && Screen != NULL;
+//    }
+//private:
+//    mutable std::mutex mut;
+//    CClient* Screen = NULL;
+//    CClient* Mobile = NULL;
+//};
 
 /**
  * 全局变量
@@ -41,7 +41,7 @@ CRITICAL_SECTION  cs;			            //保护数据的临界区对象
 HANDLE	hAcceptThread;						//数据处理线程句柄
 HANDLE	hCleanThread;						//数据接收线程
 ClIENTVECTOR clientvector;                  //存储子套接字
-ScreenPartner OnlyPartner;                  //唯一配对项
+PartnerProcess OnlyPartner;                  //唯一配对项
 
 /**
  * 初始化
@@ -306,12 +306,11 @@ bool PartnerStateRight() {
     // 清理连接断开的
     CClient* mobile = OnlyPartner.GetMobile();
     CClient* screen = OnlyPartner.GetScreen();
-    bool iserase = false;
-    if (mobile == NULL || screen == NULL || !mobile->IsConning() || !screen->IsConning()) {
-        iserase = true;
+    if (mobile != NULL && screen != NULL && mobile->IsConning() && screen->IsConning()) {
+        return true;
     }
     EnterCriticalSection(&cs);//进入临界区
-    if (mobile != NULL && iserase) {
+    if (mobile != NULL) {
         OnlyPartner.SetMobilde(NULL);
         if (!mobile->IsConning()) {
             LogManager::Log("连接断开：" + string(*mobile));
@@ -321,7 +320,7 @@ bool PartnerStateRight() {
             clientvector.push_back(mobile);
         }
     }
-    if (screen != NULL && iserase) {
+    if (screen != NULL) {
         OnlyPartner.SetScreen(NULL);
         if (!screen->IsConning()) {
             LogManager::Log("连接断开：" + string(*screen));
@@ -332,14 +331,13 @@ bool PartnerStateRight() {
         }
     }
     LeaveCriticalSection(&cs);
-    return !iserase;
+    return false;
 }
 /**
  * 处理数据
  */
  void Run(void)
  {
-    char sendBuf[MAX_NUM_BUF];
 
     while(bRunning)
     {
@@ -347,15 +345,16 @@ bool PartnerStateRight() {
             if (!PartnerStateRight()) {
                 continue;
             }
-            memset(sendBuf, 0, MAX_NUM_BUF);//清空接收缓冲区
-            Message::KeyChange keychange;
-            auto keydata = keychange.add_keydatas();
-            keydata->set_key(0);
-            keydata->set_keystate(1);
-            int size = keychange.ByteSize();
-            keychange.SerializeToArray(sendBuf, size);
-            //发送数据
-            handleData(123, sendBuf, keychange.ByteSize(), 0);
+            OnlyPartner.ExchangeData();
+            //memset(sendBuf, 0, MAX_NUM_BUF);//清空接收缓冲区
+            //Message::KeyChange keychange;
+            //auto keydata = keychange.add_keydatas();
+            //keydata->set_key(0);
+            //keydata->set_keystate(1);
+            //int size = keychange.ByteSize();
+            //keychange.SerializeToArray(sendBuf, size);
+            ////发送数据
+            //handleData(123, sendBuf, keychange.ByteSize(), 0);
         }
         else {
             // 尝试大小屏幕配对
@@ -371,6 +370,9 @@ bool PartnerStateRight() {
                 else {
                     iter++;
                 }
+            }
+            if (OnlyPartner.IsPair()) {
+                LogManager::Debug(string("配对成功：") + string(*OnlyPartner.GetScreen()) + string(*OnlyPartner.GetMobile()));
             }
         }
         

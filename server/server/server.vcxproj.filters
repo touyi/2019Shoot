@@ -54,6 +54,12 @@
     <ClInclude Include="define.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="PartnerProcess.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="protocolnumber.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -87,6 +93,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="WebSocket\websocket_respond.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PartnerProcess.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

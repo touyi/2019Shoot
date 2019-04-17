@@ -51,7 +51,7 @@ public:
     BOOL ConnectServer(void);           //连接服务器
     void ExitClient(void);              //退出服务器
 
-    void SendData(int proto, char* content);
+    void SendData(int proto, const char* content);
 
     DataBuffer* PopNextPackageData();
     bool IsDataEmpty();
