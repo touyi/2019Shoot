@@ -26,15 +26,8 @@ int Websocket_Request::fetch_websocket_info(char *msg){
 }
 
 void Websocket_Request::print(char* dst){
-	DEBUG_LOG("WEBSOCKET PROTOCOL\n"
-				"FIN: %d\n"
-				"OPCODE: %d\n"
-				"MASK: %d\n"
-				"PAYLOADLEN: %d\n"
-				"PAYLOAD: %s",
-				fin_, opcode_, mask_, payload_length_, payload_);
+    
     memcpy(dst, payload_, MAX_NUM_DATA);
-
 	reset();
 }
 

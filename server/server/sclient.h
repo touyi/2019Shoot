@@ -48,9 +48,11 @@ public:
         return m_socketType;
     }
     void SetFrameSend(UShort proto, const char* buffer, UShort bufferlen);
+    void SerFrameSend(DataBuffer buffer);
 
 private:
     bool InnerSendData(DataBuffer* buffer);
+    void SetFrameSendInner(DataBuffer* buffer);
     
 public:
     static DWORD __stdcall	 RecvDataThread(void* pParam);		//接收客户端数据

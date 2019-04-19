@@ -13,11 +13,12 @@ Websocket_Handler::Websocket_Handler(int fd):
 Websocket_Handler::~Websocket_Handler(){
 }
 
-int Websocket_Handler::process(){
+int Websocket_Handler::process(char* buffer){
 	if(status_ == WEBSOCKET_UNCONNECT){
 		return handshark();
 	}
 	request_->fetch_websocket_info(buff_);
+    request_->print(buffer);
 	memset(buff_, 0, sizeof(buff_));
 	return 0;
 }
@@ -90,7 +91,7 @@ int Websocket_Handler::send_data(char *buff){
 }
 
 /*
-* 获取后数据会清空 不能再次获取
+* 获取后数据会清空 不能再次获取 已经废弃 直接在process里面返回buffer
 */
 void Websocket_Handler::GetParseData(char * buffer)
 {

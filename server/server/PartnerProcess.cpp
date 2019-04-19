@@ -33,11 +33,9 @@ CClient * PartnerProcess::GetMobile()
     return Mobile;
 }
 
-void PartnerProcess::ExchangeData()
+DataBuffer PartnerProcess::ParseWebInfo()
 {
-    if (!IsPair()) {
-        return;
-    }
+
     Message::KeyChange keychange;
     while (!Mobile->isEmpty()) {
         // TODO web暂时不用pb
@@ -48,14 +46,18 @@ void PartnerProcess::ExchangeData()
             keydata->set_keystate(1);
         }
     }
-    char tempbuf[MAX_NUM_BUF];
-    memset(tempbuf, 0, MAX_NUM_BUF);
-    int size = keychange.ByteSize();
-    if (size > 0) {
-        keychange.SerializeToArray(tempbuf, size);
-        Screen->SetFrameSend(ProtocolNumber::KEY_STATE, tempbuf, size);
+
+    // NEXT TODO 解析为最终数据包
+    return DataBuffer();
+}
+
+void PartnerProcess::ExchangeData()
+{
+    if (!IsPair()) {
+        return;
     }
-    
+    DataBuffer parseBuffer = this->ParseWebInfo();
+    Screen->SerFrameSend(parseBuffer);
 }
 
 bool PartnerProcess::IsPair()

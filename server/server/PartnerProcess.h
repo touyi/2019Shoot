@@ -13,6 +13,8 @@ public:
 
     void ExchangeData();
 
+    DataBuffer ParseWebInfo();
+
     bool IsPair();
 private:
     mutable std::mutex mut;

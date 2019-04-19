@@ -58,7 +58,7 @@ int CClient::CheckSocketType(CClient* pClient)
         pClient->m_socketType = SocketConnType::Web;
         pClient->m_webSocketHandler = new Websocket_Handler(pClient->Socket());
         memcpy(pClient->m_webSocketHandler->getbuff(), buffer, MAX_NUM_WEB_ALL);
-        pClient->m_webSocketHandler->process();
+        pClient->m_webSocketHandler->process(buffer);
         LogManager::Debug("Web 端连接");
     }
     else if(strstr(buffer, "PCUnity")){
@@ -109,6 +109,17 @@ BOOL CClient::StartRuning(void)
 	return TRUE;
 }
 
+void CClient::SetFrameSendInner(DataBuffer * buffer)
+{
+    this->m_sendBufferQuene.push(buffer);
+    m_bSend = TRUE;
+}
+
+void CClient::SerFrameSend(DataBuffer buffer)
+{
+    DataBuffer* _buffer = new DataBuffer(buffer);
+    this->SetFrameSendInner(_buffer);
+}
 
 void CClient::SetFrameSend(UShort proto, const char * buffer, UShort bufferlen)
 {
@@ -117,9 +128,9 @@ void CClient::SetFrameSend(UShort proto, const char * buffer, UShort bufferlen)
     datapack->Package.head.proto = proto;
     datapack->Package.head.Length = bufferlen + 4; // 加上头部4个字节
     memcpy(datapack->Package.datas, buffer, bufferlen);
-    this->m_sendBufferQuene.push(datapack);
+    this->SetFrameSendInner(datapack);
 
-    m_bSend = TRUE;
+    
 }
 
 bool CClient::InnerSendData(DataBuffer * buffer)
@@ -240,8 +251,8 @@ int CClient::RecvDataInner(CClient * pClient, char* buffer)
             if (pClient->WebSocketType() == SocketConnType::Web && pClient->m_webSocketHandler != NULL) {
                 // 解析web数据
                 memcpy(pClient->m_webSocketHandler->getbuff(), buffer, MAX_NUM_WEB_ALL);
-                pClient->m_webSocketHandler->process();
-                pClient->m_webSocketHandler->GetParseData(buffer);
+                pClient->m_webSocketHandler->process(buffer);
+                //pClient->m_webSocketHandler->GetParseData(buffer);
             }
             return 1;
         }

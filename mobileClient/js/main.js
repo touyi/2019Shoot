@@ -30,9 +30,12 @@ window.addEventListener("devicemotion", function(e) {
 	if(e==null || e.accelerationIncludingGravity ==null){
 		return;
 	}
-	a_x = e.accelerationIncludingGravity.x;
-	a_y = e.accelerationIncludingGravity.y;
-	a_z = e.accelerationIncludingGravity.z + 10;
+	if(IsPC() != true){
+		a_x = e.accelerationIncludingGravity.x;
+		a_y = e.accelerationIncludingGravity.y;
+		a_z = e.accelerationIncludingGravity.z + 10;
+	}
+	
 	//websocket.send("O"+distanceX+" "+distanceY+" "+"0#");
 
 	speedX += a_x * timeInterval;
@@ -40,6 +43,24 @@ window.addEventListener("devicemotion", function(e) {
 	speedZ += a_z * timeInterval;
 }, true);
 ////////////////////////////////////
+function IsPC() {
+   var userAgentInfo = navigator.userAgent;
+   // TODO 调试判断
+   if(userAgentInfo.indexOf("Chrome") > 0){
+   	return true;
+   }
+   var Agents = ["Android", "iPhone",
+      "SymbianOS", "Windows Phone",
+      "iPad", "iPod"];
+   var flag = true;
+   for (var v = 0; v < Agents.length; v++) {
+      if (userAgentInfo.indexOf(Agents[v]) > 0) {
+         flag = false;
+         break;
+      }
+   }
+   return flag;
+}
 function getIp(ipString) {
 	ipstring = ipString;
 	if ('WebSocket' in window) {
@@ -118,7 +139,7 @@ window.onload = function() {
 		websocket.send("E#");
 		isend = true;
 		leaveGame.style.opacity = "1";
-		window.location.replace("index.jsp");
+		window.location.replace("index.html");
 	};
 	method.ontouchstart = function() {
 		//method.style.backgroundColor="#FFF";
@@ -147,9 +168,13 @@ window.onload = function() {
 	shootGame.ontouchstart = function() {
 		shootGame.style.backgroundColor = "#8E8986";
 		shootGame.style.opacity = 0.5;
+		if(intervalTime!=null){
+			clearInterval(intervalTime);
+		}
 		intervalTime = setInterval(function() {
 			websocket.send("F#");
-		}, 20)
+			console.log("F#");
+		}, 60)
 	};
 	shootGame.ontouchmove = function() {
 		shootGame.style.backgroundColor = "greenyellow";
@@ -158,6 +183,7 @@ window.onload = function() {
 	shootGame.ontouchend = function() {
 		shootGame.style.backgroundColor = "greenyellow";
 		clearInterval(intervalTime);
+		intervalTime = null;
 		shootGame.style.opacity = 1;
 	};
 }

@@ -40,6 +40,12 @@ public:
     DataBuffer(char* _buffer) {
         memcpy(this->buffer, _buffer, MAX_NUM_DATA);
     }
+    DataBuffer(const DataBuffer& buffer) {
+        memcpy(this->buffer, buffer.buffer, MAX_NUM_DATA);
+    }
+    DataBuffer(const DataBuffer*&buffer) {
+        memcpy(this->buffer, buffer->buffer, MAX_NUM_DATA);
+    }
 };
 
 //数据包中的数据结构

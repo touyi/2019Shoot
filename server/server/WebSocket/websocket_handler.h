@@ -22,8 +22,9 @@ class Websocket_Handler{
 public:
 	Websocket_Handler(int fd);
 	~Websocket_Handler();
-	int process();
+	int process(char* buffer);
 	inline char *getbuff();
+    // 已经废弃 直接在process里面返回buffer
     void GetParseData(char* buffer);
 private:
 	int handshark();
