@@ -15,16 +15,16 @@ namespace Message
   {
     public KeyData() {}
     
-    private int _key;
+    private Message.KeyType _key;
     [global::ProtoBuf.ProtoMember(1, IsRequired = true, Name=@"key", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
-    public int key
+    public Message.KeyType key
     {
       get { return _key; }
       set { _key = value; }
     }
-    private int _keyState;
+    private Message.KeyState _keyState;
     [global::ProtoBuf.ProtoMember(2, IsRequired = true, Name=@"keyState", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
-    public int keyState
+    public Message.KeyState keyState
     {
       get { return _keyState; }
       set { _keyState = value; }
@@ -50,5 +50,36 @@ namespace Message
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
   }
+  
+    [global::ProtoBuf.ProtoContract(Name=@"KeyType")]
+    public enum KeyType
+    {
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"Fire", Value=0)]
+      Fire = 0,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"Change", Value=1)]
+      Change = 1,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"TypeCount", Value=2)]
+      TypeCount = 2
+    }
+  
+    [global::ProtoBuf.ProtoContract(Name=@"KeyState")]
+    public enum KeyState
+    {
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"Down", Value=0)]
+      Down = 0,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"Up", Value=1)]
+      Up = 1,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"Click", Value=2)]
+      Click = 2,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"StateCount", Value=3)]
+      StateCount = 3
+    }
   
 }

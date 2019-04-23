@@ -36,7 +36,7 @@ namespace Component.Actor
             {
                 return;
             }
-            if (NetInput.CurrentInput.CurInput.GetKey(InputKeyCode.Fire))
+            if (NetInput.CurrentInput.CurInput.GetKey(InputKeyType.Fire))
             {
                 this._currentGun.Fire();
             }

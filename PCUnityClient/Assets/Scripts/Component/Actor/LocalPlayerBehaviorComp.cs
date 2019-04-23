@@ -61,7 +61,7 @@ namespace Component.Actor
 
             if (this._weapen)
             {
-                Vector3 dir = CurrentInput.CurInput.GetAxis3D(InputKeyCode.DirVector);
+                Vector3 dir = CurrentInput.CurInput.GetAxis3D(InputKeyType.DirVector);
                 this._weapen.LookAt(this._weapen.position + dir);
             }
             

@@ -62,7 +62,7 @@ void InitDefaults_Protocol_2eproto() {
 }
 
 ::google::protobuf::Metadata file_level_metadata_Protocol_2eproto[2];
-constexpr ::google::protobuf::EnumDescriptor const** file_level_enum_descriptors_Protocol_2eproto = nullptr;
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors_Protocol_2eproto[2];
 constexpr ::google::protobuf::ServiceDescriptor const** file_level_service_descriptors_Protocol_2eproto = nullptr;
 
 const ::google::protobuf::uint32 TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -100,14 +100,18 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
 };
 
 const char descriptor_table_protodef_Protocol_2eproto[] =
-  "\n\016Protocol.proto\022\007Message\"(\n\007KeyData\022\013\n\003"
-  "key\030\001 \002(\005\022\020\n\010keyState\030\002 \002(\005\"/\n\tKeyChange"
-  "\022\"\n\010keyDatas\030\001 \003(\0132\020.Message.KeyData"
+  "\n\016Protocol.proto\022\007Message\"M\n\007KeyData\022\035\n\003"
+  "key\030\001 \002(\0162\020.Message.KeyType\022#\n\010keyState\030"
+  "\002 \002(\0162\021.Message.KeyState\"/\n\tKeyChange\022\"\n"
+  "\010keyDatas\030\001 \003(\0132\020.Message.KeyData*.\n\007Key"
+  "Type\022\010\n\004Fire\020\000\022\n\n\006Change\020\001\022\r\n\tTypeCount\020"
+  "\002*7\n\010KeyState\022\010\n\004Down\020\000\022\006\n\002Up\020\001\022\t\n\005Click"
+  "\020\002\022\016\n\nStateCount\020\003"
   ;
 ::google::protobuf::internal::DescriptorTable descriptor_table_Protocol_2eproto = {
   false, InitDefaults_Protocol_2eproto, 
   descriptor_table_protodef_Protocol_2eproto,
-  "Protocol.proto", &assign_descriptors_table_Protocol_2eproto, 116,
+  "Protocol.proto", &assign_descriptors_table_Protocol_2eproto, 258,
 };
 
 void AddDescriptors_Protocol_2eproto() {
@@ -120,6 +124,37 @@ void AddDescriptors_Protocol_2eproto() {
 // Force running AddDescriptors() at dynamic initialization time.
 static bool dynamic_init_dummy_Protocol_2eproto = []() { AddDescriptors_Protocol_2eproto(); return true; }();
 namespace Message {
+const ::google::protobuf::EnumDescriptor* KeyType_descriptor() {
+  ::google::protobuf::internal::AssignDescriptors(&assign_descriptors_table_Protocol_2eproto);
+  return file_level_enum_descriptors_Protocol_2eproto[0];
+}
+bool KeyType_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* KeyState_descriptor() {
+  ::google::protobuf::internal::AssignDescriptors(&assign_descriptors_table_Protocol_2eproto);
+  return file_level_enum_descriptors_Protocol_2eproto[1];
+}
+bool KeyState_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+      return true;
+    default:
+      return false;
+  }
+}
+
 
 // ===================================================================
 
@@ -208,17 +243,27 @@ const char* KeyData::_InternalParse(const char* begin, const char* end, void* ob
     ptr = ::google::protobuf::io::Parse32(ptr, &tag);
     GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
     switch (tag >> 3) {
-      // required int32 key = 1;
+      // required .Message.KeyType key = 1;
       case 1: {
         if (static_cast<::google::protobuf::uint8>(tag) != 8) goto handle_unusual;
-        msg->set_key(::google::protobuf::internal::ReadVarint(&ptr));
+        ::google::protobuf::uint64 val = ::google::protobuf::internal::ReadVarint(&ptr);
+        if (!::Message::KeyType_IsValid(val)) {
+          ::google::protobuf::internal::WriteVarint(1, val, msg->mutable_unknown_fields());
+          break;
+        }
+        msg->set_key(static_cast<::Message::KeyType>(val));
         GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
         break;
       }
-      // required int32 keyState = 2;
+      // required .Message.KeyState keyState = 2;
       case 2: {
         if (static_cast<::google::protobuf::uint8>(tag) != 16) goto handle_unusual;
-        msg->set_keystate(::google::protobuf::internal::ReadVarint(&ptr));
+        ::google::protobuf::uint64 val = ::google::protobuf::internal::ReadVarint(&ptr);
+        if (!::Message::KeyState_IsValid(val)) {
+          ::google::protobuf::internal::WriteVarint(2, val, msg->mutable_unknown_fields());
+          break;
+        }
+        msg->set_keystate(static_cast<::Message::KeyState>(val));
         GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
         break;
       }
@@ -249,26 +294,38 @@ bool KeyData::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 key = 1;
+      // required .Message.KeyType key = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) == (8 & 0xFF)) {
-          HasBitSetters::set_has_key(this);
+          int value = 0;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &key_)));
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::Message::KeyType_IsValid(value)) {
+            set_key(static_cast< ::Message::KeyType >(value));
+          } else {
+            mutable_unknown_fields()->AddVarint(
+                1, static_cast<::google::protobuf::uint64>(value));
+          }
         } else {
           goto handle_unusual;
         }
         break;
       }
 
-      // required int32 keyState = 2;
+      // required .Message.KeyState keyState = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) == (16 & 0xFF)) {
-          HasBitSetters::set_has_keystate(this);
+          int value = 0;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &keystate_)));
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          if (::Message::KeyState_IsValid(value)) {
+            set_keystate(static_cast< ::Message::KeyState >(value));
+          } else {
+            mutable_unknown_fields()->AddVarint(
+                2, static_cast<::google::protobuf::uint64>(value));
+          }
         } else {
           goto handle_unusual;
         }
@@ -303,14 +360,16 @@ void KeyData::SerializeWithCachedSizes(
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // required int32 key = 1;
+  // required .Message.KeyType key = 1;
   if (cached_has_bits & 0x00000001u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->key(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->key(), output);
   }
 
-  // required int32 keyState = 2;
+  // required .Message.KeyState keyState = 2;
   if (cached_has_bits & 0x00000002u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->keystate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      2, this->keystate(), output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -327,14 +386,16 @@ void KeyData::SerializeWithCachedSizes(
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // required int32 key = 1;
+  // required .Message.KeyType key = 1;
   if (cached_has_bits & 0x00000001u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->key(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      1, this->key(), target);
   }
 
-  // required int32 keyState = 2;
+  // required .Message.KeyState keyState = 2;
   if (cached_has_bits & 0x00000002u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->keystate(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      2, this->keystate(), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -350,17 +411,15 @@ size_t KeyData::RequiredFieldsByteSizeFallback() const {
   size_t total_size = 0;
 
   if (has_key()) {
-    // required int32 key = 1;
+    // required .Message.KeyType key = 1;
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->key());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->key());
   }
 
   if (has_keystate()) {
-    // required int32 keyState = 2;
+    // required .Message.KeyState keyState = 2;
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->keystate());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->keystate());
   }
 
   return total_size;
@@ -375,15 +434,13 @@ size_t KeyData::ByteSizeLong() const {
         _internal_metadata_.unknown_fields());
   }
   if (((_has_bits_[0] & 0x00000003) ^ 0x00000003) == 0) {  // All required fields are present.
-    // required int32 key = 1;
+    // required .Message.KeyType key = 1;
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->key());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->key());
 
-    // required int32 keyState = 2;
+    // required .Message.KeyState keyState = 2;
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->keystate());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->keystate());
 
   } else {
     total_size += RequiredFieldsByteSizeFallback();

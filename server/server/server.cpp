@@ -376,7 +376,7 @@ bool PartnerStateRight() {
             }
         }
         
-        Sleep(5000);
+        Sleep(FRAME_TIME);
     }
  }
 

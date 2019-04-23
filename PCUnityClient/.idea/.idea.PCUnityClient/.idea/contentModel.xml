@@ -191,7 +191,7 @@
         </e>
         <e p="NetInput" t="Include">
           <e p="IInput.cs" t="Include" />
-          <e p="InputKeyCode.cs" t="Include" />
+          <e p="InputKeyType.cs" t="Include" />
           <e p="SInput.cs" t="Include" />
           <e p="TempInput.cs" t="Include" />
         </e>
@@ -200,6 +200,7 @@
           <e p="GenProtocol" t="Include">
             <e p="Protocol.cs" t="Include" />
           </e>
+          <e p="SocketInputProvide.cs" t="Include" />
         </e>
         <e p="SwiftFSM" t="Include">
           <e p="Internal" t="Include">
@@ -223,6 +224,7 @@
         </e>
         <e p="tools" t="Include">
           <e p="IProcess.cs" t="Include" />
+          <e p="ProtocolHelper.cs" t="Include" />
           <e p="Timer.cs" t="Include" />
           <e p="TransformExtend.cs" t="Include" />
         </e>

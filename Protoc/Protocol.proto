@@ -1,9 +1,19 @@
 syntax = "proto2";
 package Message;
-
+enum KeyType {
+	Fire = 0;
+	Change = 1;
+	TypeCount = 2;
+}
+enum KeyState {
+	Down = 0;
+	Up = 1;
+	Click = 2;
+	StateCount = 3;
+}
 message KeyData {
-    required int32 key = 1;
-    required int32 keyState = 2;
+    required KeyType key = 1;
+    required KeyState keyState = 2;
 }
 
 message KeyChange {

@@ -4,11 +4,11 @@ namespace NetInput
 {
     public class TempInput : IInput
     {
-        public bool GetKeyDown(InputKeyCode key)
+        public bool GetKeyDown(InputKeyType key)
         {
             switch (key)
             {
-                    case InputKeyCode.Fire:
+                    case InputKeyType.Fire:
                         if (Input.GetMouseButtonDown(0))
                         {
                             return true;
@@ -19,11 +19,11 @@ namespace NetInput
             return false;
         }
 
-        public bool GetKey(InputKeyCode key)
+        public bool GetKey(InputKeyType key)
         {
             switch (key)
             {
-                case InputKeyCode.Fire:
+                case InputKeyType.Fire:
                     if (Input.GetMouseButton(0))
                     {
                         return true;
@@ -34,22 +34,22 @@ namespace NetInput
             return false;
         }
 
-        public float GetAxis(InputKeyCode key)
+        public float GetAxis(InputKeyType key)
         {
             throw new System.NotImplementedException();
         }
 
-        public Vector2 GetAxis2D(InputKeyCode key)
+        public Vector2 GetAxis2D(InputKeyType key)
         {
             throw new System.NotImplementedException();
         }
 
         private Vector3 dir = Vector3.forward;
-        public Vector3 GetAxis3D(InputKeyCode key)
+        public Vector3 GetAxis3D(InputKeyType key)
         {
             switch (key)
             {
-                    case InputKeyCode.DirVector:
+                    case InputKeyType.DirVector:
                         return dir.normalized;
                         break;
             }
@@ -59,7 +59,7 @@ namespace NetInput
 
         }
 
-        public Vector4 GetAxis4D(InputKeyCode key)
+        public Vector4 GetAxis4D(InputKeyType key)
         {
             throw new System.NotImplementedException();
         }

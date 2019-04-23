@@ -41,10 +41,14 @@ public:
         memcpy(this->buffer, _buffer, MAX_NUM_DATA);
     }
     DataBuffer(const DataBuffer& buffer) {
-        memcpy(this->buffer, buffer.buffer, MAX_NUM_DATA);
+        (*this) = buffer;
     }
     DataBuffer(const DataBuffer*&buffer) {
-        memcpy(this->buffer, buffer->buffer, MAX_NUM_DATA);
+        (*this) = *buffer;
+    }
+    const DataBuffer& operator=(const DataBuffer& _buffer) {
+        memcpy(this->buffer, _buffer.buffer, MAX_NUM_DATA);
+        return (*this);
     }
 };
 

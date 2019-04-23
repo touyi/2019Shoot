@@ -30,6 +30,7 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
+#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
@@ -64,6 +65,47 @@ template<> ::Message::KeyData* Arena::CreateMaybeMessage<::Message::KeyData>(Are
 }  // namespace google
 namespace Message {
 
+enum KeyType {
+  Fire = 0,
+  Change = 1,
+  TypeCount = 2
+};
+bool KeyType_IsValid(int value);
+const KeyType KeyType_MIN = Fire;
+const KeyType KeyType_MAX = TypeCount;
+const int KeyType_ARRAYSIZE = KeyType_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* KeyType_descriptor();
+inline const ::std::string& KeyType_Name(KeyType value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    KeyType_descriptor(), value);
+}
+inline bool KeyType_Parse(
+    const ::std::string& name, KeyType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<KeyType>(
+    KeyType_descriptor(), name, value);
+}
+enum KeyState {
+  Down = 0,
+  Up = 1,
+  Click = 2,
+  StateCount = 3
+};
+bool KeyState_IsValid(int value);
+const KeyState KeyState_MIN = Down;
+const KeyState KeyState_MAX = StateCount;
+const int KeyState_ARRAYSIZE = KeyState_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* KeyState_descriptor();
+inline const ::std::string& KeyState_Name(KeyState value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    KeyState_descriptor(), value);
+}
+inline bool KeyState_Parse(
+    const ::std::string& name, KeyState* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<KeyState>(
+    KeyState_descriptor(), name, value);
+}
 // ===================================================================
 
 class KeyData final :
@@ -168,19 +210,19 @@ class KeyData final :
 
   // accessors -------------------------------------------------------
 
-  // required int32 key = 1;
+  // required .Message.KeyType key = 1;
   bool has_key() const;
   void clear_key();
   static const int kKeyFieldNumber = 1;
-  ::google::protobuf::int32 key() const;
-  void set_key(::google::protobuf::int32 value);
+  ::Message::KeyType key() const;
+  void set_key(::Message::KeyType value);
 
-  // required int32 keyState = 2;
+  // required .Message.KeyState keyState = 2;
   bool has_keystate() const;
   void clear_keystate();
   static const int kKeyStateFieldNumber = 2;
-  ::google::protobuf::int32 keystate() const;
-  void set_keystate(::google::protobuf::int32 value);
+  ::Message::KeyState keystate() const;
+  void set_keystate(::Message::KeyState value);
 
   // @@protoc_insertion_point(class_scope:Message.KeyData)
  private:
@@ -192,8 +234,8 @@ class KeyData final :
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  ::google::protobuf::int32 key_;
-  ::google::protobuf::int32 keystate_;
+  int key_;
+  int keystate_;
   friend struct ::TableStruct_Protocol_2eproto;
 };
 // -------------------------------------------------------------------
@@ -333,7 +375,7 @@ class KeyChange final :
 #endif  // __GNUC__
 // KeyData
 
-// required int32 key = 1;
+// required .Message.KeyType key = 1;
 inline bool KeyData::has_key() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -341,17 +383,18 @@ inline void KeyData::clear_key() {
   key_ = 0;
   _has_bits_[0] &= ~0x00000001u;
 }
-inline ::google::protobuf::int32 KeyData::key() const {
+inline ::Message::KeyType KeyData::key() const {
   // @@protoc_insertion_point(field_get:Message.KeyData.key)
-  return key_;
+  return static_cast< ::Message::KeyType >(key_);
 }
-inline void KeyData::set_key(::google::protobuf::int32 value) {
+inline void KeyData::set_key(::Message::KeyType value) {
+  assert(::Message::KeyType_IsValid(value));
   _has_bits_[0] |= 0x00000001u;
   key_ = value;
   // @@protoc_insertion_point(field_set:Message.KeyData.key)
 }
 
-// required int32 keyState = 2;
+// required .Message.KeyState keyState = 2;
 inline bool KeyData::has_keystate() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -359,11 +402,12 @@ inline void KeyData::clear_keystate() {
   keystate_ = 0;
   _has_bits_[0] &= ~0x00000002u;
 }
-inline ::google::protobuf::int32 KeyData::keystate() const {
+inline ::Message::KeyState KeyData::keystate() const {
   // @@protoc_insertion_point(field_get:Message.KeyData.keyState)
-  return keystate_;
+  return static_cast< ::Message::KeyState >(keystate_);
 }
-inline void KeyData::set_keystate(::google::protobuf::int32 value) {
+inline void KeyData::set_keystate(::Message::KeyState value) {
+  assert(::Message::KeyState_IsValid(value));
   _has_bits_[0] |= 0x00000002u;
   keystate_ = value;
   // @@protoc_insertion_point(field_set:Message.KeyData.keyState)
@@ -412,6 +456,23 @@ KeyChange::keydatas() const {
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace Message
+
+namespace google {
+namespace protobuf {
+
+template <> struct is_proto_enum< ::Message::KeyType> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Message::KeyType>() {
+  return ::Message::KeyType_descriptor();
+}
+template <> struct is_proto_enum< ::Message::KeyState> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Message::KeyState>() {
+  return ::Message::KeyState_descriptor();
+}
+
+}  // namespace protobuf
+}  // namespace google
 
 // @@protoc_insertion_point(global_scope)
 

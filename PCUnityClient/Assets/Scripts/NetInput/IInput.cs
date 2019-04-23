@@ -4,12 +4,12 @@ namespace NetInput
 {
     public interface IInput
     {
-        bool GetKeyDown(InputKeyCode key);
-        bool GetKey(InputKeyCode key);
-        float GetAxis(InputKeyCode key);
-        Vector2 GetAxis2D(InputKeyCode key);
-        Vector3 GetAxis3D(InputKeyCode key);
-        Vector4 GetAxis4D(InputKeyCode key);
+        bool GetKeyDown(InputKeyType key);
+        bool GetKey(InputKeyType key);
+        float GetAxis(InputKeyType key);
+        Vector2 GetAxis2D(InputKeyType key);
+        Vector3 GetAxis3D(InputKeyType key);
+        Vector4 GetAxis4D(InputKeyType key);
         void Update(float deltaTime);
     }
 
@@ -29,7 +29,7 @@ namespace NetInput
                     {
                         if (_input == null)
                         {
-                            _input = new TempInput();
+                            _input = new SInput();
                         }
                     }
                 }

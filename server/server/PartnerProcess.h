@@ -13,7 +13,7 @@ public:
 
     void ExchangeData();
 
-    DataBuffer ParseWebInfo();
+    bool ParseWebInfo(DataBuffer& parseBuffer);
 
     bool IsPair();
 private:

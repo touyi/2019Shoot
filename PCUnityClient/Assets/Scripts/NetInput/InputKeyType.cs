@@ -1,9 +1,10 @@
 ﻿namespace NetInput
 {
-    public enum InputKeyCode
+    public enum InputKeyType
     {
         DirVector,
         Fire,
+        Change,
         Count,
     }
 }

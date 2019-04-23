@@ -1,58 +1,75 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using Tools;
+using UnityEngine;
 
 namespace NetInput
 {
     public class SInput : IInput
     {
-        enum KeyState
+        public enum KeyState
         {
             Down,
             KeepDown,
             Up,
             KeepUp,
         }
-        private KeyState[] isKeyDown;
+        private KeyState[] _keyState;
         public SInput()
         {
-            isKeyDown = new KeyState[(int)InputKeyCode.Count];
-            for (int i = 0; i < isKeyDown.Length; i++)
+            _keyState = new KeyState[(int)InputKeyType.Count];
+            for (int i = 0; i < _keyState.Length; i++)
             {
-                isKeyDown[i] = KeyState.KeepUp;
+                _keyState[i] = KeyState.KeepUp;
             }
         }
-        public bool GetKeyDown(InputKeyCode key)
+        public bool GetKeyDown(InputKeyType key)
         {
             throw new System.NotImplementedException();
         }
 
-        public bool GetKey(InputKeyCode key)
+        public bool GetKey(InputKeyType key)
+        {
+            if (this._keyState[(int) key] == KeyState.Down)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public float GetAxis(InputKeyType key)
         {
             throw new System.NotImplementedException();
         }
 
-        public float GetAxis(InputKeyCode key)
+        public Vector2 GetAxis2D(InputKeyType key)
         {
             throw new System.NotImplementedException();
         }
 
-        public Vector2 GetAxis2D(InputKeyCode key)
+        public Vector3 GetAxis3D(InputKeyType key)
+        {
+            return Vector3.forward;
+        }
+
+        public Vector4 GetAxis4D(InputKeyType key)
         {
             throw new System.NotImplementedException();
         }
 
-        public Vector3 GetAxis3D(InputKeyCode key)
+        private List<InputKeyType> _keyTypes = new List<InputKeyType>()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public Vector4 GetAxis4D(InputKeyCode key)
-        {
-            throw new System.NotImplementedException();
-        }
-
+            InputKeyType.Change, 
+            InputKeyType.Fire
+        };
         public void Update(float deltaTime)
         {
-            // Next
+            for (int i = 0; i < this._keyTypes.Count; i++)
+            {
+                InputKeyType type = this._keyTypes[i];
+                this._keyState[(int) type] = ProtocolHelper.GetKeyState(type);
+            }
+            
         }
     }
 }

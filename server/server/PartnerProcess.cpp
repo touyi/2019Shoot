@@ -1,6 +1,7 @@
 #include "PartnerProcess.h"
 #include "protocol/Protocol.pb.h"
 #include "protocolnumber.h"
+#include<map>
 
 PartnerProcess::PartnerProcess()
 {
@@ -33,22 +34,41 @@ CClient * PartnerProcess::GetMobile()
     return Mobile;
 }
 
-DataBuffer PartnerProcess::ParseWebInfo()
+bool PartnerProcess::ParseWebInfo(DataBuffer& parseBuffer)
 {
-
-    Message::KeyChange keychange;
+    using namespace Message;
+    KeyChange keychange;
+    using std::map;
+    using std::pair;
+    map<KeyType, KeyState> keyMap;
     while (!Mobile->isEmpty()) {
         // TODO web暂时不用pb
         DataBuffer* buffer = Mobile->PopNextData();
         if (strcmp(buffer->buffer, "F#") == 0) {
-            auto keydata = keychange.add_keydatas();
-            keydata->set_key(0);
-            keydata->set_keystate(1);
+            keyMap[KeyType::Fire] = KeyState::Click;
         }
+        if (strcmp(buffer->buffer, "C#") == 0) {
+            keyMap[KeyType::Change] = KeyState::Click;
+        }
+        delete buffer;
     }
-
-    // NEXT TODO 解析为最终数据包
-    return DataBuffer();
+    if (keyMap.size() <= 0) {
+        return false;
+    }
+    for (map<KeyType, KeyState>::iterator iter = keyMap.begin(); iter != keyMap.end(); iter++) {
+        KeyData* data = keychange.add_keydatas();
+        data->set_key(iter->first);
+        data->set_keystate(iter->second);
+    }
+    int size = keychange.ByteSize();
+    if (size <= 0) {
+        return false;
+    }
+    
+    parseBuffer.Package.head.proto = 1;
+    parseBuffer.Package.head.Length = size + sizeof(parseBuffer.Package.head);
+    keychange.SerializeToArray(parseBuffer.Package.datas, size);
+    return true;
 }
 
 void PartnerProcess::ExchangeData()
@@ -56,8 +76,11 @@ void PartnerProcess::ExchangeData()
     if (!IsPair()) {
         return;
     }
-    DataBuffer parseBuffer = this->ParseWebInfo();
-    Screen->SerFrameSend(parseBuffer);
+    DataBuffer parseBuffer;
+    if (this->ParseWebInfo(parseBuffer)) {
+        Screen->SerFrameSend(parseBuffer);
+    }
+    
 }
 
 bool PartnerProcess::IsPair()
