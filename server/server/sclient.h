@@ -35,6 +35,10 @@ public:
     BOOL IsConning(void) {					//是否连接存在
         return m_bConning;
     }
+
+    BOOL IsCanClean() {
+        // NEXT TODO
+    }
     void DisConning(void) {					//断开与客户端的连接
         m_bConning = FALSE;
     }

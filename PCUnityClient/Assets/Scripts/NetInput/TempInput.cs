@@ -64,6 +64,10 @@ namespace NetInput
             throw new System.NotImplementedException();
         }
 
+        public void Init()
+        {
+        }
+
         public void Update(float deltaTime)
         {
             float x = Input.GetAxis("Mouse X") * deltaTime;

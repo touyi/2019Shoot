@@ -1,5 +1,6 @@
 ﻿
 using GamePlay;
+using MessageSystem;
 using NetInput;
 using Protocol;
 using UnityEngine;
@@ -28,6 +29,8 @@ public class GameMain : MonoBehaviour
     {
         //_mainFsmStarter.Init();
         ClientSocket.Instance.Init();
+        NetMessage.Instance.Init();
+        CurrentInput.CurInput.Init();
         // TODO 异步加载
         this._currentGamePlay = GamePlayBuilder.BuildNormalGamePlay();
         this._currentGamePlay.Init();
@@ -57,8 +60,8 @@ public class GameMain : MonoBehaviour
     {
         float deltaTime = Time.time - lastFrameTime;
         lastFrameTime = Time.time;
-        ClientSocket.Instance.Update(deltaTime);
         CurrentInput.CurInput.Update(deltaTime);
+        ClientSocket.Instance.Update(deltaTime);
         Tools.Timer.Instance.Update(deltaTime);
         if (CurrentGamePlay != null && CurrentGamePlay.IsRunning)
         {

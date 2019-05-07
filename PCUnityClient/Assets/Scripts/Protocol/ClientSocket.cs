@@ -3,13 +3,14 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using Message;
+using MessageSystem;
 using NetInput;
 using UnityEngine;
 using Wrapper;
 
 namespace Protocol
 {
-public unsafe class ClientSocket : Singleton<ClientSocket> , SocketInputProvide
+public class ClientSocket : Singleton<ClientSocket> 
     {
         public const int BYTE_LENGTH = 60;
         private ClientWarp _warp = null;
@@ -34,10 +35,6 @@ public unsafe class ClientSocket : Singleton<ClientSocket> , SocketInputProvide
         }
         public void Update(float deltaTime)
         {
-            for (int i = 0; i < this._keyStates.Length; i++)
-            {
-                this._keyStates[i] = KeyState.Up;
-            }
             if (!this._warp.IsConnected())
             {
                 if (isConnect)
@@ -63,18 +60,19 @@ public unsafe class ClientSocket : Singleton<ClientSocket> , SocketInputProvide
             try
             {
                 Marshal.Copy(item.GetBuffer(), memBytes, 0, item.bufferLength);
-                // TODO 重用stream 防止GC  BYTE_LENGTH应该在协议中带 这里临时使用
+                // TODO 重用stream 防止GC
                 using (MemoryStream stream = new MemoryStream(memBytes, 0, item.bufferLength)) 
                 {
                     KeyChange change = ProtoBuf.Serializer.Deserialize<KeyChange>(stream);
-                    for (int i = 0; i < change.keyDatas.Count; i++)
-                    {
-                        Debug.Log(string.Format("key:{0}, keyState:{1}", change.keyDatas[i].key,
-                            change.keyDatas[i].keyState));
+                    NetMessage.Instance.LaunchNetMessage((EProtocol) item.protocol, change);
+//                    for (int i = 0; i < change.keyDatas.Count; i++)
+//                    {
+//                        Debug.Log(string.Format("key:{0}, keyState:{1}", change.keyDatas[i].key,
+//                            change.keyDatas[i].keyState));
+//
+//                        this._keyStates[(int) change.keyDatas[i].key] = change.keyDatas[i].keyState;
+//                    }
 
-                        this._keyStates[(int) change.keyDatas[i].key] = change.keyDatas[i].keyState;
-                    }
-                    
                 }
             }
             catch (Exception ex)
@@ -85,15 +83,22 @@ public unsafe class ClientSocket : Singleton<ClientSocket> , SocketInputProvide
 
         #region 按键数据
 
-        private KeyState[] _keyStates = new KeyState[(int)KeyType.TypeCount];
-        /// <summary>
-        /// 按键状态
-        /// </summary>
-        public KeyState GetKeyState(KeyType type)
-        {
-            return _keyStates[(int) type];
-        }
-        
+//        private KeyState[] _keyStates = new KeyState[(int)KeyType.TypeCount];
+//        /// <summary>
+//        /// 按键状态
+//        /// </summary>
+//        public KeyState GetKeyState(KeyType type)
+//        {
+//            return _keyStates[(int) type];
+//        }
+//
+//        private void InitKeyState()
+//        {
+//            for (int i = 0; i < this._keyStates.Length; i++)
+//            {
+//                this._keyStates[i] = KeyState.Up;
+//            }
+//        }
 
         #endregion
         

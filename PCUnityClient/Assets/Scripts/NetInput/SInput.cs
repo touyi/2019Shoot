@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using Message;
+using MessageSystem;
+using Protocol;
 using Tools;
 using UnityEngine;
 
@@ -13,6 +16,11 @@ namespace NetInput
             Up,
             KeepUp,
         }
+        private List<InputKeyType> _keyTypes = new List<InputKeyType>()
+        {
+            InputKeyType.Change, 
+            InputKeyType.Fire
+        };
         private KeyState[] _keyState;
         public SInput()
         {
@@ -24,12 +32,18 @@ namespace NetInput
         }
         public bool GetKeyDown(InputKeyType key)
         {
-            throw new System.NotImplementedException();
+            if (this._keyState[(int) key] == KeyState.Down)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public bool GetKey(InputKeyType key)
         {
-            if (this._keyState[(int) key] == KeyState.Down)
+            Debug.Log(this._keyState[(int) key]);
+            if (this._keyState[(int) key] == KeyState.KeepDown)
             {
                 return true;
             }
@@ -57,19 +71,51 @@ namespace NetInput
             throw new System.NotImplementedException();
         }
 
-        private List<InputKeyType> _keyTypes = new List<InputKeyType>()
+        public void Init()
         {
-            InputKeyType.Change, 
-            InputKeyType.Fire
-        };
+            NetMessage.Instance.RegistNetListener(EProtocol.KeyChange , this.KeyChangeNetMessage);
+        }
+
+        private void KeyChangeNetMessage(EventParam param)
+        {
+            if (param.type != EProtocol.KeyChange)
+            {
+                return;
+            }
+
+            KeyChange change = param.message as KeyChange;
+            if (change == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < change.keyDatas.Count; i++)
+            {
+                InputKeyType ukeyType = ProtocolHelper.TransitionKeyTypeU(change.keyDatas[i].key);
+                KeyState uKeyState = ProtocolHelper.TransitionKeyState(change.keyDatas[i].keyState);
+                this._keyState[(int) ukeyType] = uKeyState;
+            }
+        }
+
+        
         public void Update(float deltaTime)
         {
-            for (int i = 0; i < this._keyTypes.Count; i++)
+//            for (int i = 0; i < this._keyTypes.Count; i++)
+//            {
+//                InputKeyType type = this._keyTypes[i];
+//                this._keyState[(int) type] = ProtocolHelper.GetKeyState(type);
+//            }
+            for (int i = 0; i < this._keyState.Length; i++)
             {
-                InputKeyType type = this._keyTypes[i];
-                this._keyState[(int) type] = ProtocolHelper.GetKeyState(type);
+                if (this._keyState[i] == KeyState.Down)
+                {
+                    this._keyState[i] = KeyState.KeepUp;
+                }
+                else if (this._keyState[i] == KeyState.Up)
+                {
+                    this._keyState[i] = KeyState.KeepUp;
+                }
             }
-            
         }
     }
 }

@@ -47,7 +47,6 @@
           </e>
           <e p="UI" t="Include">
             <e p="encode" t="Include">
-              <e p="BarcodeCam.cs" t="Include" />
               <e p="EncodedControl.cs" t="Include" />
             </e>
             <e p="EndScoreControl.cs" t="Include" />
@@ -178,10 +177,16 @@
             <e p="ActorManager.cs" t="Include" />
             <e p="IActor.cs" t="Include" />
           </e>
+          <e p="Command" t="Include">
+            <e p="CommandSystem.cs" t="Include" />
+          </e>
           <e p="GamePlayBuilder.cs" t="Include" />
           <e p="IGamePlay.cs" t="Include" />
           <e p="LevelManager.cs" t="Include" />
           <e p="NormalGamePlay.cs" t="Include" />
+        </e>
+        <e p="MessageSystem" t="Include">
+          <e p="NetMessage.cs" t="Include" />
         </e>
         <e p="Net" t="Include">
           <e p="ClientDLL.cs" t="Include" />
@@ -195,11 +200,15 @@
           <e p="SInput.cs" t="Include" />
           <e p="TempInput.cs" t="Include" />
         </e>
+        <e p="Plugins" t="Include">
+          <e p="BarcodeCam.cs" t="Include" />
+        </e>
         <e p="Protocol" t="Include">
           <e p="ClientSocket.cs" t="Include" />
           <e p="GenProtocol" t="Include">
             <e p="Protocol.cs" t="Include" />
           </e>
+          <e p="ProtocolNumberDefine.cs" t="Include" />
           <e p="SocketInputProvide.cs" t="Include" />
         </e>
         <e p="SwiftFSM" t="Include">

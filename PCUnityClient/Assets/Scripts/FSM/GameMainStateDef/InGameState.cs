@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using GamePlay;
 using GamePlay.Actor;
+using GamePlay.Command;
+using NetInput;
 using UnityEngine;
 
 namespace FSM.GameMainStateDef
@@ -8,6 +10,7 @@ namespace FSM.GameMainStateDef
     // TODO
     public class InGameState : BaseState
     {
+        private bool lastFireState = false;
         public void Enter()
         {
             // TODO 初始化玩家
@@ -28,6 +31,21 @@ namespace FSM.GameMainStateDef
 
         public void Execute()
         {
+            bool isFire = CurrentInput.CurInput.GetKey(InputKeyType.Fire);
+            if (isFire && (lastFireState != isFire))
+            {
+                InputCmd cmd = InputCmd.Get();
+                cmd.Action_Type = InputCmd.ActionType.Fire;
+                GameMain.Instance.CurrentGamePlay.ActorManager.AcceptCmd(cmd);
+                cmd.Release();
+            }
+            else if (!isFire && lastFireState != isFire)
+            {
+                InputCmd cmd = InputCmd.Get();
+                cmd.Action_Type = InputCmd.ActionType.StopFire;
+                GameMain.Instance.CurrentGamePlay.ActorManager.AcceptCmd(cmd);
+            }
+            lastFireState = isFire;
         }
 
         public void Exit()

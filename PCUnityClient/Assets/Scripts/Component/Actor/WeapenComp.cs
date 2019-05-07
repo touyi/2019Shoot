@@ -2,12 +2,13 @@
 using assets;
 using Component.Widget;
 using GamePlay.Actor;
+using GamePlay.Command;
 using NetInput;
 using UnityEngine;
 
 namespace Component.Actor
 {
-    public class WeapenComp : ActorBaseComponent
+    public class WeapenComp : ActorBaseComponent, IAcceptCommand
     {
         private IGun _currentGun = null;
         private List<IGun> _guns = new List<IGun>();
@@ -24,6 +25,7 @@ namespace Component.Actor
             this._guns.Add(gun);
             gun.Enable = true;
             this._currentGun = gun;
+            gun.StopFire();
         }
 
         public override void Start()
@@ -36,14 +38,39 @@ namespace Component.Actor
             {
                 return;
             }
-            if (NetInput.CurrentInput.CurInput.GetKey(InputKeyType.Fire))
+//            if (NetInput.CurrentInput.CurInput.GetKey(InputKeyType.Fire))
+//            {
+//                this._currentGun.Fire();
+//            }
+//            else
+//            {
+//                this._currentGun.StopFire();
+//            }
+        }
+
+        public void AcceptCmd(IBaseCommand cmd)
+        {
+            if (cmd.CmdType != CmdType.InputCmd)
             {
-                this._currentGun.Fire();
+                return;
             }
-            else
+            InputCmd icmd = cmd as InputCmd;
+            if (icmd == null)
             {
-                this._currentGun.StopFire();
+                return;
             }
+
+            switch (icmd.Action_Type)
+            {
+                    case InputCmd.ActionType.Fire:
+                        this._currentGun.Fire();
+                        break;
+                    case InputCmd.ActionType.StopFire:
+                        this._currentGun.StopFire();
+                        break;
+            }
+
+            icmd.IsUse = true;
         }
     }
 

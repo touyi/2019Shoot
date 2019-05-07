@@ -18,7 +18,7 @@ var distanceY = 0;
 var distanceZ = 0;
 var websocket = null;
 var ipstirng;
-getIp("127.0.0.1:7000");
+getIp("192.168.31.183:7000");
 var Terminal = navigator.userAgent;
 var MobileTerminal;
 if (Terminal.indexOf('Android') > -1 || Terminal.indexOf('Adr') > -1) {
@@ -153,7 +153,7 @@ window.onload = function() {
 		else initLand();
 	}
 	changeWeapon.ontouchstart = function() {
-		websocket.send("C#");
+		websocket.send("C1#");
 		changeWeapon.style.backgroundColor = "#8E8986";
 		changeWeapon.style.opacity = 0.5;
 	};
@@ -162,28 +162,31 @@ window.onload = function() {
 		changeWeapon.style.opacity = 0.5;
 	};
 	changeWeapon.ontouchend = function() {
+		websocket.send("C0#");
 		changeWeapon.style.backgroundColor = "greenyellow";
 		changeWeapon.style.opacity = 0.9;
 	};
 	shootGame.ontouchstart = function() {
+		websocket.send("F1#");
 		shootGame.style.backgroundColor = "#8E8986";
 		shootGame.style.opacity = 0.5;
-		if(intervalTime!=null){
-			clearInterval(intervalTime);
-		}
-		intervalTime = setInterval(function() {
-			websocket.send("F#");
-			console.log("F#");
-		}, 60)
+		// if(intervalTime!=null){
+		// 	clearInterval(intervalTime);
+		// }
+		// intervalTime = setInterval(function() {
+		// 	websocket.send("F#");
+		// 	console.log("F#");
+		// }, 60)
 	};
 	shootGame.ontouchmove = function() {
 		shootGame.style.backgroundColor = "greenyellow";
 		shootGame.style.opacity = 0.5;
 	};
 	shootGame.ontouchend = function() {
+		websocket.send("F0#");
 		shootGame.style.backgroundColor = "greenyellow";
-		clearInterval(intervalTime);
-		intervalTime = null;
+		// clearInterval(intervalTime);
+		// intervalTime = null;
 		shootGame.style.opacity = 1;
 	};
 }

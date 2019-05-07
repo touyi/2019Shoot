@@ -10,6 +10,7 @@ namespace NetInput
         Vector2 GetAxis2D(InputKeyType key);
         Vector3 GetAxis3D(InputKeyType key);
         Vector4 GetAxis4D(InputKeyType key);
+        void Init();
         void Update(float deltaTime);
     }
 

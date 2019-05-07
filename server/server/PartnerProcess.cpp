@@ -42,13 +42,30 @@ bool PartnerProcess::ParseWebInfo(DataBuffer& parseBuffer)
     using std::pair;
     map<KeyType, KeyState> keyMap;
     while (!Mobile->isEmpty()) {
-        // TODO web暂时不用pb
+        // TODO 这里的解析可以再优化一哈
         DataBuffer* buffer = Mobile->PopNextData();
-        if (strcmp(buffer->buffer, "F#") == 0) {
-            keyMap[KeyType::Fire] = KeyState::Click;
+        if (strcmp(buffer->buffer, "F1#") == 0) {
+            keyMap[KeyType::Fire] = KeyState::Down;
         }
-        if (strcmp(buffer->buffer, "C#") == 0) {
-            keyMap[KeyType::Change] = KeyState::Click;
+        if (strcmp(buffer->buffer, "F0#") == 0) {
+            if (keyMap.find(KeyType::Fire) != keyMap.end()) {
+                keyMap[KeyType::Fire] = KeyState::Click;
+            }
+            else {
+                keyMap[KeyType::Fire] = KeyState::Up;
+            }
+                
+        }
+        if (strcmp(buffer->buffer, "C1#") == 0) {
+            keyMap[KeyType::Change] = KeyState::Down;
+        }
+        if (strcmp(buffer->buffer, "C0#") == 0) {
+            if (keyMap.find(KeyType::Change) != keyMap.end()) {
+                keyMap[KeyType::Change] = KeyState::Click;
+            }
+            else {
+                keyMap[KeyType::Change] = KeyState::Up;
+            }
         }
         delete buffer;
     }

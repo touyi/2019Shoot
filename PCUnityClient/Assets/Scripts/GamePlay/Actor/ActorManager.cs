@@ -2,6 +2,7 @@
 using assets;
 using Component;
 using Component.Actor;
+using GamePlay.Command;
 using Tools;
 using UnityEngine;
 using Wrapper;
@@ -13,7 +14,7 @@ namespace GamePlay.Actor
         public ActorType type;
         public Vector3 BornWorldPos;
     }
-    public class ActorManager : IProcess
+    public class ActorManager : IProcess, IAcceptCommand
     {
         // TODO
         List<Actor> _actors = new List<Actor>();
@@ -94,6 +95,19 @@ namespace GamePlay.Actor
             actor.Init();
             actor.Start();
             return actor;
+        }
+
+        public void AcceptCmd(IBaseCommand cmd)
+        {
+            if (cmd.IsUse) return;
+            for (int i = 0; i < this._actors.Count; i++)
+            {
+                this._actors[i].AcceptCmd(cmd);
+                if (cmd.IsUse)
+                {
+                    break;
+                }
+            }
         }
     }
 }
