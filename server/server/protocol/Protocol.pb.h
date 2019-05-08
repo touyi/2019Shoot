@@ -42,7 +42,7 @@ struct TableStruct_Protocol_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::google::protobuf::internal::ParseTable schema[2]
+  static const ::google::protobuf::internal::ParseTable schema[4]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
@@ -50,6 +50,12 @@ struct TableStruct_Protocol_2eproto {
 };
 void AddDescriptors_Protocol_2eproto();
 namespace Message {
+class Command;
+class CommandDefaultTypeInternal;
+extern CommandDefaultTypeInternal _Command_default_instance_;
+class CommandList;
+class CommandListDefaultTypeInternal;
+extern CommandListDefaultTypeInternal _CommandList_default_instance_;
 class KeyChange;
 class KeyChangeDefaultTypeInternal;
 extern KeyChangeDefaultTypeInternal _KeyChange_default_instance_;
@@ -59,6 +65,8 @@ extern KeyDataDefaultTypeInternal _KeyData_default_instance_;
 }  // namespace Message
 namespace google {
 namespace protobuf {
+template<> ::Message::Command* Arena::CreateMaybeMessage<::Message::Command>(Arena*);
+template<> ::Message::CommandList* Arena::CreateMaybeMessage<::Message::CommandList>(Arena*);
 template<> ::Message::KeyChange* Arena::CreateMaybeMessage<::Message::KeyChange>(Arena*);
 template<> ::Message::KeyData* Arena::CreateMaybeMessage<::Message::KeyData>(Arena*);
 }  // namespace protobuf
@@ -105,6 +113,27 @@ inline bool KeyState_Parse(
     const ::std::string& name, KeyState* value) {
   return ::google::protobuf::internal::ParseNamedEnum<KeyState>(
     KeyState_descriptor(), name, value);
+}
+enum CmdType {
+  UserIn = 0,
+  UserOut = 1,
+  GameEnd = 2,
+  GameBegin = 3
+};
+bool CmdType_IsValid(int value);
+const CmdType CmdType_MIN = UserIn;
+const CmdType CmdType_MAX = GameBegin;
+const int CmdType_ARRAYSIZE = CmdType_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* CmdType_descriptor();
+inline const ::std::string& CmdType_Name(CmdType value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    CmdType_descriptor(), value);
+}
+inline bool CmdType_Parse(
+    const ::std::string& name, CmdType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<CmdType>(
+    CmdType_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -364,6 +393,253 @@ class KeyChange final :
   ::google::protobuf::RepeatedPtrField< ::Message::KeyData > keydatas_;
   friend struct ::TableStruct_Protocol_2eproto;
 };
+// -------------------------------------------------------------------
+
+class Command final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Message.Command) */ {
+ public:
+  Command();
+  virtual ~Command();
+
+  Command(const Command& from);
+
+  inline Command& operator=(const Command& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  Command(Command&& from) noexcept
+    : Command() {
+    *this = ::std::move(from);
+  }
+
+  inline Command& operator=(Command&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return default_instance().GetDescriptor();
+  }
+  static const Command& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const Command* internal_default_instance() {
+    return reinterpret_cast<const Command*>(
+               &_Command_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  void Swap(Command* other);
+  friend void swap(Command& a, Command& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline Command* New() const final {
+    return CreateMaybeMessage<Command>(nullptr);
+  }
+
+  Command* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<Command>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const Command& from);
+  void MergeFrom(const Command& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  static const char* _InternalParse(const char* begin, const char* end, void* object, ::google::protobuf::internal::ParseContext* ctx);
+  ::google::protobuf::internal::ParseFunc _ParseFunc() const final { return _InternalParse; }
+  #else
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Command* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required .Message.CmdType ctype = 1;
+  bool has_ctype() const;
+  void clear_ctype();
+  static const int kCtypeFieldNumber = 1;
+  ::Message::CmdType ctype() const;
+  void set_ctype(::Message::CmdType value);
+
+  // @@protoc_insertion_point(class_scope:Message.Command)
+ private:
+  class HasBitSetters;
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  int ctype_;
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
+class CommandList final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Message.CommandList) */ {
+ public:
+  CommandList();
+  virtual ~CommandList();
+
+  CommandList(const CommandList& from);
+
+  inline CommandList& operator=(const CommandList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  CommandList(CommandList&& from) noexcept
+    : CommandList() {
+    *this = ::std::move(from);
+  }
+
+  inline CommandList& operator=(CommandList&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return default_instance().GetDescriptor();
+  }
+  static const CommandList& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const CommandList* internal_default_instance() {
+    return reinterpret_cast<const CommandList*>(
+               &_CommandList_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  void Swap(CommandList* other);
+  friend void swap(CommandList& a, CommandList& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline CommandList* New() const final {
+    return CreateMaybeMessage<CommandList>(nullptr);
+  }
+
+  CommandList* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<CommandList>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const CommandList& from);
+  void MergeFrom(const CommandList& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  static const char* _InternalParse(const char* begin, const char* end, void* object, ::google::protobuf::internal::ParseContext* ctx);
+  ::google::protobuf::internal::ParseFunc _ParseFunc() const final { return _InternalParse; }
+  #else
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CommandList* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .Message.Command commandDatas = 1;
+  int commanddatas_size() const;
+  void clear_commanddatas();
+  static const int kCommandDatasFieldNumber = 1;
+  ::Message::Command* mutable_commanddatas(int index);
+  ::google::protobuf::RepeatedPtrField< ::Message::Command >*
+      mutable_commanddatas();
+  const ::Message::Command& commanddatas(int index) const;
+  ::Message::Command* add_commanddatas();
+  const ::google::protobuf::RepeatedPtrField< ::Message::Command >&
+      commanddatas() const;
+
+  // @@protoc_insertion_point(class_scope:Message.CommandList)
+ private:
+  class HasBitSetters;
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::Message::Command > commanddatas_;
+  friend struct ::TableStruct_Protocol_2eproto;
+};
 // ===================================================================
 
 
@@ -447,9 +723,70 @@ KeyChange::keydatas() const {
   return keydatas_;
 }
 
+// -------------------------------------------------------------------
+
+// Command
+
+// required .Message.CmdType ctype = 1;
+inline bool Command::has_ctype() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void Command::clear_ctype() {
+  ctype_ = 0;
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline ::Message::CmdType Command::ctype() const {
+  // @@protoc_insertion_point(field_get:Message.Command.ctype)
+  return static_cast< ::Message::CmdType >(ctype_);
+}
+inline void Command::set_ctype(::Message::CmdType value) {
+  assert(::Message::CmdType_IsValid(value));
+  _has_bits_[0] |= 0x00000001u;
+  ctype_ = value;
+  // @@protoc_insertion_point(field_set:Message.Command.ctype)
+}
+
+// -------------------------------------------------------------------
+
+// CommandList
+
+// repeated .Message.Command commandDatas = 1;
+inline int CommandList::commanddatas_size() const {
+  return commanddatas_.size();
+}
+inline void CommandList::clear_commanddatas() {
+  commanddatas_.Clear();
+}
+inline ::Message::Command* CommandList::mutable_commanddatas(int index) {
+  // @@protoc_insertion_point(field_mutable:Message.CommandList.commandDatas)
+  return commanddatas_.Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField< ::Message::Command >*
+CommandList::mutable_commanddatas() {
+  // @@protoc_insertion_point(field_mutable_list:Message.CommandList.commandDatas)
+  return &commanddatas_;
+}
+inline const ::Message::Command& CommandList::commanddatas(int index) const {
+  // @@protoc_insertion_point(field_get:Message.CommandList.commandDatas)
+  return commanddatas_.Get(index);
+}
+inline ::Message::Command* CommandList::add_commanddatas() {
+  // @@protoc_insertion_point(field_add:Message.CommandList.commandDatas)
+  return commanddatas_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Message::Command >&
+CommandList::commanddatas() const {
+  // @@protoc_insertion_point(field_list:Message.CommandList.commandDatas)
+  return commanddatas_;
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 
@@ -469,6 +806,11 @@ template <> struct is_proto_enum< ::Message::KeyState> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::Message::KeyState>() {
   return ::Message::KeyState_descriptor();
+}
+template <> struct is_proto_enum< ::Message::CmdType> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Message::CmdType>() {
+  return ::Message::CmdType_descriptor();
 }
 
 }  // namespace protobuf

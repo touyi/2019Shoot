@@ -20,6 +20,7 @@ namespace GamePlay.Actor
         List<Actor> _actors = new List<Actor>();
 
         private Actor localPlayer = null;
+        private Actor uiRootActor = null;
         
         public Actor LocalPlayer
         {
@@ -43,10 +44,16 @@ namespace GamePlay.Actor
                         break;
                     case ActorType.Enemy:
                         break;
+                    case ActorType.UI:
+                        actor = this.BuildUIActor(buildData);
+                        this.uiRootActor = actor;
+                        break;
             }
 
             if (actor != null)
             {
+                actor.Init();
+                actor.Start();
                 this._actors.Add(actor);
             }
 
@@ -92,13 +99,31 @@ namespace GamePlay.Actor
             // TODO组装
             actor.InsertActorComponent(ActorComponentType.PlayerBehaviorComponent, new LocalPlayerBehaviorComp(actor));
             actor.InsertActorComponent(ActorComponentType.WeapenComponent, new WeapenComp(actor));
-            actor.Init();
-            actor.Start();
+            return actor;
+        }
+
+        private Actor BuildUIActor(ActorBuildData data)
+        {
+            // TODO next
+            Actor actor = new Actor();
+            actor.InsertActorComponent(ActorComponentType.UIRootComponent, new UIRootComp(actor));
             return actor;
         }
 
         public void AcceptCmd(IBaseCommand cmd)
         {
+            if (cmd.CmdType == CmdType.UIRootCmd)
+            {
+                UICmd uicmd = cmd as UICmd;
+                if (uicmd != null && uicmd.UiType == UICmd.UIType.Root && this.uiRootActor == null)
+                {
+                    var data = ActorBuildData.Get();
+                    data.type = ActorType.UI;
+                    data.BornWorldPos = Vector3.zero;
+                    this.CreateActor(data);
+                    data.Release();
+                }
+            }
             if (cmd.IsUse) return;
             for (int i = 0; i < this._actors.Count; i++)
             {

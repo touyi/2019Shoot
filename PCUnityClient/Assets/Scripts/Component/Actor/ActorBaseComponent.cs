@@ -10,6 +10,7 @@ namespace Component.Actor
         WeapenComponent,
         AttackComponent,
         ActorGameObjectComponent,
+        UIRootComponent,
     }
     public class ActorBaseComponent : IBaseComponent
     {

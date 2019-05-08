@@ -19,3 +19,16 @@ message KeyData {
 message KeyChange {
     repeated KeyData keyDatas = 1;
 }
+enum CmdType{
+	UserIn = 0;
+	UserOut = 1;
+	GameEnd = 2;
+	GameBegin = 3;
+}
+message Command{
+	required CmdType ctype = 1;
+}
+
+message CommandList{
+	repeated Command commandDatas = 1;
+}

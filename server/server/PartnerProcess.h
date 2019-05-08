@@ -13,7 +13,7 @@ public:
 
     void ExchangeData();
 
-    bool ParseWebInfo(DataBuffer& parseBuffer);
+    bool ParseWebInfo(std::vector<DataBuffer>& parseBuffer);
 
     bool IsPair();
 private:

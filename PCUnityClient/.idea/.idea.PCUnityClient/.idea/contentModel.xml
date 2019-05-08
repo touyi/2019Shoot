@@ -154,6 +154,7 @@
           <e p="Actor" t="Include">
             <e p="ActorBaseComponent.cs" t="Include" />
             <e p="LocalPlayerBehaviorComp.cs" t="Include" />
+            <e p="UIRootComp.cs" t="Include" />
             <e p="WeapenComp.cs" t="Include" />
           </e>
           <e p="BaseComponent.cs" t="Include" />

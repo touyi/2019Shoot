@@ -10,6 +10,7 @@ namespace GamePlay.Actor
     {
         LocalPlayer,
         Enemy,
+        UI,
     }
     
     public class Actor : IActor, IAcceptCommand

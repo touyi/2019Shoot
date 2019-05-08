@@ -23,6 +23,16 @@ namespace Tools
 
             return transform.GetComponent<T>();
         }
+        
+        public static T CustomGetComponent<T>(this Transform transform, string path) where T : class
+        {
+            if (transform == null)
+            {
+                return null;
+            }
+
+            return transform.Find(path).CustomGetComponent<T>();
+        }
 
         public static void CustomSetActive(this Transform transform, bool isActive)
         {

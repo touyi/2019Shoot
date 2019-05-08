@@ -51,6 +51,40 @@ namespace Message
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
   }
   
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"Command")]
+  public partial class Command : global::ProtoBuf.IExtensible
+  {
+    public Command() {}
+    
+    private Message.CmdType _ctype;
+    [global::ProtoBuf.ProtoMember(1, IsRequired = true, Name=@"ctype", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    public Message.CmdType ctype
+    {
+      get { return _ctype; }
+      set { _ctype = value; }
+    }
+    private global::ProtoBuf.IExtension extensionObject;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+      { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+  }
+  
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"CommandList")]
+  public partial class CommandList : global::ProtoBuf.IExtensible
+  {
+    public CommandList() {}
+    
+    private readonly global::System.Collections.Generic.List<Message.Command> _commandDatas = new global::System.Collections.Generic.List<Message.Command>();
+    [global::ProtoBuf.ProtoMember(1, Name=@"commandDatas", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    public global::System.Collections.Generic.List<Message.Command> commandDatas
+    {
+      get { return _commandDatas; }
+    }
+  
+    private global::ProtoBuf.IExtension extensionObject;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+      { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+  }
+  
     [global::ProtoBuf.ProtoContract(Name=@"KeyType")]
     public enum KeyType
     {
@@ -80,6 +114,23 @@ namespace Message
             
       [global::ProtoBuf.ProtoEnum(Name=@"StateCount", Value=3)]
       StateCount = 3
+    }
+  
+    [global::ProtoBuf.ProtoContract(Name=@"CmdType")]
+    public enum CmdType
+    {
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"UserIn", Value=0)]
+      UserIn = 0,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"UserOut", Value=1)]
+      UserOut = 1,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"GameEnd", Value=2)]
+      GameEnd = 2,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"GameBegin", Value=3)]
+      GameBegin = 3
     }
   
 }

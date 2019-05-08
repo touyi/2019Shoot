@@ -34,7 +34,7 @@ CClient * PartnerProcess::GetMobile()
     return Mobile;
 }
 
-bool PartnerProcess::ParseWebInfo(DataBuffer& parseBuffer)
+bool PartnerProcess::ParseWebInfo(std::vector<DataBuffer>& parseBufferVec)
 {
     using namespace Message;
     KeyChange keychange;
@@ -67,8 +67,13 @@ bool PartnerProcess::ParseWebInfo(DataBuffer& parseBuffer)
                 keyMap[KeyType::Change] = KeyState::Up;
             }
         }
+        if (strcmp(buffer->buffer, "E#") == 0) {
+            // TODO Next
+            
+        }
         delete buffer;
     }
+    parseBufferVec.clear();
     if (keyMap.size() <= 0) {
         return false;
     }
@@ -77,11 +82,13 @@ bool PartnerProcess::ParseWebInfo(DataBuffer& parseBuffer)
         data->set_key(iter->first);
         data->set_keystate(iter->second);
     }
+    
     int size = keychange.ByteSize();
     if (size <= 0) {
         return false;
     }
     
+    DataBuffer parseBuffer;
     parseBuffer.Package.head.proto = 1;
     parseBuffer.Package.head.Length = size + sizeof(parseBuffer.Package.head);
     keychange.SerializeToArray(parseBuffer.Package.datas, size);
@@ -93,9 +100,11 @@ void PartnerProcess::ExchangeData()
     if (!IsPair()) {
         return;
     }
-    DataBuffer parseBuffer;
+    std::vector<DataBuffer> parseBuffer;
     if (this->ParseWebInfo(parseBuffer)) {
-        Screen->SerFrameSend(parseBuffer);
+        for (int i = 0; i < parseBuffer.size(); i++) {
+            Screen->SerFrameSend(parseBuffer[i]);
+        }
     }
     
 }
@@ -104,3 +113,4 @@ bool PartnerProcess::IsPair()
 {
     return Mobile != NULL && Screen != NULL;
 }
+

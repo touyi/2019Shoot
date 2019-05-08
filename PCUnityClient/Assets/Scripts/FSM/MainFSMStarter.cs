@@ -12,7 +12,7 @@ namespace FSM
             this.RegisterGlobalState(new WaitScanState());
             this.RegisterGlobalState(new InGameState());
             // TODO 测试用 初始化为 InGameState
-            _mainFsm.Initialize(GameMainState.InGame);
+            _mainFsm.Initialize(GameMainState.WaitScan);
             
         }
 

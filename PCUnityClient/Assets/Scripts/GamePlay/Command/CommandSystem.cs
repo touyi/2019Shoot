@@ -5,11 +5,12 @@ namespace GamePlay.Command
     public enum CmdType
     {
         InputCmd,
+        UIRootCmd,
     }
 
     public interface IBaseCommand
     {
-        CmdType CmdType { get; set; }
+        CmdType CmdType { get; }
         bool IsUse { get; set; }
     }
 
@@ -20,13 +21,47 @@ namespace GamePlay.Command
             Fire,
             StopFire,
         }
-        public CmdType CmdType { get; set; }
+
+        public CmdType CmdType
+        {
+            get { return CmdType.InputCmd; }
+        }
+
         public bool IsUse { get; set; }
         public ActionType Action_Type;
 
         protected override void Init()
         {
             IsUse = false;
+        }
+    }
+
+    public class UICmd : Poolable<UICmd>, IBaseCommand
+    {
+        public enum UIType
+        {
+            Root,
+        }
+        public enum UIState
+        {
+            Close,
+            Open,
+        }
+
+        public CmdType CmdType
+        {
+            get { return CmdType.UIRootCmd; }
+        }
+
+        public bool IsUse { get; set; }
+        public UIType UiType;
+        public UIState UiState;
+        public string Info;
+
+        protected override void Init()
+        {
+            IsUse = false;
+            Info = "";
         }
     }
 
