@@ -54,30 +54,38 @@ public class ClientSocket : Singleton<ClientSocket>
         }
 
         private byte[] memBytes = new byte[BYTE_LENGTH];
-        private unsafe void HandleData(DataItem item)
+        private void HandleData(DataItem item)
         {
             Debug.Log(string.Format("协议：{0} ",item.protocol));
             try
             {
                 Marshal.Copy(item.GetBuffer(), memBytes, 0, item.bufferLength);
-                // TODO 重用stream 防止GC
                 using (MemoryStream stream = new MemoryStream(memBytes, 0, item.bufferLength)) 
                 {
-                    KeyChange change = ProtoBuf.Serializer.Deserialize<KeyChange>(stream);
-                    NetMessage.Instance.LaunchNetMessage((EProtocol) item.protocol, change);
-//                    for (int i = 0; i < change.keyDatas.Count; i++)
-//                    {
-//                        Debug.Log(string.Format("key:{0}, keyState:{1}", change.keyDatas[i].key,
-//                            change.keyDatas[i].keyState));
-//
-//                        this._keyStates[(int) change.keyDatas[i].key] = change.keyDatas[i].keyState;
-//                    }
-
+                    //KeyChange change = ProtoBuf.Serializer.Deserialize<KeyChange>(stream);
+                    object msg = this.ParseBuffer(item.protocol, stream);
+                    NetMessage.Instance.LaunchNetMessage((EProtocol) item.protocol, msg);
                 }
             }
             catch (Exception ex)
             {
                 Debug.LogError(ex.Message);
+            }
+        }
+
+        private object ParseBuffer(int protocol, MemoryStream stream)
+        {
+            EProtocol ep = (EProtocol) protocol;
+            switch (ep)
+            {
+                case EProtocol.KeyChange:
+                    return ProtoBuf.Serializer.Deserialize<KeyChange>(stream);
+                    break;
+                case EProtocol.NetCmd:
+                    var pro = ProtoBuf.Serializer.Deserialize<CommandList>(stream);
+                    return pro;
+                    break;
+                default: return null;
             }
         }
 

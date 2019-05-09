@@ -2,8 +2,13 @@
 using GamePlay;
 using GamePlay.Actor;
 using GamePlay.Command;
+using Message;
+using MessageSystem;
 using NetInput;
+using Protocol;
 using UnityEngine;
+using Wrapper;
+using CmdType = Message.CmdType;
 
 namespace FSM.GameMainStateDef
 {
@@ -11,8 +16,12 @@ namespace FSM.GameMainStateDef
     public class InGameState : BaseState
     {
         private bool lastFireState = false;
+
+        private WeakRef<StateMachine<GameMainState, GameMainEvent>> _fsm =
+            new WeakRef<StateMachine<GameMainState, GameMainEvent>>();
         public void Enter()
         {
+            NetMessage.Instance.RegistNetListener(EProtocol.NetCmd, this.GameNetMessage);
             // TODO 初始化玩家
             NormalGamePlay gamePlay = GameMain.Instance.CurrentGamePlay as NormalGamePlay;
             if (gamePlay == null)
@@ -50,6 +59,7 @@ namespace FSM.GameMainStateDef
 
         public void Exit()
         {
+            NetMessage.Instance.RemoveNetListener(EProtocol.NetCmd, this.GameNetMessage);
         }
 
         public void RegistToFsm(StateMachine<GameMainState, GameMainEvent> fsm)
@@ -57,6 +67,26 @@ namespace FSM.GameMainStateDef
             fsm.In(GameMainState.InGame)
                 .On(GameMainEvent.End).GoTo(GameMainState.WaitScan)
                 .Attach(this);
+
+            this._fsm.Ref = fsm;
+        }
+
+        private void GameNetMessage(EventParam param)
+        {
+            if (param.type == EProtocol.NetCmd)
+            {
+                CommandList cmdList = param.message as CommandList;
+                for (int i = 0; i < cmdList.commandDatas.Count; i++)
+                {
+                    var cmd = cmdList.commandDatas[i];
+                    switch (cmd.ctype)
+                    {
+                        case CmdType.GameEnd:
+                            this._fsm.Ref.Fire(GameMainEvent.End);
+                            break;
+                    }
+                }
+            }
         }
     }
 }

@@ -23,12 +23,17 @@ namespace ThreadSafe {
         mutable std::condition_variable data_cond;
         using queue_type = std::queue<T>;
         queue_type data_queue;
+        bool isErase;
     public:
         using value_type = typename queue_type::value_type;
         using container_type = typename queue_type::container_type;
-        ThreadSafe_Queue() = default;
         ThreadSafe_Queue(const ThreadSafe_Queue&) = delete;
         ThreadSafe_Queue& operator=(const ThreadSafe_Queue&) = delete;
+        ThreadSafe_Queue() :isErase(false) {};
+        ~ThreadSafe_Queue() {
+            isErase = true;
+            data_cond.notify_all();
+        }
         /*
          * 使用迭代器为参数的构造函数,适用所有容器对象
          * */
@@ -56,8 +61,14 @@ namespace ThreadSafe {
          * 从队列中弹出一个元素,如果队列为空就阻塞
          * */
         value_type wait_and_pop() {
+            if (isErase) {
+                return value_type();
+            }
             std::unique_lock<std::mutex>lk(mut);
             data_cond.wait(lk, [this] {return !this->data_queue.empty(); });
+            if (isErase) {
+                return value_type();
+            }
             auto value = std::move(data_queue.front());
             data_queue.pop();
             return value;
@@ -77,6 +88,7 @@ namespace ThreadSafe {
          * 返回队列是否为空
          * */
         auto empty() const->decltype(data_queue.empty()) {
+            if (isErase)return true;
             std::lock_guard<std::mutex>lk(mut);
             return data_queue.empty();
         }

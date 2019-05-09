@@ -36,6 +36,13 @@ CClient::CClient(const SOCKET sClient, const sockaddr_in &addrClient)
  */
 CClient::~CClient()
 {
+    if (m_hThreadRecv != NULL) {
+        TerminateThread(m_hThreadRecv, 0);
+    }
+    if (m_hThreadSend != NULL) {
+        TerminateThread(m_hThreadSend, 0);
+    }
+    
 	closesocket(m_socket);			//关闭套接字
 	m_socket = INVALID_SOCKET;		//套接字无效
 	DeleteCriticalSection(&m_cs);	//释放临界区对象
@@ -93,18 +100,18 @@ BOOL CClient::StartRuning(void)
 	if(NULL == m_hThreadRecv)
 	{
 		return FALSE;
-	}else{
+	}/*else{
 		CloseHandle(m_hThreadRecv);
-	}
+	}*/
 
 	//创建发送客户端数据的线程
 	m_hThreadSend =  CreateThread(NULL, 0, FrameSendDataThread, this, 0, &ulThreadId);
 	if(NULL == m_hThreadSend)
 	{
 		return FALSE;
-	}else{
+	}/*else{
 		CloseHandle(m_hThreadSend);
-	}
+	}*/
 
 	return TRUE;
 }
@@ -115,7 +122,7 @@ void CClient::SetFrameSendInner(DataBuffer * buffer)
     m_bSend = TRUE;
 }
 
-void CClient::SerFrameSend(DataBuffer buffer)
+void CClient::SetFrameSend(const DataBuffer& buffer)
 {
     DataBuffer* _buffer = new DataBuffer(buffer);
     this->SetFrameSendInner(_buffer);
@@ -126,7 +133,7 @@ void CClient::SetFrameSend(UShort proto, const char * buffer, UShort bufferlen)
     // TODO 这里会有大量GC
     DataBuffer* datapack = new DataBuffer();
     datapack->Package.head.proto = proto;
-    datapack->Package.head.Length = bufferlen + 4; // 加上头部4个字节
+    datapack->Package.head.Length = bufferlen + HEAD_SIZE; // 加上头部4个字节
     memcpy(datapack->Package.datas, buffer, bufferlen);
     this->SetFrameSendInner(datapack);
 
@@ -135,6 +142,7 @@ void CClient::SetFrameSend(UShort proto, const char * buffer, UShort bufferlen)
 
 bool CClient::InnerSendData(DataBuffer * buffer)
 {
+    if (buffer == NULL)return true;
     bool flag = true;
     //进入临界区
     EnterCriticalSection(&this->m_cs);
@@ -190,8 +198,17 @@ DWORD CClient::FrameSendDataThread(void* pParam)
         Sleep(FRAME_TIME);
         if(pClient->m_bSend || bSend || !pClient->m_sendBufferQuene.empty())
         {
-            if (!pClient->InnerSendData(pClient->m_sendBufferQuene.wait_and_pop())) {
+            DataBuffer* tbuffer = pClient->m_sendBufferQuene.wait_and_pop();
+            if (!pClient->InnerSendData(tbuffer)) {
+                if (tbuffer != NULL) {
+                    delete tbuffer;
+                    tbuffer = NULL;
+                }
                 break;
+            }
+            if (tbuffer != NULL) {
+                delete tbuffer;
+                tbuffer = NULL;
             }
 			//设置事件为无信号状态
 			pClient->m_bSend = FALSE;

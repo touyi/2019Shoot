@@ -5,9 +5,9 @@ class PartnerProcess
 public:
     PartnerProcess();
     ~PartnerProcess();
-    void SetScreen(CClient* client);
+    CClient * SetScreen(CClient* client);
 
-    void SetMobilde(CClient* client);
+    CClient * SetMobilde(CClient* client);
     CClient* GetScreen();
     CClient* GetMobile();
 

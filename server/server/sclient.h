@@ -52,7 +52,7 @@ public:
         return m_socketType;
     }
     void SetFrameSend(UShort proto, const char* buffer, UShort bufferlen);
-    void SerFrameSend(DataBuffer buffer);
+    void SetFrameSend(const DataBuffer& buffer);
 
 private:
     bool InnerSendData(DataBuffer* buffer);

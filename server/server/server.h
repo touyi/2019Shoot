@@ -8,6 +8,7 @@
 #include <string>
 #include <process.h>
 #include "sclient.h"
+#include "protocol/Protocol.pb.h"
 
 #pragma comment(lib, "ws2_32.lib")			//动态库函数
 
@@ -56,6 +57,7 @@ void exitServer(void);						//释放资源
 bool startService(void);					//启动服务器
 void Run(void);                  //处理数据
 bool PartnerStateRight();
+void SendCMDToClient(CClient* client, Message::CmdType type);
 //void showServerStartMsg(BOOL bSuc);         //显示错误信息
 //void showServerExitMsg(void);               //显示退出消息
 void handleData(UShort proto, const char* buffer, UShort bufferlen, ClientID id);                 //数据处理

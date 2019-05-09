@@ -309,11 +309,13 @@ bool PartnerStateRight() {
     if (mobile != NULL && screen != NULL && mobile->IsConning() && screen->IsConning()) {
         return true;
     }
+    SendCMDToClient(OnlyPartner.GetScreen(), Message::CmdType::GameEnd);
     EnterCriticalSection(&cs);//进入临界区
     if (mobile != NULL) {
         OnlyPartner.SetMobilde(NULL);
         if (!mobile->IsConning()) {
             LogManager::Log("连接断开：" + string(*mobile));
+            //TODO 网络连接断开 需要处理PC游戏结束
             delete mobile;
         }
         else {
@@ -331,6 +333,7 @@ bool PartnerStateRight() {
         }
     }
     LeaveCriticalSection(&cs);
+    
     return false;
 }
 /**
@@ -373,6 +376,8 @@ bool PartnerStateRight() {
             }
             if (OnlyPartner.IsPair()) {
                 LogManager::Debug(string("配对成功：") + string(*OnlyPartner.GetScreen()) + string(*OnlyPartner.GetMobile()));
+                // 配对成功 发送开始CMD
+                SendCMDToClient(OnlyPartner.GetScreen(), Message::CmdType::GameBegin);
             }
         }
         
@@ -435,6 +440,22 @@ void  exitServer(void)
 {
 	closesocket(sServer);					//关闭SOCKET
 	WSACleanup();							//卸载Windows Sockets DLL
+}
+
+void SendCMDToClient(CClient * client, Message::CmdType type)
+{
+    if (client == NULL)return;
+    if(type == Message::CmdType::GameEnd)
+        LogManager::Debug("Send");
+    DataBuffer buffer;
+    Message::CommandList cmdList;
+    auto cmd = cmdList.add_commanddatas();
+    cmd->set_ctype(type);
+    int size = cmdList.ByteSize();
+    buffer.Package.head.proto = 2;
+    buffer.Package.head.Length = size + HEAD_SIZE;
+    cmdList.SerializeToArray(buffer.Package.datas, size);
+    client->SetFrameSend(buffer);
 }
 
 //void showTipMsg(int input)

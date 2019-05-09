@@ -3,7 +3,8 @@
 
 #define	MAX_NUM_CLIENT		10				//接受的客户端连接最多数量
 #define	MAX_NUM_BUF			60				//缓冲区的最大长度
-#define	MAX_NUM_DATA		(60 + sizeof(ProtoHead))	//数据包的最大长度
+#define HEAD_SIZE           sizeof(ProtoHead)
+#define	MAX_NUM_DATA		(60 + HEAD_SIZE)	//数据包的最大长度
 #define MAX_NUM_WEB_HEAD    1024
 #define MAX_NUM_WEB_ALL    (MAX_NUM_WEB_HEAD + MAX_NUM_DATA)
 #define INVALID_OPERATOR	1				//无效的操作符

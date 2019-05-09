@@ -12,16 +12,21 @@ PartnerProcess::~PartnerProcess()
 {
 }
 
-void PartnerProcess::SetScreen(CClient * client)
+CClient * PartnerProcess::SetScreen(CClient * client)
 {
     std::lock_guard<std::mutex>lk(mut);
+    auto cl = Screen;
     Screen = client;
+    return cl;
+
 }
 
-void PartnerProcess::SetMobilde(CClient * client)
+CClient * PartnerProcess::SetMobilde(CClient * client)
 {
     std::lock_guard<std::mutex>lk(mut);
+    auto cl = Mobile;
     Mobile = client;
+    return cl;
 }
 
 CClient * PartnerProcess::GetScreen()
@@ -38,6 +43,7 @@ bool PartnerProcess::ParseWebInfo(std::vector<DataBuffer>& parseBufferVec)
 {
     using namespace Message;
     KeyChange keychange;
+    CommandList cmdList;
     using std::map;
     using std::pair;
     map<KeyType, KeyState> keyMap;
@@ -67,31 +73,41 @@ bool PartnerProcess::ParseWebInfo(std::vector<DataBuffer>& parseBufferVec)
                 keyMap[KeyType::Change] = KeyState::Up;
             }
         }
+        // CMD
         if (strcmp(buffer->buffer, "E#") == 0) {
-            // TODO Next
+            Command* cmd = cmdList.add_commanddatas();
+            cmd->set_ctype(CmdType::GameEnd);
             
         }
         delete buffer;
     }
-    parseBufferVec.clear();
-    if (keyMap.size() <= 0) {
-        return false;
-    }
+    
     for (map<KeyType, KeyState>::iterator iter = keyMap.begin(); iter != keyMap.end(); iter++) {
         KeyData* data = keychange.add_keydatas();
         data->set_key(iter->first);
         data->set_keystate(iter->second);
     }
-    
-    int size = keychange.ByteSize();
-    if (size <= 0) {
+    parseBufferVec.clear();
+    int keyChangeSize = keychange.ByteSize();
+    if (keyChangeSize > 0) {
+        DataBuffer parseBuffer;
+        parseBuffer.Package.head.proto = 1;
+        parseBuffer.Package.head.Length = keyChangeSize + sizeof(parseBuffer.Package.head);
+        keychange.SerializeToArray(parseBuffer.Package.datas, keyChangeSize);
+        parseBufferVec.push_back(parseBuffer);
+    }
+    int cmdSize = cmdList.ByteSize();
+    if (cmdSize > 0) {
+        DataBuffer parseBuffer;
+        parseBuffer.Package.head.proto = 2;
+        parseBuffer.Package.head.Length = cmdSize + HEAD_SIZE;
+        cmdList.SerializeToArray(parseBuffer.Package.datas, cmdSize);
+        parseBufferVec.push_back(parseBuffer);
+    }
+    if (cmdSize <= 0 && keyChangeSize <= 0) {
         return false;
     }
     
-    DataBuffer parseBuffer;
-    parseBuffer.Package.head.proto = 1;
-    parseBuffer.Package.head.Length = size + sizeof(parseBuffer.Package.head);
-    keychange.SerializeToArray(parseBuffer.Package.datas, size);
     return true;
 }
 
@@ -103,7 +119,7 @@ void PartnerProcess::ExchangeData()
     std::vector<DataBuffer> parseBuffer;
     if (this->ParseWebInfo(parseBuffer)) {
         for (int i = 0; i < parseBuffer.size(); i++) {
-            Screen->SerFrameSend(parseBuffer[i]);
+            Screen->SetFrameSend(parseBuffer[i]);
         }
     }
     

@@ -4,6 +4,7 @@
     {
         None = 0,
         KeyChange = 1,
-        Count = 2,
+        NetCmd = 2,
+        Count = 3,
     }
 }
