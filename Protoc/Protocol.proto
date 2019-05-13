@@ -32,3 +32,9 @@ message Command{
 message CommandList{
 	repeated Command commandDatas = 1;
 }
+
+message Vec3{
+	required float x = 1;
+	required float y = 2;
+	required float z = 3;
+}

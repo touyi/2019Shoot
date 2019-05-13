@@ -11,6 +11,7 @@ namespace GamePlay
             gamePlay.ActorManager = new ActorManager();
             gamePlay.FsmStarter = new MainFSMStarter();
             gamePlay.LevelManager = new LevelManager();
+            gamePlay.Dispathcer = new NormalDispatcher();
             return gamePlay;
         }
     }

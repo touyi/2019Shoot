@@ -50,7 +50,6 @@ namespace MessageSystem
             int ntype = (int) type;
             if (_netMessageCallBacks.ContainsKey(ntype))
             {
-                //_netMessageCallBacks[ntype] -= callBack;
                 _netMessageCallBacks[ntype] += callBack;
             }
             else
@@ -64,6 +63,10 @@ namespace MessageSystem
             if (_netMessageCallBacks.ContainsKey(ntype))
             {
                 _netMessageCallBacks[ntype] -= callBack;
+                if (_netMessageCallBacks[ntype] == null)
+                {
+                    _netMessageCallBacks.Remove(ntype);
+                }
             }
         }
     }

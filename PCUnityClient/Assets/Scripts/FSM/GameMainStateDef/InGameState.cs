@@ -21,7 +21,7 @@ namespace FSM.GameMainStateDef
             new WeakRef<StateMachine<GameMainState, GameMainEvent>>();
         public void Enter()
         {
-            NetMessage.Instance.RegistNetListener(EProtocol.NetCmd, this.GameNetMessage);
+            GameMain.Instance.CurrentGamePlay.Dispathcer.RegistListener(GameEventDefine.GameEnd, this.OnGameEnd);
             // TODO 初始化玩家
             NormalGamePlay gamePlay = GameMain.Instance.CurrentGamePlay as NormalGamePlay;
             if (gamePlay == null)
@@ -59,7 +59,7 @@ namespace FSM.GameMainStateDef
 
         public void Exit()
         {
-            NetMessage.Instance.RemoveNetListener(EProtocol.NetCmd, this.GameNetMessage);
+            GameMain.Instance.CurrentGamePlay.Dispathcer.RemoveListener(GameEventDefine.GameEnd, this.OnGameEnd);
         }
 
         public void RegistToFsm(StateMachine<GameMainState, GameMainEvent> fsm)
@@ -71,22 +71,23 @@ namespace FSM.GameMainStateDef
             this._fsm.Ref = fsm;
         }
 
-        private void GameNetMessage(EventParam param)
+        private void OnGameEnd(EventData param)
         {
-            if (param.type == EProtocol.NetCmd)
-            {
-                CommandList cmdList = param.message as CommandList;
-                for (int i = 0; i < cmdList.commandDatas.Count; i++)
-                {
-                    var cmd = cmdList.commandDatas[i];
-                    switch (cmd.ctype)
-                    {
-                        case CmdType.GameEnd:
-                            this._fsm.Ref.Fire(GameMainEvent.End);
-                            break;
-                    }
-                }
-            }
+            this._fsm.Ref.Fire(GameMainEvent.End);
+//            if (param.type == EProtocol.NetCmd)
+//            {
+//                CommandList cmdList = param.message as CommandList;
+//                for (int i = 0; i < cmdList.commandDatas.Count; i++)
+//                {
+//                    var cmd = cmdList.commandDatas[i];
+//                    switch (cmd.ctype)
+//                    {
+//                        case CmdType.GameEnd:
+//                            
+//                            break;
+//                    }
+//                }
+//            }
         }
     }
 }

@@ -8,7 +8,14 @@ namespace GamePlay
         private MainFSMStarter _fsmStarter = null;
         private ActorManager _actorManager = null;
         private LevelManager _levelManager = null;
+        private IDispathcer _dispathcer = null;
         private bool _isRunning = false;
+
+        public IDispathcer Dispathcer
+        {
+            get { return _dispathcer; }
+            set { _dispathcer = value; }
+        }
 
         public bool IsRunning
         {
@@ -38,6 +45,7 @@ namespace GamePlay
             _actorManager.Init();
             _fsmStarter.Init();
             
+            _dispathcer.Start();
             _actorManager.Start();
             _fsmStarter.Start();
 
@@ -46,12 +54,14 @@ namespace GamePlay
 
         public void Update(float deltaTime)
         {
+            _dispathcer.Update(deltaTime);
             ActorManager.Update(deltaTime);
             _fsmStarter.Update(deltaTime);
         }
 
         public void Init()
         {
+            _dispathcer.Init();
             _levelManager.InitScence();
         }
 
@@ -60,6 +70,7 @@ namespace GamePlay
             // 销毁
             _fsmStarter.Uninit();
             _actorManager.Uninit();
+            _dispathcer.Uninit();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Net.Configuration;
+using GamePlay;
 using GamePlay.Command;
 using Message;
 using MessageSystem;
@@ -14,7 +15,7 @@ namespace FSM.GameMainStateDef
             new WeakRef<StateMachine<GameMainState, GameMainEvent>>();
         public void Enter()
         {
-            NetMessage.Instance.RegistNetListener(EProtocol.NetCmd, GameMessage);
+            GameMain.Instance.CurrentGamePlay.Dispathcer.RegistListener(GameEventDefine.GameBegin, this.OnGameBegin);
             UICmd cmd = UICmd.Get();
             cmd.UiState = UICmd.UIState.Open;
             cmd.UiType = UICmd.UIType.Root;
@@ -32,7 +33,7 @@ namespace FSM.GameMainStateDef
 
         public void Exit()
         {
-            NetMessage.Instance.RemoveNetListener(EProtocol.NetCmd, GameMessage);
+            GameMain.Instance.CurrentGamePlay.Dispathcer.RemoveListener(GameEventDefine.GameBegin, this.OnGameBegin);
             UICmd cmd = UICmd.Get();
             cmd.UiState = UICmd.UIState.Close;
             cmd.UiType = UICmd.UIType.Root;
@@ -49,22 +50,23 @@ namespace FSM.GameMainStateDef
             this._fsm.Ref = fsm;
         }
 
-        private void GameMessage(EventParam param)
+        private void OnGameBegin(EventData param)
         {
-            if (param.type == EProtocol.NetCmd)
-            {
-                CommandList cmdList = param.message as CommandList;
-                for (int i = 0; i < cmdList.commandDatas.Count; i++)
-                {
-                    var cmd = cmdList.commandDatas[i];
-                    switch (cmd.ctype)
-                    {
-                            case CmdType.GameBegin:
-                                this._fsm.Ref.Fire(GameMainEvent.Begin);
-                                break;
-                    }
-                }
-            }
+            this._fsm.Ref.Fire(GameMainEvent.Begin);
+//            if (param.type == EProtocol.NetCmd)
+//            {
+//                CommandList cmdList = param.message as CommandList;
+//                for (int i = 0; i < cmdList.commandDatas.Count; i++)
+//                {
+//                    var cmd = cmdList.commandDatas[i];
+//                    switch (cmd.ctype)
+//                    {
+//                            case CmdType.GameBegin:
+//                                
+//                                break;
+//                    }
+//                }
+//            }
         }
     }
 }
