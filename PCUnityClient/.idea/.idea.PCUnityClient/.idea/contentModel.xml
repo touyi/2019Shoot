@@ -235,6 +235,7 @@
           </e>
         </e>
         <e p="tools" t="Include">
+          <e p="InputDirChange.cs" t="Include" />
           <e p="IProcess.cs" t="Include" />
           <e p="ProtocolHelper.cs" t="Include" />
           <e p="Timer.cs" t="Include" />

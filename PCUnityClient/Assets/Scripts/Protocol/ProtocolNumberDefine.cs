@@ -5,6 +5,7 @@
         None = 0,
         KeyChange = 1,
         NetCmd = 2,
-        Count = 3,
+        MobileDir = 3,
+        Count = 4,
     }
 }

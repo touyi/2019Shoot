@@ -22,6 +22,7 @@ namespace NetInput
             InputKeyType.Fire
         };
         private KeyState[] _keyState;
+        private Vector3 _vector3 = Vector3.forward;
         public SInput()
         {
             _keyState = new KeyState[(int)InputKeyType.Count];
@@ -42,7 +43,6 @@ namespace NetInput
 
         public bool GetKey(InputKeyType key)
         {
-            Debug.Log(this._keyState[(int) key]);
             if (this._keyState[(int) key] == KeyState.KeepDown)
             {
                 return true;
@@ -58,12 +58,20 @@ namespace NetInput
 
         public Vector2 GetAxis2D(InputKeyType key)
         {
-            throw new System.NotImplementedException();
+            if (key == InputKeyType.DirVector)
+            {
+                return this._vector3;
+            }
+            return Vector2.zero;
         }
 
         public Vector3 GetAxis3D(InputKeyType key)
         {
-            return Vector3.forward;
+            if (key == InputKeyType.DirVector)
+            {
+                return this._vector3;
+            }
+            return Vector3.zero;
         }
 
         public Vector4 GetAxis4D(InputKeyType key)
@@ -74,6 +82,7 @@ namespace NetInput
         public void Init()
         {
             NetMessage.Instance.RegistNetListener(EProtocol.KeyChange , this.KeyChangeNetMessage);
+            NetMessage.Instance.RegistNetListener(EProtocol.MobileDir , this.RoteNetMessage);
         }
 
         private void KeyChangeNetMessage(EventParam param)
@@ -97,6 +106,29 @@ namespace NetInput
             }
         }
 
+        private void RoteNetMessage(EventParam param)
+        {
+            if (param.type != EProtocol.MobileDir)
+            {
+                return;
+            }
+            VecList list = param.message as VecList;
+            if (list == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < list.vec.Count; i++)
+            {
+                Vec3 vec = list.vec[i];
+                Vector2 uVec3;
+                uVec3.x = vec.x;
+                uVec3.y = vec.y;
+                Debug.Log(uVec3);
+                InputDirChange.Instance.AddNewPos(uVec3);
+            }
+        }
+
         
         public void Update(float deltaTime)
         {
@@ -116,6 +148,8 @@ namespace NetInput
                     this._keyState[i] = KeyState.KeepUp;
                 }
             }
+
+            this._vector3 = InputDirChange.Instance.GetLookAtScreenPos();
         }
     }
 }

@@ -17,6 +17,7 @@ public:
 
     bool IsPair();
 private:
+    void ParseVec3(const char* obj, float&x, float&y, float&z);
     mutable std::mutex mut;
     CClient* Screen = NULL;
     CClient* Mobile = NULL;

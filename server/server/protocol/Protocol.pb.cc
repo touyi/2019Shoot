@@ -18,6 +18,7 @@
 
 extern PROTOBUF_INTERNAL_EXPORT_Protocol_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_Command_Protocol_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Protocol_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_KeyData_Protocol_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_Protocol_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_Vec3_Protocol_2eproto;
 namespace Message {
 class KeyDataDefaultTypeInternal {
  public:
@@ -35,6 +36,14 @@ class CommandListDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<CommandList> _instance;
 } _CommandList_default_instance_;
+class Vec3DefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<Vec3> _instance;
+} _Vec3_default_instance_;
+class VecListDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<VecList> _instance;
+} _VecList_default_instance_;
 }  // namespace Message
 static void InitDefaultsKeyData_Protocol_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -94,14 +103,45 @@ static void InitDefaultsCommandList_Protocol_2eproto() {
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsCommandList_Protocol_2eproto}, {
       &scc_info_Command_Protocol_2eproto.base,}};
 
+static void InitDefaultsVec3_Protocol_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::Message::_Vec3_default_instance_;
+    new (ptr) ::Message::Vec3();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::Message::Vec3::InitAsDefaultInstance();
+}
+
+::google::protobuf::internal::SCCInfo<0> scc_info_Vec3_Protocol_2eproto =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsVec3_Protocol_2eproto}, {}};
+
+static void InitDefaultsVecList_Protocol_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::Message::_VecList_default_instance_;
+    new (ptr) ::Message::VecList();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::Message::VecList::InitAsDefaultInstance();
+}
+
+::google::protobuf::internal::SCCInfo<1> scc_info_VecList_Protocol_2eproto =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsVecList_Protocol_2eproto}, {
+      &scc_info_Vec3_Protocol_2eproto.base,}};
+
 void InitDefaults_Protocol_2eproto() {
   ::google::protobuf::internal::InitSCC(&scc_info_KeyData_Protocol_2eproto.base);
   ::google::protobuf::internal::InitSCC(&scc_info_KeyChange_Protocol_2eproto.base);
   ::google::protobuf::internal::InitSCC(&scc_info_Command_Protocol_2eproto.base);
   ::google::protobuf::internal::InitSCC(&scc_info_CommandList_Protocol_2eproto.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_Vec3_Protocol_2eproto.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_VecList_Protocol_2eproto.base);
 }
 
-::google::protobuf::Metadata file_level_metadata_Protocol_2eproto[4];
+::google::protobuf::Metadata file_level_metadata_Protocol_2eproto[6];
 const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors_Protocol_2eproto[3];
 constexpr ::google::protobuf::ServiceDescriptor const** file_level_service_descriptors_Protocol_2eproto = nullptr;
 
@@ -136,12 +176,32 @@ const ::google::protobuf::uint32 TableStruct_Protocol_2eproto::offsets[] PROTOBU
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::Message::CommandList, commanddatas_),
   ~0u,
+  PROTOBUF_FIELD_OFFSET(::Message::Vec3, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::Message::Vec3, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::Message::Vec3, x_),
+  PROTOBUF_FIELD_OFFSET(::Message::Vec3, y_),
+  PROTOBUF_FIELD_OFFSET(::Message::Vec3, z_),
+  0,
+  1,
+  2,
+  PROTOBUF_FIELD_OFFSET(::Message::VecList, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::Message::VecList, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::Message::VecList, vec_),
+  ~0u,
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 7, sizeof(::Message::KeyData)},
   { 9, 15, sizeof(::Message::KeyChange)},
   { 16, 22, sizeof(::Message::Command)},
   { 23, 29, sizeof(::Message::CommandList)},
+  { 30, 38, sizeof(::Message::Vec3)},
+  { 41, 47, sizeof(::Message::VecList)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -149,12 +209,14 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::Message::_KeyChange_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::Message::_Command_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::Message::_CommandList_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::Message::_Vec3_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::Message::_VecList_default_instance_),
 };
 
 ::google::protobuf::internal::AssignDescriptorsTable assign_descriptors_table_Protocol_2eproto = {
   {}, AddDescriptors_Protocol_2eproto, "Protocol.proto", schemas,
   file_default_instances, TableStruct_Protocol_2eproto::offsets,
-  file_level_metadata_Protocol_2eproto, 4, file_level_enum_descriptors_Protocol_2eproto, file_level_service_descriptors_Protocol_2eproto,
+  file_level_metadata_Protocol_2eproto, 6, file_level_enum_descriptors_Protocol_2eproto, file_level_service_descriptors_Protocol_2eproto,
 };
 
 const char descriptor_table_protodef_Protocol_2eproto[] =
@@ -164,7 +226,9 @@ const char descriptor_table_protodef_Protocol_2eproto[] =
   "\010keyDatas\030\001 \003(\0132\020.Message.KeyData\"*\n\007Com"
   "mand\022\037\n\005ctype\030\001 \002(\0162\020.Message.CmdType\"5\n"
   "\013CommandList\022&\n\014commandDatas\030\001 \003(\0132\020.Mes"
-  "sage.Command*.\n\007KeyType\022\010\n\004Fire\020\000\022\n\n\006Cha"
+  "sage.Command\"\'\n\004Vec3\022\t\n\001x\030\001 \002(\002\022\t\n\001y\030\002 \002"
+  "(\002\022\t\n\001z\030\003 \002(\002\"%\n\007VecList\022\032\n\003vec\030\001 \003(\0132\r."
+  "Message.Vec3*.\n\007KeyType\022\010\n\004Fire\020\000\022\n\n\006Cha"
   "nge\020\001\022\r\n\tTypeCount\020\002*7\n\010KeyState\022\010\n\004Down"
   "\020\000\022\006\n\002Up\020\001\022\t\n\005Click\020\002\022\016\n\nStateCount\020\003*>\n"
   "\007CmdType\022\n\n\006UserIn\020\000\022\013\n\007UserOut\020\001\022\013\n\007Gam"
@@ -173,7 +237,7 @@ const char descriptor_table_protodef_Protocol_2eproto[] =
 ::google::protobuf::internal::DescriptorTable descriptor_table_Protocol_2eproto = {
   false, InitDefaults_Protocol_2eproto, 
   descriptor_table_protodef_Protocol_2eproto,
-  "Protocol.proto", &assign_descriptors_table_Protocol_2eproto, 421,
+  "Protocol.proto", &assign_descriptors_table_Protocol_2eproto, 501,
 };
 
 void AddDescriptors_Protocol_2eproto() {
@@ -1451,6 +1515,675 @@ void CommandList::InternalSwap(CommandList* other) {
 }
 
 
+// ===================================================================
+
+void Vec3::InitAsDefaultInstance() {
+}
+class Vec3::HasBitSetters {
+ public:
+  static void set_has_x(Vec3* msg) {
+    msg->_has_bits_[0] |= 0x00000001u;
+  }
+  static void set_has_y(Vec3* msg) {
+    msg->_has_bits_[0] |= 0x00000002u;
+  }
+  static void set_has_z(Vec3* msg) {
+    msg->_has_bits_[0] |= 0x00000004u;
+  }
+};
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int Vec3::kXFieldNumber;
+const int Vec3::kYFieldNumber;
+const int Vec3::kZFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+Vec3::Vec3()
+  : ::google::protobuf::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Message.Vec3)
+}
+Vec3::Vec3(const Vec3& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&x_, &from.x_,
+    static_cast<size_t>(reinterpret_cast<char*>(&z_) -
+    reinterpret_cast<char*>(&x_)) + sizeof(z_));
+  // @@protoc_insertion_point(copy_constructor:Message.Vec3)
+}
+
+void Vec3::SharedCtor() {
+  ::memset(&x_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&z_) -
+      reinterpret_cast<char*>(&x_)) + sizeof(z_));
+}
+
+Vec3::~Vec3() {
+  // @@protoc_insertion_point(destructor:Message.Vec3)
+  SharedDtor();
+}
+
+void Vec3::SharedDtor() {
+}
+
+void Vec3::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const Vec3& Vec3::default_instance() {
+  ::google::protobuf::internal::InitSCC(&::scc_info_Vec3_Protocol_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void Vec3::Clear() {
+// @@protoc_insertion_point(message_clear_start:Message.Vec3)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    ::memset(&x_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&z_) -
+        reinterpret_cast<char*>(&x_)) + sizeof(z_));
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+const char* Vec3::_InternalParse(const char* begin, const char* end, void* object,
+                  ::google::protobuf::internal::ParseContext* ctx) {
+  auto msg = static_cast<Vec3*>(object);
+  ::google::protobuf::int32 size; (void)size;
+  int depth; (void)depth;
+  ::google::protobuf::uint32 tag;
+  ::google::protobuf::internal::ParseFunc parser_till_end; (void)parser_till_end;
+  auto ptr = begin;
+  while (ptr < end) {
+    ptr = ::google::protobuf::io::Parse32(ptr, &tag);
+    GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+    switch (tag >> 3) {
+      // required float x = 1;
+      case 1: {
+        if (static_cast<::google::protobuf::uint8>(tag) != 13) goto handle_unusual;
+        msg->set_x(::google::protobuf::io::UnalignedLoad<float>(ptr));
+        ptr += sizeof(float);
+        break;
+      }
+      // required float y = 2;
+      case 2: {
+        if (static_cast<::google::protobuf::uint8>(tag) != 21) goto handle_unusual;
+        msg->set_y(::google::protobuf::io::UnalignedLoad<float>(ptr));
+        ptr += sizeof(float);
+        break;
+      }
+      // required float z = 3;
+      case 3: {
+        if (static_cast<::google::protobuf::uint8>(tag) != 29) goto handle_unusual;
+        msg->set_z(::google::protobuf::io::UnalignedLoad<float>(ptr));
+        ptr += sizeof(float);
+        break;
+      }
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->EndGroup(tag);
+          return ptr;
+        }
+        auto res = UnknownFieldParse(tag, {_InternalParse, msg},
+          ptr, end, msg->_internal_metadata_.mutable_unknown_fields(), ctx);
+        ptr = res.first;
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr != nullptr);
+        if (res.second) return ptr;
+      }
+    }  // switch
+  }  // while
+  return ptr;
+}
+#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+bool Vec3::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:Message.Vec3)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required float x = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) == (13 & 0xFF)) {
+          HasBitSetters::set_has_x(this);
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &x_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // required float y = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) == (21 & 0xFF)) {
+          HasBitSetters::set_has_y(this);
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &y_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // required float z = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) == (29 & 0xFF)) {
+          HasBitSetters::set_has_z(this);
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &z_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Message.Vec3)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Message.Vec3)
+  return false;
+#undef DO_
+}
+#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+
+void Vec3::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Message.Vec3)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required float x = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(1, this->x(), output);
+  }
+
+  // required float y = 2;
+  if (cached_has_bits & 0x00000002u) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(2, this->y(), output);
+  }
+
+  // required float z = 3;
+  if (cached_has_bits & 0x00000004u) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(3, this->z(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        _internal_metadata_.unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:Message.Vec3)
+}
+
+::google::protobuf::uint8* Vec3::InternalSerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Message.Vec3)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // required float x = 1;
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(1, this->x(), target);
+  }
+
+  // required float y = 2;
+  if (cached_has_bits & 0x00000002u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(2, this->y(), target);
+  }
+
+  // required float z = 3;
+  if (cached_has_bits & 0x00000004u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(3, this->z(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Message.Vec3)
+  return target;
+}
+
+size_t Vec3::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:Message.Vec3)
+  size_t total_size = 0;
+
+  if (has_x()) {
+    // required float x = 1;
+    total_size += 1 + 4;
+  }
+
+  if (has_y()) {
+    // required float y = 2;
+    total_size += 1 + 4;
+  }
+
+  if (has_z()) {
+    // required float z = 3;
+    total_size += 1 + 4;
+  }
+
+  return total_size;
+}
+size_t Vec3::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Message.Vec3)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        _internal_metadata_.unknown_fields());
+  }
+  if (((_has_bits_[0] & 0x00000007) ^ 0x00000007) == 0) {  // All required fields are present.
+    // required float x = 1;
+    total_size += 1 + 4;
+
+    // required float y = 2;
+    total_size += 1 + 4;
+
+    // required float z = 3;
+    total_size += 1 + 4;
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
+  }
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void Vec3::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:Message.Vec3)
+  GOOGLE_DCHECK_NE(&from, this);
+  const Vec3* source =
+      ::google::protobuf::DynamicCastToGenerated<Vec3>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Message.Vec3)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Message.Vec3)
+    MergeFrom(*source);
+  }
+}
+
+void Vec3::MergeFrom(const Vec3& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Message.Vec3)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    if (cached_has_bits & 0x00000001u) {
+      x_ = from.x_;
+    }
+    if (cached_has_bits & 0x00000002u) {
+      y_ = from.y_;
+    }
+    if (cached_has_bits & 0x00000004u) {
+      z_ = from.z_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void Vec3::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:Message.Vec3)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void Vec3::CopyFrom(const Vec3& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Message.Vec3)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Vec3::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+  return true;
+}
+
+void Vec3::Swap(Vec3* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void Vec3::InternalSwap(Vec3* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  swap(x_, other->x_);
+  swap(y_, other->y_);
+  swap(z_, other->z_);
+}
+
+::google::protobuf::Metadata Vec3::GetMetadata() const {
+  ::google::protobuf::internal::AssignDescriptors(&::assign_descriptors_table_Protocol_2eproto);
+  return ::file_level_metadata_Protocol_2eproto[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void VecList::InitAsDefaultInstance() {
+}
+class VecList::HasBitSetters {
+ public:
+};
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int VecList::kVecFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+VecList::VecList()
+  : ::google::protobuf::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Message.VecList)
+}
+VecList::VecList(const VecList& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_),
+      vec_(from.vec_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:Message.VecList)
+}
+
+void VecList::SharedCtor() {
+  ::google::protobuf::internal::InitSCC(
+      &scc_info_VecList_Protocol_2eproto.base);
+}
+
+VecList::~VecList() {
+  // @@protoc_insertion_point(destructor:Message.VecList)
+  SharedDtor();
+}
+
+void VecList::SharedDtor() {
+}
+
+void VecList::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const VecList& VecList::default_instance() {
+  ::google::protobuf::internal::InitSCC(&::scc_info_VecList_Protocol_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void VecList::Clear() {
+// @@protoc_insertion_point(message_clear_start:Message.VecList)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  vec_.Clear();
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+const char* VecList::_InternalParse(const char* begin, const char* end, void* object,
+                  ::google::protobuf::internal::ParseContext* ctx) {
+  auto msg = static_cast<VecList*>(object);
+  ::google::protobuf::int32 size; (void)size;
+  int depth; (void)depth;
+  ::google::protobuf::uint32 tag;
+  ::google::protobuf::internal::ParseFunc parser_till_end; (void)parser_till_end;
+  auto ptr = begin;
+  while (ptr < end) {
+    ptr = ::google::protobuf::io::Parse32(ptr, &tag);
+    GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+    switch (tag >> 3) {
+      // repeated .Message.Vec3 vec = 1;
+      case 1: {
+        if (static_cast<::google::protobuf::uint8>(tag) != 10) goto handle_unusual;
+        do {
+          ptr = ::google::protobuf::io::ReadSize(ptr, &size);
+          GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+          parser_till_end = ::Message::Vec3::_InternalParse;
+          object = msg->add_vec();
+          if (size > end - ptr) goto len_delim_till_end;
+          ptr += size;
+          GOOGLE_PROTOBUF_PARSER_ASSERT(ctx->ParseExactRange(
+              {parser_till_end, object}, ptr - size, ptr));
+          if (ptr >= end) break;
+        } while ((::google::protobuf::io::UnalignedLoad<::google::protobuf::uint64>(ptr) & 255) == 10 && (ptr += 1));
+        break;
+      }
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->EndGroup(tag);
+          return ptr;
+        }
+        auto res = UnknownFieldParse(tag, {_InternalParse, msg},
+          ptr, end, msg->_internal_metadata_.mutable_unknown_fields(), ctx);
+        ptr = res.first;
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr != nullptr);
+        if (res.second) return ptr;
+      }
+    }  // switch
+  }  // while
+  return ptr;
+len_delim_till_end:
+  return ctx->StoreAndTailCall(ptr, end, {_InternalParse, msg},
+                               {parser_till_end, object}, size);
+}
+#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+bool VecList::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:Message.VecList)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated .Message.Vec3 vec = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) == (10 & 0xFF)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+                input, add_vec()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Message.VecList)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Message.VecList)
+  return false;
+#undef DO_
+}
+#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+
+void VecList::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Message.VecList)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // repeated .Message.Vec3 vec = 1;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->vec_size()); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1,
+      this->vec(static_cast<int>(i)),
+      output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        _internal_metadata_.unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:Message.VecList)
+}
+
+::google::protobuf::uint8* VecList::InternalSerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Message.VecList)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // repeated .Message.Vec3 vec = 1;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->vec_size()); i < n; i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        1, this->vec(static_cast<int>(i)), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Message.VecList)
+  return target;
+}
+
+size_t VecList::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Message.VecList)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        _internal_metadata_.unknown_fields());
+  }
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated .Message.Vec3 vec = 1;
+  {
+    unsigned int count = static_cast<unsigned int>(this->vec_size());
+    total_size += 1UL * count;
+    for (unsigned int i = 0; i < count; i++) {
+      total_size +=
+        ::google::protobuf::internal::WireFormatLite::MessageSize(
+          this->vec(static_cast<int>(i)));
+    }
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void VecList::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:Message.VecList)
+  GOOGLE_DCHECK_NE(&from, this);
+  const VecList* source =
+      ::google::protobuf::DynamicCastToGenerated<VecList>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Message.VecList)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Message.VecList)
+    MergeFrom(*source);
+  }
+}
+
+void VecList::MergeFrom(const VecList& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Message.VecList)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  vec_.MergeFrom(from.vec_);
+}
+
+void VecList::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:Message.VecList)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void VecList::CopyFrom(const VecList& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Message.VecList)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool VecList::IsInitialized() const {
+  if (!::google::protobuf::internal::AllAreInitialized(this->vec())) return false;
+  return true;
+}
+
+void VecList::Swap(VecList* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void VecList::InternalSwap(VecList* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  CastToBase(&vec_)->InternalSwap(CastToBase(&other->vec_));
+}
+
+::google::protobuf::Metadata VecList::GetMetadata() const {
+  ::google::protobuf::internal::AssignDescriptors(&::assign_descriptors_table_Protocol_2eproto);
+  return ::file_level_metadata_Protocol_2eproto[kIndexInFileMessages];
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace Message
 namespace google {
@@ -1466,6 +2199,12 @@ template<> PROTOBUF_NOINLINE ::Message::Command* Arena::CreateMaybeMessage< ::Me
 }
 template<> PROTOBUF_NOINLINE ::Message::CommandList* Arena::CreateMaybeMessage< ::Message::CommandList >(Arena* arena) {
   return Arena::CreateInternal< ::Message::CommandList >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Message::Vec3* Arena::CreateMaybeMessage< ::Message::Vec3 >(Arena* arena) {
+  return Arena::CreateInternal< ::Message::Vec3 >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Message::VecList* Arena::CreateMaybeMessage< ::Message::VecList >(Arena* arena) {
+  return Arena::CreateInternal< ::Message::VecList >(arena);
 }
 }  // namespace protobuf
 }  // namespace google

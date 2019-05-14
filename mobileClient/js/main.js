@@ -109,11 +109,11 @@ window.ontouchstart  =   function(e)  { 
 		distanceY = a_y.toFixed(2) * MobileTerminal; //两个轴相互交换
 		distanceZ = a_z.toFixed(2) * MobileTerminal;
 		if (!isLand) {
-			websocket.send("O" + distanceX + " " + distanceY + " " + "0#");
+			websocket.send("O#" + distanceX + " " + distanceY + " " + "0#");
 		} else {
-			websocket.send("O" + (-1) * distanceY + " " + distanceX + " " + "0#");
+			websocket.send("O#" + (-1) * distanceY + " " + distanceX + " " + "0#");
 		}
-		setTimeout(foo, 60);
+		setTimeout(foo, 67);
 		//发送数据
 	}
 }; 

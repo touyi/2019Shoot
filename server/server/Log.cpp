@@ -18,6 +18,7 @@ void LogManager::Debug(string msg)
     cout << "[Debug]:" << msg << endl;
 }
 
+
 void LogManager::Log(string msg)
 {
     cout << "[Log]:" << msg << endl;

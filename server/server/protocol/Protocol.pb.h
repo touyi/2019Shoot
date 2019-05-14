@@ -42,7 +42,7 @@ struct TableStruct_Protocol_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::google::protobuf::internal::ParseTable schema[4]
+  static const ::google::protobuf::internal::ParseTable schema[6]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
@@ -62,6 +62,12 @@ extern KeyChangeDefaultTypeInternal _KeyChange_default_instance_;
 class KeyData;
 class KeyDataDefaultTypeInternal;
 extern KeyDataDefaultTypeInternal _KeyData_default_instance_;
+class Vec3;
+class Vec3DefaultTypeInternal;
+extern Vec3DefaultTypeInternal _Vec3_default_instance_;
+class VecList;
+class VecListDefaultTypeInternal;
+extern VecListDefaultTypeInternal _VecList_default_instance_;
 }  // namespace Message
 namespace google {
 namespace protobuf {
@@ -69,6 +75,8 @@ template<> ::Message::Command* Arena::CreateMaybeMessage<::Message::Command>(Are
 template<> ::Message::CommandList* Arena::CreateMaybeMessage<::Message::CommandList>(Arena*);
 template<> ::Message::KeyChange* Arena::CreateMaybeMessage<::Message::KeyChange>(Arena*);
 template<> ::Message::KeyData* Arena::CreateMaybeMessage<::Message::KeyData>(Arena*);
+template<> ::Message::Vec3* Arena::CreateMaybeMessage<::Message::Vec3>(Arena*);
+template<> ::Message::VecList* Arena::CreateMaybeMessage<::Message::VecList>(Arena*);
 }  // namespace protobuf
 }  // namespace google
 namespace Message {
@@ -640,6 +648,272 @@ class CommandList final :
   ::google::protobuf::RepeatedPtrField< ::Message::Command > commanddatas_;
   friend struct ::TableStruct_Protocol_2eproto;
 };
+// -------------------------------------------------------------------
+
+class Vec3 final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Message.Vec3) */ {
+ public:
+  Vec3();
+  virtual ~Vec3();
+
+  Vec3(const Vec3& from);
+
+  inline Vec3& operator=(const Vec3& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  Vec3(Vec3&& from) noexcept
+    : Vec3() {
+    *this = ::std::move(from);
+  }
+
+  inline Vec3& operator=(Vec3&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return default_instance().GetDescriptor();
+  }
+  static const Vec3& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const Vec3* internal_default_instance() {
+    return reinterpret_cast<const Vec3*>(
+               &_Vec3_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    4;
+
+  void Swap(Vec3* other);
+  friend void swap(Vec3& a, Vec3& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline Vec3* New() const final {
+    return CreateMaybeMessage<Vec3>(nullptr);
+  }
+
+  Vec3* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<Vec3>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const Vec3& from);
+  void MergeFrom(const Vec3& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  static const char* _InternalParse(const char* begin, const char* end, void* object, ::google::protobuf::internal::ParseContext* ctx);
+  ::google::protobuf::internal::ParseFunc _ParseFunc() const final { return _InternalParse; }
+  #else
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Vec3* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required float x = 1;
+  bool has_x() const;
+  void clear_x();
+  static const int kXFieldNumber = 1;
+  float x() const;
+  void set_x(float value);
+
+  // required float y = 2;
+  bool has_y() const;
+  void clear_y();
+  static const int kYFieldNumber = 2;
+  float y() const;
+  void set_y(float value);
+
+  // required float z = 3;
+  bool has_z() const;
+  void clear_z();
+  static const int kZFieldNumber = 3;
+  float z() const;
+  void set_z(float value);
+
+  // @@protoc_insertion_point(class_scope:Message.Vec3)
+ private:
+  class HasBitSetters;
+
+  // helper for ByteSizeLong()
+  size_t RequiredFieldsByteSizeFallback() const;
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  float x_;
+  float y_;
+  float z_;
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
+class VecList final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Message.VecList) */ {
+ public:
+  VecList();
+  virtual ~VecList();
+
+  VecList(const VecList& from);
+
+  inline VecList& operator=(const VecList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  VecList(VecList&& from) noexcept
+    : VecList() {
+    *this = ::std::move(from);
+  }
+
+  inline VecList& operator=(VecList&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return default_instance().GetDescriptor();
+  }
+  static const VecList& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const VecList* internal_default_instance() {
+    return reinterpret_cast<const VecList*>(
+               &_VecList_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  void Swap(VecList* other);
+  friend void swap(VecList& a, VecList& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline VecList* New() const final {
+    return CreateMaybeMessage<VecList>(nullptr);
+  }
+
+  VecList* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<VecList>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const VecList& from);
+  void MergeFrom(const VecList& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  static const char* _InternalParse(const char* begin, const char* end, void* object, ::google::protobuf::internal::ParseContext* ctx);
+  ::google::protobuf::internal::ParseFunc _ParseFunc() const final { return _InternalParse; }
+  #else
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(VecList* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .Message.Vec3 vec = 1;
+  int vec_size() const;
+  void clear_vec();
+  static const int kVecFieldNumber = 1;
+  ::Message::Vec3* mutable_vec(int index);
+  ::google::protobuf::RepeatedPtrField< ::Message::Vec3 >*
+      mutable_vec();
+  const ::Message::Vec3& vec(int index) const;
+  ::Message::Vec3* add_vec();
+  const ::google::protobuf::RepeatedPtrField< ::Message::Vec3 >&
+      vec() const;
+
+  // @@protoc_insertion_point(class_scope:Message.VecList)
+ private:
+  class HasBitSetters;
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::Message::Vec3 > vec_;
+  friend struct ::TableStruct_Protocol_2eproto;
+};
 // ===================================================================
 
 
@@ -780,9 +1054,105 @@ CommandList::commanddatas() const {
   return commanddatas_;
 }
 
+// -------------------------------------------------------------------
+
+// Vec3
+
+// required float x = 1;
+inline bool Vec3::has_x() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void Vec3::clear_x() {
+  x_ = 0;
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline float Vec3::x() const {
+  // @@protoc_insertion_point(field_get:Message.Vec3.x)
+  return x_;
+}
+inline void Vec3::set_x(float value) {
+  _has_bits_[0] |= 0x00000001u;
+  x_ = value;
+  // @@protoc_insertion_point(field_set:Message.Vec3.x)
+}
+
+// required float y = 2;
+inline bool Vec3::has_y() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void Vec3::clear_y() {
+  y_ = 0;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline float Vec3::y() const {
+  // @@protoc_insertion_point(field_get:Message.Vec3.y)
+  return y_;
+}
+inline void Vec3::set_y(float value) {
+  _has_bits_[0] |= 0x00000002u;
+  y_ = value;
+  // @@protoc_insertion_point(field_set:Message.Vec3.y)
+}
+
+// required float z = 3;
+inline bool Vec3::has_z() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void Vec3::clear_z() {
+  z_ = 0;
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline float Vec3::z() const {
+  // @@protoc_insertion_point(field_get:Message.Vec3.z)
+  return z_;
+}
+inline void Vec3::set_z(float value) {
+  _has_bits_[0] |= 0x00000004u;
+  z_ = value;
+  // @@protoc_insertion_point(field_set:Message.Vec3.z)
+}
+
+// -------------------------------------------------------------------
+
+// VecList
+
+// repeated .Message.Vec3 vec = 1;
+inline int VecList::vec_size() const {
+  return vec_.size();
+}
+inline void VecList::clear_vec() {
+  vec_.Clear();
+}
+inline ::Message::Vec3* VecList::mutable_vec(int index) {
+  // @@protoc_insertion_point(field_mutable:Message.VecList.vec)
+  return vec_.Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField< ::Message::Vec3 >*
+VecList::mutable_vec() {
+  // @@protoc_insertion_point(field_mutable_list:Message.VecList.vec)
+  return &vec_;
+}
+inline const ::Message::Vec3& VecList::vec(int index) const {
+  // @@protoc_insertion_point(field_get:Message.VecList.vec)
+  return vec_.Get(index);
+}
+inline ::Message::Vec3* VecList::add_vec() {
+  // @@protoc_insertion_point(field_add:Message.VecList.vec)
+  return vec_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Message::Vec3 >&
+VecList::vec() const {
+  // @@protoc_insertion_point(field_list:Message.VecList.vec)
+  return vec_;
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

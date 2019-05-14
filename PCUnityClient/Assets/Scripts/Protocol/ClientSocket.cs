@@ -82,9 +82,11 @@ public class ClientSocket : Singleton<ClientSocket>
                     return ProtoBuf.Serializer.Deserialize<KeyChange>(stream);
                     break;
                 case EProtocol.NetCmd:
-                    var pro = ProtoBuf.Serializer.Deserialize<CommandList>(stream);
-                    return pro;
+                    return ProtoBuf.Serializer.Deserialize<CommandList>(stream);
+                    
                     break;
+                case EProtocol.MobileDir:
+                    return ProtoBuf.Serializer.Deserialize<VecList>(stream);
                 default: return null;
             }
         }

@@ -38,3 +38,7 @@ message Vec3{
 	required float y = 2;
 	required float z = 3;
 }
+
+message VecList{
+	repeated Vec3 vec = 1;
+}

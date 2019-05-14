@@ -12,6 +12,7 @@ namespace Component.Actor
     {
         private Transform _targetTrans = null;
         private Transform _weapen = null;
+        public Camera camera = null;
         public LocalPlayerBehaviorComp(IActor actor) : base(actor)
         {
         }
@@ -34,6 +35,8 @@ namespace Component.Actor
                     this._targetTrans.localPosition = Vector3.zero;
                     this._targetTrans.rotation = Quaternion.identity;
                 }
+
+                this.camera = go.GetComponent<Camera>();
             }
 
             this._weapen = this._targetTrans.CustomFind("weapenPos");
@@ -61,8 +64,17 @@ namespace Component.Actor
 
             if (this._weapen)
             {
-                Vector3 dir = CurrentInput.CurInput.GetAxis3D(InputKeyType.DirVector);
-                this._weapen.LookAt(this._weapen.position + dir);
+                Vector3 screenPos = CurrentInput.CurInput.GetAxis3D(InputKeyType.DirVector);
+                if (this.camera != null)
+                {
+                    Vector3 worldPos = this.camera.ScreenToWorldPoint(screenPos);
+                    this._weapen.LookAt(worldPos);
+                }
+                else
+                {
+                    Debug.LogError("camera null");
+                }
+                
             }
             
 

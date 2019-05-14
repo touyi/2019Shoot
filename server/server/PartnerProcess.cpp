@@ -2,6 +2,7 @@
 #include "protocol/Protocol.pb.h"
 #include "protocolnumber.h"
 #include<map>
+#include<sstream>
 
 PartnerProcess::PartnerProcess()
 {
@@ -39,11 +40,26 @@ CClient * PartnerProcess::GetMobile()
     return Mobile;
 }
 
+void PartnerProcess::ParseVec3(const char * obj, float & x, float & y, float & z)
+{
+    using namespace std;
+    const char* src = strstr(obj, "O#");
+    if (src == NULL) {
+        return;
+    }
+    src += 2;
+    stringstream stream(src);
+    stream >> x >> y;
+    std::cout << x << " " << y << std::endl;
+    z = 0;
+}
+
 bool PartnerProcess::ParseWebInfo(std::vector<DataBuffer>& parseBufferVec)
 {
     using namespace Message;
     KeyChange keychange;
     CommandList cmdList;
+    VecList vecList;
     using std::map;
     using std::pair;
     map<KeyType, KeyState> keyMap;
@@ -79,6 +95,14 @@ bool PartnerProcess::ParseWebInfo(std::vector<DataBuffer>& parseBufferVec)
             cmd->set_ctype(CmdType::GameEnd);
             
         }
+        if (strstr(buffer->buffer, "O#") != NULL) {
+            Vec3* vec = vecList.add_vec();
+            float x, y, z;
+            this->ParseVec3(buffer->buffer, x, y, z);
+            vec->set_x(x);
+            vec->set_y(y);
+            vec->set_z(z);
+        }
         delete buffer;
     }
     
@@ -104,7 +128,15 @@ bool PartnerProcess::ParseWebInfo(std::vector<DataBuffer>& parseBufferVec)
         cmdList.SerializeToArray(parseBuffer.Package.datas, cmdSize);
         parseBufferVec.push_back(parseBuffer);
     }
-    if (cmdSize <= 0 && keyChangeSize <= 0) {
+    int vecSize = vecList.ByteSize();
+    if (vecSize > 0) {
+        DataBuffer parseBuffer;
+        parseBuffer.Package.head.proto = 3;
+        parseBuffer.Package.head.Length = vecSize + HEAD_SIZE;
+        vecList.SerializeToArray(parseBuffer.Package.datas, vecSize);
+        parseBufferVec.push_back(parseBuffer);
+    }
+    if (cmdSize <= 0 && keyChangeSize <= 0 && vecSize <= 0) {
         return false;
     }
     
