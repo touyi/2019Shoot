@@ -30,7 +30,7 @@ namespace NetInput
                     {
                         if (_input == null)
                         {
-                            _input = new SInput();
+                            _input = new TempInput();
                         }
                     }
                 }

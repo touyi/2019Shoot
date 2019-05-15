@@ -36,6 +36,13 @@ namespace FSM.GameMainStateDef
             data.type = ActorType.LocalPlayer;
             Actor actor = actorManager.CreateActor(data);
             data.Release();
+            
+            // TODO 临时测试
+            data = ActorBuildData.Get();
+            data.BornWorldPos = gamePlay.LevelManager.GetLocalPlayerPos(0) + new Vector3(50, 50, 50);
+            data.type = ActorType.Enemy;
+            actorManager.CreateActor(data);
+            data.Release();
         }
 
         public void Execute()

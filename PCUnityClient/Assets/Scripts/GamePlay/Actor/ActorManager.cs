@@ -13,6 +13,8 @@ namespace GamePlay.Actor
     {
         public ActorType type;
         public Vector3 BornWorldPos;
+        public float HP;
+        public float Power;
     }
     public class ActorManager : IProcess, IAcceptCommand
     {
@@ -43,6 +45,7 @@ namespace GamePlay.Actor
                         this.localPlayer = actor;
                         break;
                     case ActorType.Enemy:
+                        actor = this.BuildEnemyActor(buildData);
                         break;
                     case ActorType.UI:
                         actor = this.BuildUIActor(buildData);
@@ -99,6 +102,38 @@ namespace GamePlay.Actor
             // TODO组装
             actor.InsertActorComponent(ActorComponentType.PlayerBehaviorComponent, new LocalPlayerBehaviorComp(actor));
             actor.InsertActorComponent(ActorComponentType.WeapenComponent, new WeapenComp(actor));
+            return actor;
+        }
+
+        private Actor BuildEnemyActor(ActorBuildData data)
+        {
+            Actor actor = new Actor();
+            actor.InsertActorComponent(ActorComponentType.ActorGameObjectComponent,
+                new GameObjectComp(actor, PathDefine.EnemyPrefabPath));
+            
+            var comp = new SetBornWorldPosComp(actor);
+            comp.TempSetBornPos(data.BornWorldPos);
+
+            actor.InsertActorComponent(ActorComponentType.BornPosSetComponent, comp);
+            if (this.localPlayer != null)
+            {
+                GameObjectComp goComp =
+                    this.localPlayer.GetActorComponent(ActorComponentType.PlayerBehaviorComponent) as GameObjectComp;
+                if (goComp != null)
+                {
+                    actor.InsertActorComponent(ActorComponentType.PlayerBehaviorComponent,
+                        new FollowTargetComp(actor, goComp.Target));
+                }
+                else
+                {
+                    Debug.LogError("build enemy fail,gocomp is null");
+                }
+            }
+            else
+            {
+                Debug.LogError("localPlayer is null");
+            }
+            
             return actor;
         }
 

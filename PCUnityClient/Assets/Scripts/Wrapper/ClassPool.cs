@@ -38,7 +38,7 @@ namespace Wrapper
 
         protected virtual void Uninit()
         {
-            
+            this.Init();
         }
         
         public void Release()

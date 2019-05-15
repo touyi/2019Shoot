@@ -8,7 +8,7 @@ using Wrapper;
 
 namespace Component.Actor
 {
-    public class LocalPlayerBehaviorComp : ActorBaseComponent
+    public class LocalPlayerBehaviorComp : GameObjectComp
     {
         private Transform _targetTrans = null;
         private Transform _weapen = null;
@@ -24,20 +24,18 @@ namespace Component.Actor
 
         public override void Init()
         {
-            GameObject prefab = AssetsManager.Instance.LoadPrefab("Actor/KeyBordMainPlayer");
-            if (prefab != null)
+            this.SetGameObjPath(PathDefine.LocalPlayerPath);
+            base.Init();
+            Transform parent = GameMain.Instance.CurrentGamePlay.LevelManager.GetLocalPlayerBase(0);
+            this._targetTrans = this.target;
+            this._targetTrans.SetParent(parent);
+            if (this._targetTrans)
             {
-                Transform parent = GameMain.Instance.CurrentGamePlay.LevelManager.GetLocalPlayerBase(0);
-                GameObject go = GameObject.Instantiate(prefab, parent);
-                this._targetTrans = go.transform;
-                if (this._targetTrans)
-                {
-                    this._targetTrans.localPosition = Vector3.zero;
-                    this._targetTrans.rotation = Quaternion.identity;
-                }
-
-                this.camera = go.GetComponent<Camera>();
+                this._targetTrans.localPosition = Vector3.zero;
+                this._targetTrans.rotation = Quaternion.identity;
             }
+
+            this.camera = this.target.GetComponent<Camera>();
 
             this._weapen = this._targetTrans.CustomFind("weapenPos");
         }

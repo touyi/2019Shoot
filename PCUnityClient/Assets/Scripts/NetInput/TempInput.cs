@@ -50,7 +50,7 @@ namespace NetInput
             switch (key)
             {
                     case InputKeyType.DirVector:
-                        return dir.normalized;
+                        return new Vector3(Screen.width / 2f, Screen.height / 2f, 2000);
                         break;
             }
 

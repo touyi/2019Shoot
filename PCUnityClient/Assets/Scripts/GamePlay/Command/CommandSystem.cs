@@ -1,4 +1,5 @@
-﻿using Wrapper;
+﻿using GamePlay.Actor;
+using Wrapper;
 
 namespace GamePlay.Command
 {
@@ -6,6 +7,7 @@ namespace GamePlay.Command
     {
         InputCmd,
         UIRootCmd,
+        AttackCmd,
     }
 
     public interface IBaseCommand
@@ -62,6 +64,23 @@ namespace GamePlay.Command
         {
             IsUse = false;
             Info = "";
+        }
+    }
+    
+    public class AttackCmd : Poolable<AttackCmd>, IBaseCommand
+    {
+        public CmdType CmdType { get; private set; }
+        public bool IsUse { get; set; }
+        public IActor SrcActor;
+        public IActor DesActor;
+        public float Demage;
+        protected override void Init()
+        {
+            base.Init();
+            SrcActor = null;
+            DesActor = null;
+            this.IsUse = false;
+            this.CmdType = CmdType.AttackCmd;
         }
     }
 

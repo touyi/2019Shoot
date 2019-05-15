@@ -15,6 +15,7 @@ namespace GamePlay.Actor
     
     public class Actor : IActor, IAcceptCommand
     {
+        
         public ActorType ActorType;
         private bool isStart = false;
         private Dictionary<ActorComponentType, ActorBaseComponent> components =
@@ -69,13 +70,7 @@ namespace GamePlay.Actor
 
         public void Init()
         {
-//            using (Dictionary<ActorComponentType, ActorBaseComponent>.Enumerator item = this.components.GetEnumerator())
-//            {
-//                while (item.MoveNext())
-//                {
-//                    item.Current.Value.Init();
-//                }
-//            }
+            this.IsNeedRecover = false;
         }
 
         public void Start()
@@ -103,6 +98,8 @@ namespace GamePlay.Actor
 
             isStart = false;
         }
+
+        public bool IsNeedRecover { get; set; }
 
         public void AcceptCmd(IBaseCommand cmd)
         {

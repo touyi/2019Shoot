@@ -1,21 +1,24 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using Message;
 using MessageSystem;
 using NetInput;
-using UnityEngine;
 using Wrapper;
+using Debug = UnityEngine.Debug;
 
 namespace Protocol
 {
-public class ClientSocket : Singleton<ClientSocket> 
+    
+    public class ClientSocket : Singleton<ClientSocket>
     {
         public const int BYTE_LENGTH = 60;
         private ClientWarp _warp = null;
         private bool isConnect = false;
-
+        
+        [Conditional("NORMAL")]
         public void Init()
         {
             _warp = new ClientWarp();
@@ -28,11 +31,12 @@ public class ClientSocket : Singleton<ClientSocket>
 
             isConnect = true;
         }
-
+        [Conditional("NORMAL")]
         public void Uninit()
         {
             _warp.ExitClient();
         }
+        [Conditional("NORMAL")]
         public void Update(float deltaTime)
         {
             if (!this._warp.IsConnected())
@@ -42,6 +46,7 @@ public class ClientSocket : Singleton<ClientSocket>
                     isConnect = false;
                     //  TODO 异步尝试重新连接
                 }
+
                 Debug.Log("尝试连接 ");
                 return;
             }
@@ -54,13 +59,14 @@ public class ClientSocket : Singleton<ClientSocket>
         }
 
         private byte[] memBytes = new byte[BYTE_LENGTH];
+
         private void HandleData(DataItem item)
         {
-            Debug.Log(string.Format("协议：{0} ",item.protocol));
+            Debug.Log(string.Format("协议：{0} ", item.protocol));
             try
             {
                 Marshal.Copy(item.GetBuffer(), memBytes, 0, item.bufferLength);
-                using (MemoryStream stream = new MemoryStream(memBytes, 0, item.bufferLength)) 
+                using (MemoryStream stream = new MemoryStream(memBytes, 0, item.bufferLength))
                 {
                     //KeyChange change = ProtoBuf.Serializer.Deserialize<KeyChange>(stream);
                     object msg = this.ParseBuffer(item.protocol, stream);
@@ -83,7 +89,7 @@ public class ClientSocket : Singleton<ClientSocket>
                     break;
                 case EProtocol.NetCmd:
                     return ProtoBuf.Serializer.Deserialize<CommandList>(stream);
-                    
+
                     break;
                 case EProtocol.MobileDir:
                     return ProtoBuf.Serializer.Deserialize<VecList>(stream);
@@ -111,6 +117,6 @@ public class ClientSocket : Singleton<ClientSocket>
 //        }
 
         #endregion
-        
+
     }
 }

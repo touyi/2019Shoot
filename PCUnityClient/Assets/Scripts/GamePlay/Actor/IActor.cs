@@ -11,5 +11,6 @@ namespace GamePlay.Actor
         void Init();
         void Start();
         void Uninit();
+        bool IsNeedRecover { get; set; }
     }
 }
