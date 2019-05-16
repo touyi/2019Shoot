@@ -3,6 +3,7 @@ using assets;
 using GamePlay.Actor;
 using NetInput;
 using Tools;
+using UnityEditor.Rendering;
 using UnityEngine;
 using Wrapper;
 
@@ -40,17 +41,17 @@ namespace Component.Actor
             this._weapen = this._targetTrans.CustomFind("weapenPos");
         }
 
-        public override void Start()
+        public override void Update(float deltaTime)
         {
+            UpdateInput();
         }
 
         public override void Uninit()
         {
-        } 
-
-        public override void Update(float deltaTime)
-        {
-            UpdateInput();
+            this.camera = null;
+            this._weapen = null;
+            this._targetTrans = null;
+            base.Uninit();
         }
 
         private void UpdateInput()

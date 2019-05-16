@@ -20,9 +20,11 @@ namespace GamePlay.Actor
     {
         // TODO
         List<Actor> _actors = new List<Actor>();
+        List<Actor> _deleteActors = new List<Actor>();
 
         private Actor localPlayer = null;
         private Actor uiRootActor = null;
+        private long assignID = 0;
         
         public Actor LocalPlayer
         {
@@ -55,6 +57,7 @@ namespace GamePlay.Actor
 
             if (actor != null)
             {
+                actor.ActorGid = ++assignID;
                 actor.Init();
                 actor.Start();
                 this._actors.Add(actor);
@@ -73,6 +76,11 @@ namespace GamePlay.Actor
 
         public void Update(float deltaTime)
         {
+            for (int i = 0; i < _deleteActors.Count; i++)
+            {
+                this._deleteActors[i].Uninit();
+            }
+            this._deleteActors.Clear();
             using (List<Actor>.Enumerator item = this._actors.GetEnumerator())
             {
                 while (item.MoveNext())
@@ -80,8 +88,17 @@ namespace GamePlay.Actor
                     if (item.Current != null)
                     {
                         item.Current.Update(deltaTime);
+                        if (item.Current.IsNeedRecover)
+                        {
+                            _deleteActors.Add(item.Current);
+                        }
                     }
                 }
+            }
+
+            for (int i = _deleteActors.Count - 1; i >=0; i--)
+            {
+                this._actors.Remove(_deleteActors[i]);
             }
         }
 
@@ -111,10 +128,14 @@ namespace GamePlay.Actor
             actor.InsertActorComponent(ActorComponentType.ActorGameObjectComponent,
                 new GameObjectComp(actor, PathDefine.EnemyPrefabPath));
             
-            var comp = new SetBornWorldPosComp(actor);
-            comp.TempSetBornPos(data.BornWorldPos);
-
-            actor.InsertActorComponent(ActorComponentType.BornPosSetComponent, comp);
+            var bornComp = new SetBornWorldPosComp(actor);
+            bornComp.TempSetBornPos(data.BornWorldPos);
+            actor.InsertActorComponent(ActorComponentType.BornPosSetComponent, bornComp);
+            
+            var dataComp = new ActorDataComp(actor);
+            dataComp.Hp = data.HP;
+            dataComp.Power = data.Power;
+            actor.InsertActorComponent(ActorComponentType.ActorDataComponent, dataComp);
             if (this.localPlayer != null)
             {
                 GameObjectComp goComp =

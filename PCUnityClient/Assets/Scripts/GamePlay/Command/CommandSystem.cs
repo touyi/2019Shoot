@@ -1,4 +1,6 @@
-﻿using GamePlay.Actor;
+﻿using System;
+using GamePlay.Actor;
+using UnityEngine;
 using Wrapper;
 
 namespace GamePlay.Command
@@ -8,6 +10,7 @@ namespace GamePlay.Command
         InputCmd,
         UIRootCmd,
         AttackCmd,
+        EffectCmd,
     }
 
     public interface IBaseCommand
@@ -81,6 +84,23 @@ namespace GamePlay.Command
             DesActor = null;
             this.IsUse = false;
             this.CmdType = CmdType.AttackCmd;
+        }
+    }
+    
+    public class EffectCmd : Poolable<EffectCmd>, IBaseCommand
+    {
+        public CmdType CmdType { get; private set; }
+        public bool IsUse { get; set; }
+        public string EffectPath;
+        public Vector3 PlayWorldPos;
+
+        protected override void Init()
+        {
+            base.Init();
+            this.IsUse = false;
+            this.CmdType = CmdType.EffectCmd;
+            this.EffectPath = String.Empty;
+            this.PlayWorldPos = Vector3.zero;
         }
     }
 

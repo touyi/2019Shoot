@@ -18,7 +18,13 @@ namespace Component.Actor
         public GameObjectComp(IActor actor) : base(actor)
         {
         }
-        
+
+        public override void Uninit()
+        {
+            GameObject.Destroy(this.target.gameObject);
+            base.Uninit();
+        }
+
         public GameObjectComp(IActor actor, string path) : base(actor)
         {
             this.SetGameObjPath(path);

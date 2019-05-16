@@ -1,8 +1,10 @@
-﻿using GamePlay.Actor;
+﻿using GamePlay;
+using GamePlay.Actor;
+using GamePlay.Command;
 
 namespace Component.Actor
 {
-    public class ActorDataComp : ActorBaseComponent
+    public class ActorDataComp : ActorBaseComponent,IAcceptCommand
     {
         private float hp = 0;
         private float power = 0;
@@ -10,7 +12,14 @@ namespace Component.Actor
         public float Hp
         {
             get { return hp; }
-            set { hp = value; }
+            set
+            {
+                hp = value;
+                EventData data = EventData.Get();
+                data.longPara = this._actor.Ref.ActorGid;
+                GameMain.Instance.CurrentGamePlay.Dispathcer.LaunchEvent(GameEventDefine.ActorLifeChange, data);
+                data.Release();
+            }
         }
 
         public float Power
@@ -21,6 +30,22 @@ namespace Component.Actor
 
         public ActorDataComp(IActor actor) : base(actor)
         {
+        }
+
+        public void AcceptCmd(IBaseCommand cmd)
+        {
+            if (cmd.CmdType != CmdType.AttackCmd)
+            {
+                return;
+            }
+            
+            AttackCmd attackCmd = cmd as AttackCmd;
+            if (attackCmd == null || attackCmd.DesActor != this._actor.Ref)
+            {
+                return;
+            }
+
+            this.Hp -= attackCmd.Demage;
         }
     }
 }

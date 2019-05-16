@@ -17,12 +17,17 @@ namespace Component.Actor
 
         public override void Init()
         {
-            GameObject go = AssetsManager.Instance.LoadPrefab("UI/UIRoot");
+            GameObject go = AssetsManager.Instance.LoadPrefab(PathDefine.UIRootPath);
             GameObject root = GameObject.Instantiate(go);
             uIRoot = root.GetComponent<RectTransform>();
             encode = uIRoot.CustomGetComponent<RawImage>("WaitScan/encodeimg");
         }
 
+        public override void Uninit()
+        {
+            GameObject.Destroy(uIRoot.gameObject);
+            base.Uninit();
+        }
 
         public void AcceptCmd(IBaseCommand cmd)
         {

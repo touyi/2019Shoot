@@ -1,4 +1,5 @@
-﻿using GamePlay.Actor;
+﻿using System;
+using GamePlay.Actor;
 using GamePlay.Command;
 using UnityEngine;
 
@@ -8,12 +9,19 @@ namespace Component.Actor
     {
         private Transform followTarget = null;
         private Transform navTarget = null;
-        private const float Damping = 0.5f;
+        private const float Damping = 1f;
         private const float FlySpeed = 25.6f;
         private const float AttackDistance = 10;
         public FollowTargetComp(IActor actor, Transform target) : base(actor)
         {
             this.SetTarget(target);
+        }
+
+        public override void Uninit()
+        {
+            followTarget = null;
+            navTarget = null;
+            base.Uninit();
         }
 
         private void SetTarget(Transform target)
@@ -53,8 +61,7 @@ namespace Component.Actor
 
         private void ProcessAttack()
         {
-            // TODO 获取攻击力 攻击角色 销毁自己
-            var data = this._actor.Ref.GetActorComponent(ActorComponentType.ActorInfoComponent) as ActorDataComp;
+            var data = this._actor.Ref.GetActorComponent(ActorComponentType.ActorDataComponent) as ActorDataComp;
             if (data != null)
             {
                 AttackCmd cmd = AttackCmd.Get();
@@ -67,7 +74,11 @@ namespace Component.Actor
             }
 
             this._actor.Ref.IsNeedRecover = true;
-            // TODO 释放爆炸特效
+            EffectCmd effectCmd = EffectCmd.Get();
+            effectCmd.PlayWorldPos = this.navTarget.position;
+            effectCmd.EffectPath = String.Empty; // TODO 爆炸特效路径
+            GameMain.Instance.CurrentGamePlay.AcceptCmd(effectCmd);
+            effectCmd.Release();
         }
     }
 }

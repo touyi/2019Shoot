@@ -10,11 +10,17 @@ namespace GamePlay
         None = 0,
         GameBegin = 1,
         GameEnd = 2,
-        Count = 3,
+        ActorLifeChange = 3,
+        Count = 4,
     }
 
     public class EventData : Poolable<EventData>
     {
+        public int intPara;
+        public long longPara;
+        public string strPara;
+        public float floatPara;
+        public object objectPara;
         protected override void Init()
         {
         }

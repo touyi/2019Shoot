@@ -33,7 +33,7 @@ namespace Component.Widget
         public void Init(Transform parent)
         {
             // 激光器
-            GameObject prefab = AssetsManager.Instance.LoadPrefab("Gun/linegun");
+            GameObject prefab = AssetsManager.Instance.LoadPrefab(PathDefine.LineGunPath);
             if (prefab != null)
             {
                 GameObject go = GameObject.Instantiate(prefab, parent);
@@ -44,7 +44,7 @@ namespace Component.Widget
                 
             }
             // 激光束
-            GameObject line = AssetsManager.Instance.LoadPrefab("bullet/plasma_beam_blue");
+            GameObject line = AssetsManager.Instance.LoadPrefab(PathDefine.BluLinePath);
             if (line != null)
             {
                 Transform dir = this._gun.CustomFind("dir");
@@ -62,6 +62,8 @@ namespace Component.Widget
 
         public void Uninit()
         {
+            GameObject.Destroy(this._bulelineControl.gameObject);
+            GameObject.Destroy(this._gun.gameObject);
         }
 
         public void Update(float deltaTime)

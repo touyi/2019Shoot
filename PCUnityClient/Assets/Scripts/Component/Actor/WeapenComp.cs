@@ -28,6 +28,16 @@ namespace Component.Actor
             gun.StopFire();
         }
 
+        public override void Uninit()
+        {
+            for (int i = 0; i < this._guns.Count; i++)
+            {
+                this._guns[i].Uninit();
+            }
+            this._guns.Clear();
+            base.Uninit();
+        }
+
         public override void Start()
         {
         }

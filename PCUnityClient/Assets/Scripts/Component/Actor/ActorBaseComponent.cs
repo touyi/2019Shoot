@@ -11,7 +11,7 @@ namespace Component.Actor
         AttackComponent,
         ActorGameObjectComponent,
         BornPosSetComponent,
-        ActorInfoComponent,
+        ActorDataComponent,
         UIRootComponent,
     }
     public class ActorBaseComponent : IBaseComponent

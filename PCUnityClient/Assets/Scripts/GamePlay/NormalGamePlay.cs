@@ -1,9 +1,10 @@
 ﻿using FSM;
 using GamePlay.Actor;
+using GamePlay.Command;
 
 namespace GamePlay
 {
-    public class NormalGamePlay : IGamePlay
+    public class NormalGamePlay : IGamePlay, IAcceptCommand
     {
         private MainFSMStarter _fsmStarter = null;
         private ActorManager _actorManager = null;
@@ -71,6 +72,15 @@ namespace GamePlay
             _fsmStarter.Uninit();
             _actorManager.Uninit();
             _dispathcer.Uninit();
+        }
+
+        public void AcceptCmd(IBaseCommand cmd)
+        {
+            if (cmd.IsUse == true)
+            {
+                return;
+            }
+            this._actorManager.AcceptCmd(cmd);
         }
     }
 }

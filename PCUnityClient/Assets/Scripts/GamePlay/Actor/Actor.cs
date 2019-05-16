@@ -15,11 +15,13 @@ namespace GamePlay.Actor
     
     public class Actor : IActor, IAcceptCommand
     {
-        
         public ActorType ActorType;
         private bool isStart = false;
         private Dictionary<ActorComponentType, ActorBaseComponent> components =
             new Dictionary<ActorComponentType, ActorBaseComponent>();
+
+        public long ActorGid { get; set; }
+
         public ActorBaseComponent GetActorComponent(ActorComponentType type)
         {
             ActorBaseComponent baseComponent = null;
