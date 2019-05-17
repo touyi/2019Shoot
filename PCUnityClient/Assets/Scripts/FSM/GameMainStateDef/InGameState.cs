@@ -16,13 +16,17 @@ namespace FSM.GameMainStateDef
     public class InGameState : BaseState
     {
         private bool lastFireState = false;
-
+        private int remainEnemy = 0;
+        private int currentWave = 0;
+        private WaveInfo _waveInfo = new WaveInfo();
+        
         private WeakRef<StateMachine<GameMainState, GameMainEvent>> _fsm =
             new WeakRef<StateMachine<GameMainState, GameMainEvent>>();
         public void Enter()
         {
             GameMain.Instance.CurrentGamePlay.Dispathcer.RegistListener(GameEventDefine.GameEnd, this.OnGameEnd);
-            // TODO 初始化玩家
+            GameMain.Instance.CurrentGamePlay.Dispathcer.RegistListener(GameEventDefine.ActorLifeChange,
+                this.OnActorLifeChange);
             NormalGamePlay gamePlay = GameMain.Instance.CurrentGamePlay as NormalGamePlay;
             if (gamePlay == null)
             {
@@ -40,13 +44,13 @@ namespace FSM.GameMainStateDef
             data.Release();
             
             // TODO 临时测试
-            data = ActorBuildData.Get();
-            data.BornWorldPos = gamePlay.LevelManager.GetLocalPlayerPos(0) + new Vector3(50, 50, 50);
-            data.type = ActorType.Enemy;
-            data.HP = 100;
-            data.Power = 50;
-            actorManager.CreateActor(data);
-            data.Release();
+//            data = ActorBuildData.Get();
+//            data.BornWorldPos = gamePlay.LevelManager.GetLocalPlayerPos(0) + new Vector3(50, 50, 50);
+//            data.type = ActorType.Enemy;
+//            data.HP = 100;
+//            data.Power = 50;
+//            actorManager.CreateActor(data);
+//            data.Release();
         }
 
         public void Execute()
@@ -66,11 +70,24 @@ namespace FSM.GameMainStateDef
                 GameMain.Instance.CurrentGamePlay.ActorManager.AcceptCmd(cmd);
             }
             lastFireState = isFire;
+
+            if (remainEnemy <= 0)
+            {
+                // 产生新波次
+                var datas = this._waveInfo.ProductWaveEnemyDatas(++currentWave);
+                remainEnemy = datas.Count;
+                for (int i = 0; i < remainEnemy; i++)
+                {
+                    GameMain.Instance.CurrentGamePlay.ActorManager.CreateActor(datas[i]);
+                }
+            }
         }
 
         public void Exit()
         {
             GameMain.Instance.CurrentGamePlay.Dispathcer.RemoveListener(GameEventDefine.GameEnd, this.OnGameEnd);
+            GameMain.Instance.CurrentGamePlay.Dispathcer.RemoveListener(GameEventDefine.ActorLifeChange,
+                this.OnActorLifeChange);
         }
 
         public void RegistToFsm(StateMachine<GameMainState, GameMainEvent> fsm)
@@ -80,6 +97,14 @@ namespace FSM.GameMainStateDef
                 .Attach(this);
 
             this._fsm.Ref = fsm;
+        }
+
+        private void OnActorLifeChange(EventData data)
+        {
+            if (data.floatPara <= 0 && GameMain.Instance.CurrentGamePlay.ActorManager.IsEnemy(data.longPara))
+            {
+                remainEnemy--;
+            }
         }
 
         private void OnGameEnd(EventData param)

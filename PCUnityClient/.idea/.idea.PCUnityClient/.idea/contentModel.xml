@@ -145,6 +145,7 @@
           <e p="Actor" t="Include">
             <e p="ActorBaseComponent.cs" t="Include" />
             <e p="ActorDataComp.cs" t="Include" />
+            <e p="ActorHelp.cs" t="Include" />
             <e p="FollowTargetComp.cs" t="Include" />
             <e p="GameObjectComp.cs" t="Include" />
             <e p="LocalPlayerBehaviorComp.cs" t="Include" />
@@ -182,6 +183,7 @@
           <e p="LevelManager.cs" t="Include" />
           <e p="NormalDispatcher.cs" t="Include" />
           <e p="NormalGamePlay.cs" t="Include" />
+          <e p="WaveInfo.cs" t="Include" />
         </e>
         <e p="GamePool" t="Include">
           <e p="GPGameObjectPool.cs" t="Include" />

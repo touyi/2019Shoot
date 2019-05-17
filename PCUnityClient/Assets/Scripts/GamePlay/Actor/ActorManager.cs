@@ -58,6 +58,7 @@ namespace GamePlay.Actor
             if (actor != null)
             {
                 actor.ActorGid = ++assignID;
+                actor.ActorType = buildData.type;
                 actor.Init();
                 actor.Start();
                 this._actors.Add(actor);
@@ -106,7 +107,26 @@ namespace GamePlay.Actor
         {
         }
 
-        
+        public bool IsEnemy(long actorGid)
+        {
+            for (int i = 0; i < this._actors.Count; i++)
+            {
+                if (this._actors[i].ActorGid == actorGid && this._actors[i].ActorType == ActorType.Enemy)
+                {
+                    return true;
+                }
+            }
+            
+            for (int i = 0; i < this._deleteActors.Count; i++)
+            {
+                if (this._deleteActors[i].ActorGid == actorGid && this._deleteActors[i].ActorType == ActorType.Enemy)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         /// <summary>
         /// 这个应该放在工厂里面 这里临时做法 TODO
@@ -120,7 +140,7 @@ namespace GamePlay.Actor
             actor.InsertActorComponent(ActorComponentType.PlayerBehaviorComponent, new LocalPlayerBehaviorComp(actor));
             actor.InsertActorComponent(ActorComponentType.WeapenComponent, new WeapenComp(actor));
             var comp = new ActorDataComp(actor);
-            comp.Hp = data.HP;
+            comp.HP = data.HP;
             comp.Power = data.Power;
             actor.InsertActorComponent(ActorComponentType.ActorDataComponent, comp);
             return actor;
@@ -137,7 +157,7 @@ namespace GamePlay.Actor
             actor.InsertActorComponent(ActorComponentType.BornPosSetComponent, bornComp);
             
             var dataComp = new ActorDataComp(actor);
-            dataComp.Hp = data.HP;
+            dataComp.HP = data.HP;
             dataComp.Power = data.Power;
             actor.InsertActorComponent(ActorComponentType.ActorDataComponent, dataComp);
             if (this.localPlayer != null)

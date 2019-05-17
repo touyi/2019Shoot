@@ -6,20 +6,15 @@ using UnityEngine;
 
 namespace GamePlay.Actor
 {
-    public enum ActorType
-    {
-        LocalPlayer,
-        Enemy,
-        UI,
-    }
+    
     
     public class Actor : IActor, IAcceptCommand
     {
-        public ActorType ActorType;
         private bool isStart = false;
         private Dictionary<ActorComponentType, ActorBaseComponent> components =
             new Dictionary<ActorComponentType, ActorBaseComponent>();
 
+        public ActorType ActorType { get; set; }
         public long ActorGid { get; set; }
 
         public ActorBaseComponent GetActorComponent(ActorComponentType type)

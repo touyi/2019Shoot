@@ -9,7 +9,7 @@ namespace Component.Actor
         private float hp = 0;
         private float power = 0;
 
-        public float Hp
+        public float HP
         {
             get { return hp; }
             set
@@ -46,7 +46,7 @@ namespace Component.Actor
                 return;
             }
 
-            this.Hp -= attackCmd.Demage;
+            this.HP -= attackCmd.Demage;
         }
     }
 }

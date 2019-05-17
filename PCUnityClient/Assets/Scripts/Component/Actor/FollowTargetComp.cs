@@ -28,6 +28,7 @@ namespace Component.Actor
         {
             followTarget = null;
             navTarget = null;
+            GameMain.Instance.CurrentGamePlay.Dispathcer.RemoveListener(GameEventDefine.ActorLifeChange, this.OnActorLifeChange);
             base.Uninit();
         }
 
@@ -92,7 +93,8 @@ namespace Component.Actor
                 GameMain.Instance.CurrentGamePlay.ActorManager.LocalPlayer.AcceptCmd(cmd);
                 cmd.Release();
             }
-            this.ActorDeath();
+
+            this._actor.Ref.ActorData().HP = 0;
         }
 
         private void ActorDeath()
