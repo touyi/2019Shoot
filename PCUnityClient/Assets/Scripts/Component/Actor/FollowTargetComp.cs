@@ -33,7 +33,6 @@ namespace Component.Actor
 
         private void OnActorLifeChange(EventData data)
         {
-            Debug.Log(data.floatPara);
             if (data.longPara == this._actor.Ref.ActorGid)
             {
                 if (data.floatPara <= 0)

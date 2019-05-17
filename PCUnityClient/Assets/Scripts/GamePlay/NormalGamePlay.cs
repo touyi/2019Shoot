@@ -44,13 +44,15 @@ namespace GamePlay
 
         public void Start()
         {
+            
             _actorManager.Init();
             _fsmStarter.Init();
             
+            _levelManager.Start();
             _dispathcer.Start();
             _actorManager.Start();
             _fsmStarter.Start();
-
+            
             _isRunning = true;
         }
 
@@ -65,6 +67,8 @@ namespace GamePlay
         {
             _dispathcer.Init();
             _levelManager.InitScence();
+            
+
         }
 
         public void Uninit()

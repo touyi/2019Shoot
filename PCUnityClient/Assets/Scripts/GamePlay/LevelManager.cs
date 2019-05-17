@@ -12,6 +12,11 @@ namespace GamePlay
             SceneManager.LoadScene("Scences/new");
         }
 
+        public void Start()
+        {
+            GPGameObjectPool.PreLoad<GPExplosion>(10);
+        }
+
         public Vector3 GetLocalPlayerPos(int index = 0)
         {
             // GC 优化

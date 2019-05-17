@@ -21,6 +21,7 @@ public class GPExplosion : GPObject
 
     public override void Start()
     {
+        GetComponent<ParticleSystem>().Play();
     }
     IEnumerator DelayDestory(float timer)
     {

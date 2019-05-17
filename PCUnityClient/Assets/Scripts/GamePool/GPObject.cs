@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class GPObject : MonoBehaviour {
-
-
+public abstract class GPObject : MonoBehaviour
+{
+	public bool IsReturn { get; set; }
 	public static string ResName()
 	{ 
 		return "";  
