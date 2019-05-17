@@ -17,7 +17,6 @@ namespace assets
                 Debug.LogError("LoadPrefab error path is null or empty");
                 return null;
             }
-
             path = "prefabs/" + path.Replace("//", "/").Replace("\\", "/");
             GameObject go = this.Load(path) as GameObject;
             if (go == null)

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace NetInput
 {
@@ -44,13 +45,13 @@ namespace NetInput
             throw new System.NotImplementedException();
         }
 
-        private Vector3 dir = Vector3.forward;
+        private Vector3 pos = new Vector3(Screen.width / 2f, Screen.height / 2f, 2000);
         public Vector3 GetAxis3D(InputKeyType key)
         {
             switch (key)
             {
                     case InputKeyType.DirVector:
-                        return new Vector3(Screen.width / 2f, Screen.height / 2f, 2000);
+                        return pos;
                         break;
             }
 
@@ -70,10 +71,13 @@ namespace NetInput
 
         public void Update(float deltaTime)
         {
-            float x = Input.GetAxis("Mouse X") * deltaTime;
-            float y = Input.GetAxis("Mouse Y") * deltaTime;
-            dir.y += y;
-            dir.x += x;
+            float x = Input.GetAxis("Mouse X") * deltaTime * 300;
+            float y = Input.GetAxis("Mouse Y") * deltaTime * 300;
+            pos.y += y;
+            pos.x += x;
+            pos.z = 2000;
+            pos.x = Mathf.Clamp(pos.x, 0, Screen.width);
+            pos.y = Mathf.Clamp(pos.y, 0, Screen.height);
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Component.Actor;
+using Mono;
 using UnityEngine;
 public class blueline : MonoBehaviour {
 
@@ -12,6 +14,10 @@ public class blueline : MonoBehaviour {
     RaycastHit hitpoint;
     LineRenderer linereder = null;
     float beamlength;
+
+    private const float BulletCD = 1f / 4f;
+    private float countCD = 0f;
+    public event WeapenComp.AttackCallBack OnAttackActor;
 
     private void Awake()
     {
@@ -29,6 +35,7 @@ public class blueline : MonoBehaviour {
     }
     void Update()
     {
+        countCD += Time.deltaTime;
         if (Physics.Raycast(transform.position, transform.forward, out hitpoint, MaxBeamLength))
         {
             beamlength = Vector3.Distance(transform.position, hitpoint.point);
@@ -47,10 +54,16 @@ public class blueline : MonoBehaviour {
     }
     public virtual void WhenAttackObject(GameObject attackgo)
     {
-        EnemyContorl enemy = attackgo.GetComponent<EnemyContorl>();
-        if(enemy!=null)
+        if (countCD < BulletCD)
         {
-            enemy.GetDamage(power*Time.deltaTime);
+            return;
+        }
+
+        countCD = 0;
+        var info = attackgo.GetComponent<ActorInfoWithGameObject>();
+        if (info != null && this.OnAttackActor != null)
+        {
+            this.OnAttackActor.Invoke(info.ActorGid);
         }
     }
 }

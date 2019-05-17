@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.Reflection;
+using assets;
 
 public class GPGameObjectPool
 {
@@ -24,7 +25,8 @@ public class GPGameObjectPool
 
 		if(_itemPool.Count == 0){
 			string res = GetResName<T> (_type);
-			UnityEngine.Object obj = Resources.Load (res);
+			// UnityEngine.Object obj = Resources.Load (res);
+			UnityEngine.Object obj = AssetsManager.Instance.LoadPrefab(res);
 			_go = GameObject.Instantiate (obj, postion, rotation) as GameObject;
 			if(_go.GetComponent<T>() == null) _go.AddComponent<T> ();
 		}else{

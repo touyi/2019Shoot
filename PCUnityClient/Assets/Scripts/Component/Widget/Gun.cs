@@ -7,6 +7,7 @@ namespace Component.Widget
 {
     public interface IGun
     {
+        event WeapenComp.AttackCallBack OnAttackActor;
         void Fire();
         void StopFire();
         void Init(Transform parent);
@@ -20,6 +21,8 @@ namespace Component.Widget
         private bool enable = false;
         private Transform _gun = null;
         private blueline _bulelineControl;
+        public event WeapenComp.AttackCallBack OnAttackActor;
+
         public void Fire()
         {
             this._bulelineControl.transform.CustomSetActive(true);
@@ -56,7 +59,15 @@ namespace Component.Widget
                 {
                     this._bulelineControl = go.AddComponent<blueline>();
                 }
+                this._bulelineControl.OnAttackActor += OnAttackActorInner;
+            }
+        }
 
+        private void OnAttackActorInner(long actorGid)
+        {
+            if (this.OnAttackActor != null)
+            {
+                this.OnAttackActor.Invoke(actorGid);
             }
         }
 
@@ -64,6 +75,7 @@ namespace Component.Widget
         {
             GameObject.Destroy(this._bulelineControl.gameObject);
             GameObject.Destroy(this._gun.gameObject);
+            this._bulelineControl.OnAttackActor -= OnAttackActorInner;
         }
 
         public void Update(float deltaTime)

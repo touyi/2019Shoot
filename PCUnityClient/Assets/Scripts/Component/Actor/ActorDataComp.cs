@@ -17,6 +17,7 @@ namespace Component.Actor
                 hp = value;
                 EventData data = EventData.Get();
                 data.longPara = this._actor.Ref.ActorGid;
+                data.floatPara = hp;
                 GameMain.Instance.CurrentGamePlay.Dispathcer.LaunchEvent(GameEventDefine.ActorLifeChange, data);
                 data.Release();
             }
@@ -40,7 +41,7 @@ namespace Component.Actor
             }
             
             AttackCmd attackCmd = cmd as AttackCmd;
-            if (attackCmd == null || attackCmd.DesActor != this._actor.Ref)
+            if (attackCmd == null || attackCmd.DesActor != this._actor.Ref.ActorGid)
             {
                 return;
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using GamePlay;
 using GamePlay.Actor;
 using GamePlay.Command;
 using UnityEngine;
@@ -11,10 +12,16 @@ namespace Component.Actor
         private Transform navTarget = null;
         private const float Damping = 1f;
         private const float FlySpeed = 25.6f;
-        private const float AttackDistance = 10;
+        private const float AttackDistance = 5;
         public FollowTargetComp(IActor actor, Transform target) : base(actor)
         {
             this.SetTarget(target);
+        }
+
+        public override void Init()
+        {
+            base.Init();
+            GameMain.Instance.CurrentGamePlay.Dispathcer.RegistListener(GameEventDefine.ActorLifeChange, this.OnActorLifeChange);
         }
 
         public override void Uninit()
@@ -22,6 +29,18 @@ namespace Component.Actor
             followTarget = null;
             navTarget = null;
             base.Uninit();
+        }
+
+        private void OnActorLifeChange(EventData data)
+        {
+            Debug.Log(data.floatPara);
+            if (data.longPara == this._actor.Ref.ActorGid)
+            {
+                if (data.floatPara <= 0)
+                {
+                    this.ActorDeath();
+                }
+            }
         }
 
         private void SetTarget(Transform target)
@@ -58,6 +77,8 @@ namespace Component.Actor
             }
             
         }
+        
+        
 
         private void ProcessAttack()
         {
@@ -66,17 +87,20 @@ namespace Component.Actor
             {
                 AttackCmd cmd = AttackCmd.Get();
                 cmd.Demage = data.Power;
-                cmd.SrcActor = this._actor.Ref;
+                cmd.SrcActor = this._actor.Ref.ActorGid;
                 // TODO Temp 目标应该使用Actor而不是使用GameObject 导致这里只能强行获取LocalPlayer 
-                cmd.DesActor = GameMain.Instance.CurrentGamePlay.ActorManager.LocalPlayer;
+                cmd.DesActor = GameMain.Instance.CurrentGamePlay.ActorManager.LocalPlayer.ActorGid;
                 GameMain.Instance.CurrentGamePlay.ActorManager.LocalPlayer.AcceptCmd(cmd);
                 cmd.Release();
             }
+            this.ActorDeath();
+        }
 
+        private void ActorDeath()
+        {
             this._actor.Ref.IsNeedRecover = true;
             EffectCmd effectCmd = EffectCmd.Get();
             effectCmd.PlayWorldPos = this.navTarget.position;
-            effectCmd.EffectPath = String.Empty; // TODO 爆炸特效路径
             GameMain.Instance.CurrentGamePlay.AcceptCmd(effectCmd);
             effectCmd.Release();
         }

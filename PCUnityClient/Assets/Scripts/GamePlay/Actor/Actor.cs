@@ -38,9 +38,9 @@ namespace GamePlay.Actor
             if (!this.components.ContainsKey(type) && actorBaseComponent != null) 
             {
                 this.components.Add(type, actorBaseComponent);
-                actorBaseComponent.Init();
                 if (isStart)
                 {
+                    actorBaseComponent.Init();
                     actorBaseComponent.Start();
                 }
             }
@@ -73,6 +73,13 @@ namespace GamePlay.Actor
         public void Init()
         {
             this.IsNeedRecover = false;
+            using (Dictionary<ActorComponentType, ActorBaseComponent>.Enumerator item = this.components.GetEnumerator())
+            {
+                while (item.MoveNext())
+                {
+                    item.Current.Value.Init();
+                }
+            }
         }
 
         public void Start()

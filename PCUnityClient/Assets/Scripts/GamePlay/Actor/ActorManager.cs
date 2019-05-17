@@ -119,6 +119,10 @@ namespace GamePlay.Actor
             // TODO组装
             actor.InsertActorComponent(ActorComponentType.PlayerBehaviorComponent, new LocalPlayerBehaviorComp(actor));
             actor.InsertActorComponent(ActorComponentType.WeapenComponent, new WeapenComp(actor));
+            var comp = new ActorDataComp(actor);
+            comp.Hp = data.HP;
+            comp.Power = data.Power;
+            actor.InsertActorComponent(ActorComponentType.ActorDataComponent, comp);
             return actor;
         }
 

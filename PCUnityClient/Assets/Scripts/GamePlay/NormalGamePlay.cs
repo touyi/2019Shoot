@@ -1,6 +1,7 @@
 ﻿using FSM;
 using GamePlay.Actor;
 using GamePlay.Command;
+using UnityEngine;
 
 namespace GamePlay
 {
@@ -78,6 +79,14 @@ namespace GamePlay
         {
             if (cmd.IsUse == true)
             {
+                return;
+            }
+
+            if (cmd.CmdType == CmdType.EffectCmd)
+            {
+                EffectCmd effectCmd = cmd as EffectCmd;
+                GPGameObjectPool.Creat<GPExplosion>(effectCmd.PlayWorldPos, Quaternion.identity);
+                effectCmd.IsUse = true;
                 return;
             }
             this._actorManager.AcceptCmd(cmd);

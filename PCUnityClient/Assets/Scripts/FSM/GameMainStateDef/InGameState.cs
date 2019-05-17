@@ -34,6 +34,8 @@ namespace FSM.GameMainStateDef
             ActorBuildData data = ActorBuildData.Get();
             data.BornWorldPos = gamePlay.LevelManager.GetLocalPlayerPos(0);
             data.type = ActorType.LocalPlayer;
+            data.HP = 100;
+            data.Power = 10;
             Actor actor = actorManager.CreateActor(data);
             data.Release();
             
@@ -41,6 +43,8 @@ namespace FSM.GameMainStateDef
             data = ActorBuildData.Get();
             data.BornWorldPos = gamePlay.LevelManager.GetLocalPlayerPos(0) + new Vector3(50, 50, 50);
             data.type = ActorType.Enemy;
+            data.HP = 100;
+            data.Power = 50;
             actorManager.CreateActor(data);
             data.Release();
         }

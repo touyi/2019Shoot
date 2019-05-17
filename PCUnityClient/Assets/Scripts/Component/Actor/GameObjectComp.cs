@@ -1,5 +1,6 @@
 ﻿using assets;
 using GamePlay.Actor;
+using Mono;
 using UnityEngine;
 
 namespace Component.Actor
@@ -45,6 +46,8 @@ namespace Component.Actor
             GameObject go = GameObject.Instantiate(prefab);
             if (go != null)
             {
+                var info = go.AddComponent<ActorInfoWithGameObject>();
+                info.ActorGid = this._actor.Ref.ActorGid;
                 this.target = go.transform;
             }
         }

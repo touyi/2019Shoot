@@ -12,20 +12,33 @@ namespace Component.Actor
     {
         private IGun _currentGun = null;
         private List<IGun> _guns = new List<IGun>();
+        public delegate void AttackCallBack(long actorGid);
         public WeapenComp(IActor actor) : base(actor)
         {
+        }
+
+        private void OnAttackActor(long actorGid)
+        {
+            AttackCmd attackCmd = AttackCmd.Get();
+            attackCmd.SrcActor = this._actor.Ref.ActorGid;
+            attackCmd.DesActor = actorGid;
+            var data = this._actor.Ref.GetActorComponent(ActorComponentType.ActorDataComponent) as ActorDataComp;
+            attackCmd.Demage = data.Power;
+            GameMain.Instance.CurrentGamePlay.ActorManager.AcceptCmd(attackCmd);
+            attackCmd.Release();
         }
 
         public override void Init()
         {
             LocalPlayerBehaviorComp comp =
                 this._actor.Ref.GetActorComponent(ActorComponentType.PlayerBehaviorComponent) as LocalPlayerBehaviorComp;
-            IGun gun = new LineGun();
+            LineGun gun = new LineGun();
             gun.Init(comp.WeapenTrans);
             this._guns.Add(gun);
             gun.Enable = true;
             this._currentGun = gun;
             gun.StopFire();
+            this._currentGun.OnAttackActor += this.OnAttackActor;
         }
 
         public override void Uninit()
@@ -35,6 +48,7 @@ namespace Component.Actor
                 this._guns[i].Uninit();
             }
             this._guns.Clear();
+            this._currentGun.OnAttackActor -= this.OnAttackActor;
             base.Uninit();
         }
 

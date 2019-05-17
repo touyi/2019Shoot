@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Tools;
 using UnityEngine;
 
 public class GPExplosion : GPObject
 {
     public static string ResName()
     {
-        return "prefabs/effect/Explosion_001";
+        return PathDefine.ExplosionPath;
     }
     public override void Awake()
     {

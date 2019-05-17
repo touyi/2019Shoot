@@ -77,15 +77,6 @@
             <e p="GunAim.cs" t="Include" />
             <e p="GunRotationControl.cs" t="Include" />
           </e>
-          <e p="GamePool" t="Include">
-            <e p="GPGameObjectPool.cs" t="Include" />
-            <e p="GPObject.cs" t="Include" />
-            <e p="object" t="Include">
-              <e p="GPExplosion.cs" t="Include" />
-              <e p="GPFireBullet.cs" t="Include" />
-              <e p="GPSpark.cs" t="Include" />
-            </e>
-          </e>
           <e p="LineEnergyCount.cs" t="Include" />
           <e p="LineGunDelegate.cs" t="Include" />
           <e p="MouseKeyBord" t="Include">
@@ -192,8 +183,20 @@
           <e p="NormalDispatcher.cs" t="Include" />
           <e p="NormalGamePlay.cs" t="Include" />
         </e>
+        <e p="GamePool" t="Include">
+          <e p="GPGameObjectPool.cs" t="Include" />
+          <e p="GPObject.cs" t="Include" />
+          <e p="object" t="Include">
+            <e p="GPExplosion.cs" t="Include" />
+            <e p="GPFireBullet.cs" t="Include" />
+            <e p="GPSpark.cs" t="Include" />
+          </e>
+        </e>
         <e p="MessageSystem" t="Include">
           <e p="NetMessage.cs" t="Include" />
+        </e>
+        <e p="Mono" t="Include">
+          <e p="ActorInfoWithGameObject.cs" t="Include" />
         </e>
         <e p="Net" t="Include">
           <e p="ClientDLL.cs" t="Include" />

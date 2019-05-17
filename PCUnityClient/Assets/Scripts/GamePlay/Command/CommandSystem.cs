@@ -74,14 +74,14 @@ namespace GamePlay.Command
     {
         public CmdType CmdType { get; private set; }
         public bool IsUse { get; set; }
-        public IActor SrcActor;
-        public IActor DesActor;
+        public long SrcActor;
+        public long  DesActor;
         public float Demage;
         protected override void Init()
         {
             base.Init();
-            SrcActor = null;
-            DesActor = null;
+            SrcActor = 0;
+            DesActor = 0;
             this.IsUse = false;
             this.CmdType = CmdType.AttackCmd;
         }
