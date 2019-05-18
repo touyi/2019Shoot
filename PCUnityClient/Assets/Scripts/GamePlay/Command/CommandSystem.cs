@@ -8,7 +8,7 @@ namespace GamePlay.Command
     public enum CmdType
     {
         InputCmd,
-        UIRootCmd,
+        UICmd,
         AttackCmd,
         EffectCmd,
     }
@@ -45,7 +45,9 @@ namespace GamePlay.Command
     {
         public enum UIType
         {
-            Root,
+            EncodeUI,
+            HPUI,
+            RadarUI,
         }
         public enum UIState
         {
@@ -55,7 +57,7 @@ namespace GamePlay.Command
 
         public CmdType CmdType
         {
-            get { return CmdType.UIRootCmd; }
+            get { return CmdType.UICmd; }
         }
 
         public bool IsUse { get; set; }

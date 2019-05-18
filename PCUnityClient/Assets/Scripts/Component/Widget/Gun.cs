@@ -10,13 +10,10 @@ namespace Component.Widget
         event WeapenComp.AttackCallBack OnAttackActor;
         void Fire();
         void StopFire();
-        void Init(Transform parent);
-        void Uninit();
-        void Update(float deltaTime);
         bool Enable { get; set; }
     }
 
-    public class LineGun : IGun
+    public class LineGun : IGun, IWidget
     {
         private bool enable = false;
         private Transform _gun = null;
@@ -33,7 +30,7 @@ namespace Component.Widget
             this._bulelineControl.transform.CustomSetActive(false);
         }
 
-        public void Init(Transform parent)
+        public void SetParent(Transform parent)
         {
             // 激光器
             GameObject prefab = AssetsManager.Instance.LoadPrefab(PathDefine.LineGunPath);
@@ -69,6 +66,10 @@ namespace Component.Widget
             {
                 this.OnAttackActor.Invoke(actorGid);
             }
+        }
+
+        public void Init(ActorBaseComponent parentComp)
+        {
         }
 
         public void Uninit()

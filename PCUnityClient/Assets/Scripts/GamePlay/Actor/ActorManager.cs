@@ -13,6 +13,7 @@ namespace GamePlay.Actor
     {
         public ActorType type;
         public Vector3 BornWorldPos;
+        public float MaxHp;
         public float HP;
         public float Power;
     }
@@ -140,8 +141,7 @@ namespace GamePlay.Actor
             actor.InsertActorComponent(ActorComponentType.PlayerBehaviorComponent, new LocalPlayerBehaviorComp(actor));
             actor.InsertActorComponent(ActorComponentType.WeapenComponent, new WeapenComp(actor));
             var comp = new ActorDataComp(actor);
-            comp.HP = data.HP;
-            comp.Power = data.Power;
+            comp.SetValue(data.HP,data.MaxHp,data.Power);
             actor.InsertActorComponent(ActorComponentType.ActorDataComponent, comp);
             return actor;
         }
@@ -157,7 +157,7 @@ namespace GamePlay.Actor
             actor.InsertActorComponent(ActorComponentType.BornPosSetComponent, bornComp);
             
             var dataComp = new ActorDataComp(actor);
-            dataComp.HP = data.HP;
+            dataComp.CurrentHp = data.HP;
             dataComp.Power = data.Power;
             actor.InsertActorComponent(ActorComponentType.ActorDataComponent, dataComp);
             if (this.localPlayer != null)
@@ -192,10 +192,10 @@ namespace GamePlay.Actor
 
         public void AcceptCmd(IBaseCommand cmd)
         {
-            if (cmd.CmdType == CmdType.UIRootCmd)
+            if (cmd.CmdType == CmdType.UICmd)
             {
                 UICmd uicmd = cmd as UICmd;
-                if (uicmd != null && uicmd.UiType == UICmd.UIType.Root && this.uiRootActor == null)
+                if (uicmd != null && this.uiRootActor == null)
                 {
                     var data = ActorBuildData.Get();
                     data.type = ActorType.UI;

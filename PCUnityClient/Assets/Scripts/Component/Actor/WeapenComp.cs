@@ -33,20 +33,26 @@ namespace Component.Actor
             LocalPlayerBehaviorComp comp =
                 this._actor.Ref.GetActorComponent(ActorComponentType.PlayerBehaviorComponent) as LocalPlayerBehaviorComp;
             LineGun gun = new LineGun();
-            gun.Init(comp.WeapenTrans);
+            this.AddWidget(gun);
+            gun.SetParent(comp.WeapenTrans);
             this._guns.Add(gun);
             gun.Enable = true;
             this._currentGun = gun;
             gun.StopFire();
+            
             this._currentGun.OnAttackActor += this.OnAttackActor;
         }
 
         public override void Uninit()
         {
-            for (int i = 0; i < this._guns.Count; i++)
-            {
-                this._guns[i].Uninit();
-            }
+//            for (int i = 0; i < this._guns.Count; i++)
+//            {
+//                IWidget widget = this._guns[i] as IWidget;
+//                if (widget != null)
+//                {
+//                    widget.Uninit();
+//                }
+//            }
             this._guns.Clear();
             this._currentGun.OnAttackActor -= this.OnAttackActor;
             base.Uninit();
@@ -58,6 +64,7 @@ namespace Component.Actor
 
         public override void Update(float deltaTime)
         {
+            base.Update(deltaTime);
             if (this._currentGun == null)
             {
                 return;

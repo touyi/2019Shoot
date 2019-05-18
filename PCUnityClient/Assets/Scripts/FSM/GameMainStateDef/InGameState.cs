@@ -6,6 +6,7 @@ using Message;
 using MessageSystem;
 using NetInput;
 using Protocol;
+using Tools;
 using UnityEngine;
 using Wrapper;
 using CmdType = Message.CmdType;
@@ -39,10 +40,13 @@ namespace FSM.GameMainStateDef
             data.BornWorldPos = gamePlay.LevelManager.GetLocalPlayerPos(0);
             data.type = ActorType.LocalPlayer;
             data.HP = 100;
+            data.MaxHp = data.HP;
             data.Power = 10;
             Actor actor = actorManager.CreateActor(data);
             data.Release();
-            
+
+            CMDHelper.AcceptUICmdToActorManager(UICmd.UIType.HPUI, UICmd.UIState.Open);
+
             // TODO 临时测试
 //            data = ActorBuildData.Get();
 //            data.BornWorldPos = gamePlay.LevelManager.GetLocalPlayerPos(0) + new Vector3(50, 50, 50);
@@ -88,6 +92,7 @@ namespace FSM.GameMainStateDef
             GameMain.Instance.CurrentGamePlay.Dispathcer.RemoveListener(GameEventDefine.GameEnd, this.OnGameEnd);
             GameMain.Instance.CurrentGamePlay.Dispathcer.RemoveListener(GameEventDefine.ActorLifeChange,
                 this.OnActorLifeChange);
+            CMDHelper.AcceptUICmdToActorManager(UICmd.UIType.HPUI, UICmd.UIState.Close);
         }
 
         public void RegistToFsm(StateMachine<GameMainState, GameMainEvent> fsm)

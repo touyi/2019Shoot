@@ -65,6 +65,7 @@ namespace Component.Actor
 
         public override void Update(float deltaTime)
         {
+            base.Update(deltaTime);
             if (this.navTarget != null && this.followTarget != null) // 平滑转向
             {
                 Quaternion rota = Quaternion.LookRotation(followTarget.position - this.navTarget.position);
@@ -94,7 +95,7 @@ namespace Component.Actor
                 cmd.Release();
             }
 
-            this._actor.Ref.ActorData().HP = 0;
+            this._actor.Ref.ActorData().CurrentHp = 0;
         }
 
         private void ActorDeath()

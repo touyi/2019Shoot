@@ -17,6 +17,7 @@ namespace GamePlay
                 data.BornWorldPos = GenBornPos();
                 data.type = ActorType.Enemy;
                 data.HP = Mathf.Sqrt(nWave * 50);
+                data.MaxHp = data.HP;
                 data.Power = 10;
                 datas.Add(data);
             }

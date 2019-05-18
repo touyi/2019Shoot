@@ -18,7 +18,7 @@ namespace FSM.GameMainStateDef
             GameMain.Instance.CurrentGamePlay.Dispathcer.RegistListener(GameEventDefine.GameBegin, this.OnGameBegin);
             UICmd cmd = UICmd.Get();
             cmd.UiState = UICmd.UIState.Open;
-            cmd.UiType = UICmd.UIType.Root;
+            cmd.UiType = UICmd.UIType.EncodeUI;
             // TODO 服务器下发
             cmd.Info = "http://192.168.31.183:8080";
             GameMain.Instance.CurrentGamePlay.ActorManager.AcceptCmd(cmd);
@@ -36,7 +36,7 @@ namespace FSM.GameMainStateDef
             GameMain.Instance.CurrentGamePlay.Dispathcer.RemoveListener(GameEventDefine.GameBegin, this.OnGameBegin);
             UICmd cmd = UICmd.Get();
             cmd.UiState = UICmd.UIState.Close;
-            cmd.UiType = UICmd.UIType.Root;
+            cmd.UiType = UICmd.UIType.EncodeUI;
             GameMain.Instance.CurrentGamePlay.ActorManager.AcceptCmd(cmd);
             cmd.Release();
             

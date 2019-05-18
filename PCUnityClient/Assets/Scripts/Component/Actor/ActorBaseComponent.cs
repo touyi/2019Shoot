@@ -1,4 +1,8 @@
-﻿using GamePlay.Actor;
+﻿using System;
+using System.Collections.Generic;
+using Component.Widget;
+using GamePlay.Actor;
+using NUnit.Framework;
 using UnityEngine;
 using Wrapper;
 
@@ -17,6 +21,8 @@ namespace Component.Actor
     public class ActorBaseComponent : IBaseComponent
     {
         protected WeakRef<IActor> _actor = new WeakRef<IActor>();
+        
+        protected List<IWidget> _widgets = new List<IWidget>();
 
         public bool Enable = true;
 
@@ -31,6 +37,25 @@ namespace Component.Actor
                 Debug.LogError("actor is null !");
                 return;
             }
+        }
+
+        protected void AddWidget(IWidget widget)
+        {
+            if (widget != null)
+            {
+                widget.Init(this);
+                this._widgets.Add(widget);
+            }
+        }
+
+        protected void RemoveWidget(IWidget widget)
+        {
+            if (widget != null)
+            {
+                widget.Uninit();
+            }
+
+            this._widgets.Remove(widget);
         }
 
         #region 子类关注
@@ -52,10 +77,18 @@ namespace Component.Actor
 
         public virtual void Uninit()
         {
+            for (int i = 0; i < this._widgets.Count; i++)
+            {
+                this._widgets[i].Uninit();
+            }
         }
 
         public virtual void Update(float deltaTime)
         {
+            for (int i = 0; i < _widgets.Count; i++)
+            {
+                this._widgets[i].Update(deltaTime);
+            }
         }
         #endregion
     }

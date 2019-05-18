@@ -155,7 +155,11 @@
           <e p="BaseComponent.cs" t="Include" />
           <e p="SetBornWorldPosComp.cs" t="Include" />
           <e p="Widget" t="Include">
+            <e p="BottomHPUI.cs" t="Include" />
+            <e p="EncodeUI.cs" t="Include" />
             <e p="Gun.cs" t="Include" />
+            <e p="IWidget.cs" t="Include" />
+            <e p="RadarUI.cs" t="Include" />
           </e>
         </e>
         <e p="FSM" t="Include">
@@ -244,6 +248,7 @@
           </e>
         </e>
         <e p="tools" t="Include">
+          <e p="CMDHelper.cs" t="Include" />
           <e p="InputDirChange.cs" t="Include" />
           <e p="IProcess.cs" t="Include" />
           <e p="PathDefine.cs" t="Include" />

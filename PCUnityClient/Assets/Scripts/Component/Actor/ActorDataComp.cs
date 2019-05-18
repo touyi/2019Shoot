@@ -6,18 +6,25 @@ namespace Component.Actor
 {
     public class ActorDataComp : ActorBaseComponent,IAcceptCommand
     {
-        private float hp = 0;
+        private float maxHp = 0;
+        private float currentHp = 0;
         private float power = 0;
 
-        public float HP
+        public float MaxHp
         {
-            get { return hp; }
+            get { return maxHp; }
+            set { maxHp = value; }
+        }
+
+        public float CurrentHp
+        {
+            get { return currentHp; }
             set
             {
-                hp = value;
+                currentHp = value;
                 EventData data = EventData.Get();
                 data.longPara = this._actor.Ref.ActorGid;
-                data.floatPara = hp;
+                data.floatPara = currentHp;
                 GameMain.Instance.CurrentGamePlay.Dispathcer.LaunchEvent(GameEventDefine.ActorLifeChange, data);
                 data.Release();
             }
@@ -27,6 +34,13 @@ namespace Component.Actor
         {
             get { return power; }
             set { power = value; }
+        }
+
+        public void SetValue(float hp, float maxHp, float power)
+        {
+            this.currentHp = hp;
+            this.maxHp = maxHp;
+            this.power = power;
         }
 
         public ActorDataComp(IActor actor) : base(actor)
@@ -46,7 +60,7 @@ namespace Component.Actor
                 return;
             }
 
-            this.HP -= attackCmd.Demage;
+            this.CurrentHp -= attackCmd.Demage;
         }
     }
 }

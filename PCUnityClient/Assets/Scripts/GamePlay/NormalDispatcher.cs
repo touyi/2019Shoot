@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using GamePlay.Command;
 using Message;
 using MessageSystem;
 using Protocol;
+using CmdType = Message.CmdType;
 
 namespace GamePlay
 {

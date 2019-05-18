@@ -43,6 +43,7 @@ namespace Component.Actor
 
         public override void Update(float deltaTime)
         {
+            base.Update(deltaTime);
             UpdateInput();
         }
 
