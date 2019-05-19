@@ -93,5 +93,13 @@ namespace GamePlay
                 }
             }
         }
+
+        public void LaunchEvent(GameEventDefine eventId, long param)
+        {
+            EventData data = EventData.Get();
+            data.longPara = param;
+            this.LaunchEvent(eventId, data);
+            data.Release();
+        }
     }
 }

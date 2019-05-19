@@ -10,7 +10,9 @@ namespace GamePlay
         GameBegin = 1,
         GameEnd = 2,
         ActorLifeChange = 3,
-        Count = 4,
+        ActorCreated = 4,
+        ActorDestory = 5,
+        Count = 6,
     }
 
     public class EventData : Poolable<EventData>
@@ -35,5 +37,6 @@ namespace GamePlay
         void RegistListener(GameEventDefine eventId, GameEventCallBack callBack);
         bool RemoveListener(GameEventDefine eventId, GameEventCallBack callBack);
         void LaunchEvent(GameEventDefine eventId, EventData data);
+        void LaunchEvent(GameEventDefine eventId, long param);
     }
 }

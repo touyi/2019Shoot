@@ -4,6 +4,12 @@ namespace Tools
 {
     public static class TransformExtend
     {
+        public static void CustomSetParent(this Transform transform, Transform parent, bool statyWorldPos = false)
+        {
+            if (transform == null || parent == null) return;
+            transform.SetParent(parent, statyWorldPos);
+            transform.localScale = Vector3.one;
+        }
         public static Transform CustomFind(this Transform transform, string name)
         {
             if (transform == null)

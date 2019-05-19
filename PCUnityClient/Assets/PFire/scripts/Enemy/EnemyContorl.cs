@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using GamePool.OBJ;
 using UnityEngine;
 public delegate void VoidDelgate(GameObject go);
 public class EnemyContorl : MonoBehaviour {

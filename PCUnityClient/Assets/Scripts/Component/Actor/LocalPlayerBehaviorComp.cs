@@ -9,6 +9,11 @@ using Wrapper;
 
 namespace Component.Actor
 {
+    /// <summary>
+    /// 这个类前期实现有一定的问题 它融合了两个Comp GameObjectComp和PlayerBehaviorComponent
+    /// 但是Actor的设计只能对应一个导致这里的后期实现有点奇怪 很多都需要对角色类型判断才能
+    /// 获取到正确的GameObjectComp 可以分成两个类 或者实现Actor支持一个类对应多个Comp
+    /// </summary>
     public class LocalPlayerBehaviorComp : GameObjectComp
     {
         private Transform _targetTrans = null;

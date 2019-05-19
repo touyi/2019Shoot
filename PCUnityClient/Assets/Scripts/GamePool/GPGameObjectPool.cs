@@ -13,7 +13,7 @@ public class GPGameObjectPool
 	private static Dictionary<string,Queue<GameObject>> _pool = new Dictionary<string, Queue<GameObject>>();
 	private static Dictionary<string,string> _resName = new Dictionary<string, string>();
 
-	public static void PreLoad<T>(int count)where T : GPObject
+	private static void PreLoad<T>(int count)where T : GPObject
 	{
 		string _type = typeof(T).ToString ();
 		if(!_pool.ContainsKey(_type)){
@@ -36,6 +36,34 @@ public class GPGameObjectPool
 				_itemPool.Enqueue(_go);
 			}
 			
+		}
+	}
+
+	/// <summary>
+	/// 将对象池中剩余可用对象补充为retain个，多补少删
+	/// </summary>
+	/// <param name="retain"></param>
+	/// <typeparam name="T"></typeparam>
+	public static void ReFormPoolObject<T>(int retain = 0)where T : GPObject
+	{
+		string _type = typeof(T).ToString();
+		Queue<GameObject> gosQueue;
+		if (_pool.TryGetValue(_type, out gosQueue))
+		{
+			while (gosQueue.Count > retain)
+			{
+				GameObject go = gosQueue.Dequeue();
+				GameObject.Destroy(go);
+			}
+
+			if (gosQueue.Count < retain)
+			{
+				GPGameObjectPool.PreLoad<T>(retain - gosQueue.Count);
+			}
+		}
+		else
+		{
+			GPGameObjectPool.PreLoad<T>(retain);
 		}
 	}
 	//创建物体

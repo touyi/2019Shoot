@@ -1,6 +1,7 @@
 ﻿using FSM;
 using GamePlay.Actor;
 using GamePlay.Command;
+using GamePool.OBJ;
 using UnityEngine;
 
 namespace GamePlay

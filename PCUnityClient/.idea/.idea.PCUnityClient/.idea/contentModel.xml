@@ -19,7 +19,6 @@
           <e p="Itemagent.cs" t="Include" />
           <e p="RadarManage.cs" t="Include" />
           <e p="RaderAgent.cs" t="Include" />
-          <e p="RotaSelf.cs" t="Include" />
         </e>
         <e p="Scripts" t="Include">
           <e p="Enemy" t="Include">
@@ -192,9 +191,10 @@
         <e p="GamePool" t="Include">
           <e p="GPGameObjectPool.cs" t="Include" />
           <e p="GPObject.cs" t="Include" />
-          <e p="object" t="Include">
+          <e p="obj" t="Include">
             <e p="GPExplosion.cs" t="Include" />
             <e p="GPFireBullet.cs" t="Include" />
+            <e p="GPRadarPoint.cs" t="Include" />
             <e p="GPSpark.cs" t="Include" />
           </e>
         </e>
@@ -218,6 +218,7 @@
         </e>
         <e p="Plugins" t="Include">
           <e p="BarcodeCam.cs" t="Include" />
+          <e p="RotaSelf.cs" t="Include" />
         </e>
         <e p="Protocol" t="Include">
           <e p="ClientSocket.cs" t="Include" />

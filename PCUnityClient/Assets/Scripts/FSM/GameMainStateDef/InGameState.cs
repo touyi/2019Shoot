@@ -2,6 +2,7 @@
 using GamePlay;
 using GamePlay.Actor;
 using GamePlay.Command;
+using GamePool.OBJ;
 using Message;
 using MessageSystem;
 using NetInput;
@@ -46,15 +47,9 @@ namespace FSM.GameMainStateDef
             data.Release();
 
             CMDHelper.AcceptUICmdToActorManager(UICmd.UIType.HPUI, UICmd.UIState.Open);
+            CMDHelper.AcceptUICmdToActorManager(UICmd.UIType.RadarUI, UICmd.UIState.Open);
 
-            // TODO 临时测试
-//            data = ActorBuildData.Get();
-//            data.BornWorldPos = gamePlay.LevelManager.GetLocalPlayerPos(0) + new Vector3(50, 50, 50);
-//            data.type = ActorType.Enemy;
-//            data.HP = 100;
-//            data.Power = 50;
-//            actorManager.CreateActor(data);
-//            data.Release();
+            GPGameObjectPool.ReFormPoolObject<GPExplosion>(10);
         }
 
         public void Execute()
@@ -89,10 +84,12 @@ namespace FSM.GameMainStateDef
 
         public void Exit()
         {
+            GPGameObjectPool.ReFormPoolObject<GPExplosion>(0);
             GameMain.Instance.CurrentGamePlay.Dispathcer.RemoveListener(GameEventDefine.GameEnd, this.OnGameEnd);
             GameMain.Instance.CurrentGamePlay.Dispathcer.RemoveListener(GameEventDefine.ActorLifeChange,
                 this.OnActorLifeChange);
             CMDHelper.AcceptUICmdToActorManager(UICmd.UIType.HPUI, UICmd.UIState.Close);
+            CMDHelper.AcceptUICmdToActorManager(UICmd.UIType.RadarUI, UICmd.UIState.Close);
         }
 
         public void RegistToFsm(StateMachine<GameMainState, GameMainEvent> fsm)

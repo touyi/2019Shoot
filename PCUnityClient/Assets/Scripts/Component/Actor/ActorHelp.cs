@@ -1,4 +1,5 @@
 ﻿using GamePlay.Actor;
+using UnityEngine;
 
 namespace Component.Actor
 {
@@ -13,6 +14,18 @@ namespace Component.Actor
 
             var data = actor.GetActorComponent(ActorComponentType.ActorDataComponent) as ActorDataComp;
             return data;
+        }
+
+        public static GameObjectComp ActorObjectComp(this IActor actor)
+        {
+            if (actor.ActorType == ActorType.LocalPlayer)
+            {
+                return actor.GetActorComponent(ActorComponentType.PlayerBehaviorComponent) as GameObjectComp;
+            }
+            else
+            {
+                return actor.GetActorComponent(ActorComponentType.ActorGameObjectComponent) as GameObjectComp;
+            }
         }
     }
 }

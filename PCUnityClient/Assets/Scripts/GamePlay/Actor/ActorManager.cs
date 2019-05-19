@@ -26,11 +26,17 @@ namespace GamePlay.Actor
         private Actor localPlayer = null;
         private Actor uiRootActor = null;
         private long assignID = 0;
-        
+
+        public List<Actor> Actors
+        {
+            get { return _actors; }
+        }
+
         public Actor LocalPlayer
         {
             get { return this.localPlayer; }
         }
+        
 
         public Actor CreateActor(ActorBuildData buildData)
         {
@@ -63,9 +69,23 @@ namespace GamePlay.Actor
                 actor.Init();
                 actor.Start();
                 this._actors.Add(actor);
+                GameMain.Instance.CurrentGamePlay.Dispathcer.LaunchEvent(GameEventDefine.ActorCreated, actor.ActorGid);
             }
 
             return actor;
+        }
+
+        public Actor GetActorByGid(long actorGid)
+        {
+            for (int i = 0; i < this._actors.Count; i++)
+            {
+                if (this._actors[i].ActorGid == actorGid)
+                {
+                    return this._actors[i];
+                }
+            }
+
+            return null;
         }
 
         public void Init()
@@ -101,6 +121,8 @@ namespace GamePlay.Actor
             for (int i = _deleteActors.Count - 1; i >=0; i--)
             {
                 this._actors.Remove(_deleteActors[i]);
+                GameMain.Instance.CurrentGamePlay.Dispathcer.LaunchEvent(GameEventDefine.ActorDestory,
+                    _deleteActors[i].ActorGid);
             }
         }
 

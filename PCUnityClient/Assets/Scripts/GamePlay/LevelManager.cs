@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using GamePool.OBJ;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,7 +15,7 @@ namespace GamePlay
 
         public void Start()
         {
-            GPGameObjectPool.PreLoad<GPExplosion>(10);
+            
         }
 
         public Vector3 GetLocalPlayerPos(int index = 0)

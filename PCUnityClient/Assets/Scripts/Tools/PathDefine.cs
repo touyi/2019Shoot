@@ -10,5 +10,7 @@
         public const string ExplosionPath = "effect/Explosion_001";
         public const string BottomHPPath = "UI/HealthySlider";
         public const string EncodeUIPath = "UI/WaitScan";
+        public const string RadarUIPath = "UI/Radar";
+        public const string RadarPointPath = "UI/Point";
     }
 }
