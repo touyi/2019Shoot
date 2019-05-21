@@ -5,6 +5,8 @@
         DirVector,
         Fire,
         Change,
+        Yes,
+        No,
         Count,
     }
 }

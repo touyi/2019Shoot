@@ -18,6 +18,7 @@ namespace Component.Widget
         
         private RectTransform root;
         private RectTransform radarPad;
+        private UIRootComp _rootComp = null;
         private Dictionary<long, RectTransform> actorPoints = new Dictionary<long, RectTransform>();
         public void Init(ActorBaseComponent parentComp)
         {
@@ -25,8 +26,8 @@ namespace Component.Widget
             GameObject go = GameObject.Instantiate(prefab);
             this.root = go.GetComponent<RectTransform>();
             this.radarPad = this.root.CustomFind("Radar/Rader") as RectTransform;
-            UIRootComp comp = parentComp as UIRootComp;
-            comp.AddChildGameObject(root);
+            this._rootComp = parentComp as UIRootComp;
+            this._rootComp.AddChildGameObject(root);
             GameMain.Instance.CurrentGamePlay.Dispathcer.RegistListener(GameEventDefine.ActorCreated,
                 this.OnActorCreated);
             GameMain.Instance.CurrentGamePlay.Dispathcer.RegistListener(GameEventDefine.ActorDestory,
@@ -100,6 +101,18 @@ namespace Component.Widget
 
         public void AcceptCmd(IBaseCommand cmd)
         {
+            if (cmd.IsUse)
+            {
+                return;
+            }
+            UICmd uiCmd = cmd as UICmd;
+
+            if (uiCmd == null || uiCmd.UiType != UICmd.UIType.RadarUI) return;
+            if (uiCmd.UiState == UICmd.UIState.Close)
+            {
+                this._rootComp.RemoveWidget(this);
+            }
+            cmd.IsUse = true;
         }
 
         private void OnActorCreated(EventData data)

@@ -62,12 +62,22 @@ namespace Component.Widget
 
         public void AcceptCmd(IBaseCommand cmd)
         {
-            UICmd uiCmd = cmd as UICmd;
-            if (uiCmd == null || uiCmd.UiType != UICmd.UIType.HPUI)
+            
+            if (cmd.IsUse)
             {
                 return;
             }
-            this.root.CustomSetActive(uiCmd.UiState == UICmd.UIState.Open);
+            UICmd uiCmd = cmd as UICmd;
+
+            if (uiCmd == null || uiCmd.UiType != UICmd.UIType.HPUI) return;
+            if (uiCmd.UiState == UICmd.UIState.Close)
+            {
+                this._parentComp.RemoveWidget(this);
+            }
+            else
+            {
+                this.root.CustomSetActive(true);
+            }
             cmd.IsUse = true;
         }
     }

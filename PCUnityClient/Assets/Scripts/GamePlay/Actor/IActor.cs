@@ -5,6 +5,7 @@ namespace GamePlay.Actor
     public enum ActorType
     {
         LocalPlayer,
+        EmptyLocalPlayer,
         Enemy,
         UI,
     }

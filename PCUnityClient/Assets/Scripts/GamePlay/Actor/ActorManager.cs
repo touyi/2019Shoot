@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.Design;
 using assets;
 using Component;
 using Component.Actor;
@@ -38,17 +39,18 @@ namespace GamePlay.Actor
         }
         
 
-        public Actor CreateActor(ActorBuildData buildData)
+        public long CreateActor(ActorBuildData buildData)
         {
             Actor actor = null;
             
             switch (buildData.type)
             {
                     case ActorType.LocalPlayer:
+                    case ActorType.EmptyLocalPlayer:
                         if (this.localPlayer != null)
                         {
                             // 暂时不支持多个localplayer
-                            return null;
+                            return -1;
                         }
                         actor = this.BuildLocalPlayer(buildData);
                         this.localPlayer = actor;
@@ -70,9 +72,11 @@ namespace GamePlay.Actor
                 actor.Start();
                 this._actors.Add(actor);
                 GameMain.Instance.CurrentGamePlay.Dispathcer.LaunchEvent(GameEventDefine.ActorCreated, actor.ActorGid);
+                return actor.ActorGid;
             }
 
-            return actor;
+            return -2;
+
         }
 
         public Actor GetActorByGid(long actorGid)
@@ -98,11 +102,7 @@ namespace GamePlay.Actor
 
         public void Update(float deltaTime)
         {
-            for (int i = 0; i < _deleteActors.Count; i++)
-            {
-                this._deleteActors[i].Uninit();
-            }
-            this._deleteActors.Clear();
+            
             using (List<Actor>.Enumerator item = this._actors.GetEnumerator())
             {
                 while (item.MoveNext())
@@ -124,10 +124,80 @@ namespace GamePlay.Actor
                 GameMain.Instance.CurrentGamePlay.Dispathcer.LaunchEvent(GameEventDefine.ActorDestory,
                     _deleteActors[i].ActorGid);
             }
+            
+            for (int i = 0; i < _deleteActors.Count; i++)
+            {
+                this.RemoveInner(this._deleteActors[i]);
+            }
+            this._deleteActors.Clear();
+        }
+
+        public void DestoryActorByType(ActorType type)
+        {
+            for (int i = this._actors.Count - 1; i >= 0; i--)
+            {
+                if (this._actors[i].ActorType == type)
+                {
+                    this._actors[i].IsNeedRecover = true;
+                }
+            }
+        }
+
+        public void DestoryActorByGid(long actorGid)
+        {
+            for (int i = 0; i < this._actors.Count; i++)
+            {
+                if (this._actors[i].ActorGid == actorGid)
+                {
+                    this._actors[i].IsNeedRecover = true;
+                }
+            }
+        }
+
+        public void DestoryActorImmediately(long actorGid, bool isSendEvent)
+        {
+            for (int i = 0; i < this._actors.Count; i++)
+            {
+                if (this._actors[i].ActorGid == actorGid)
+                {
+                    var actor = this._actors[i];
+                    this._actors.RemoveAt(i);
+                    if (isSendEvent)
+                    {
+                        GameMain.Instance.CurrentGamePlay.Dispathcer.LaunchEvent(GameEventDefine.ActorDestory,
+                            actorGid);
+                    }
+                    this.RemoveInner(actor);
+                }
+            }
+        }
+
+        public void DestoryActorImmediately(Actor actor, bool isSendEvent)
+        {
+            if (actor == null)
+            {
+                return;
+            }
+            this.DestoryActorImmediately(actor.ActorGid, isSendEvent);
+        }
+
+        private void RemoveInner(Actor actor)
+        {
+            if (actor == this.localPlayer)
+            {
+                this.localPlayer = null;
+            }
+
+            if (actor == this.uiRootActor)
+            {
+                this.uiRootActor = null;
+            }
+            actor.Uninit();
         }
 
         public void Uninit()
         {
+            // TODO
         }
 
         public bool IsEnemy(long actorGid)
@@ -159,12 +229,24 @@ namespace GamePlay.Actor
         private Actor BuildLocalPlayer(ActorBuildData data)
         {
             Actor actor = new Actor();
-            // TODO组装
-            actor.InsertActorComponent(ActorComponentType.PlayerBehaviorComponent, new LocalPlayerBehaviorComp(actor));
-            actor.InsertActorComponent(ActorComponentType.WeapenComponent, new WeapenComp(actor));
-            var comp = new ActorDataComp(actor);
-            comp.SetValue(data.HP,data.MaxHp,data.Power);
-            actor.InsertActorComponent(ActorComponentType.ActorDataComponent, comp);
+            if (data.type != ActorType.EmptyLocalPlayer)
+            {
+                actor.InsertActorComponent(ActorComponentType.PlayerBehaviorComponent, new LocalPlayerBehaviorComp(actor));
+                actor.InsertActorComponent(ActorComponentType.WeapenComponent, new WeapenComp(actor));
+                var comp = new ActorDataComp(actor);
+                comp.SetValue(data.HP,data.MaxHp,data.Power);
+                actor.InsertActorComponent(ActorComponentType.ActorDataComponent, comp);
+            }
+            else
+            {
+                actor.InsertActorComponent(ActorComponentType.ActorGameObjectComponent,
+                    new GameObjectComp(actor, PathDefine.LocalPlayerPath));
+                
+                SetBornWorldPosComp comp = new SetBornWorldPosComp(actor);
+                comp.TempSetBornPos(GameMain.Instance.CurrentGamePlay.LevelManager.GetLocalPlayerPos());
+                actor.InsertActorComponent(ActorComponentType.BornPosSetComponent, comp);
+            }
+            
             return actor;
         }
 

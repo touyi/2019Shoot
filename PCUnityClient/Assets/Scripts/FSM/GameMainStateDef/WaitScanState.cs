@@ -4,6 +4,7 @@ using GamePlay.Command;
 using Message;
 using MessageSystem;
 using Protocol;
+using UnityEngine;
 using Wrapper;
 using CmdType = Message.CmdType;
 
@@ -15,6 +16,7 @@ namespace FSM.GameMainStateDef
             new WeakRef<StateMachine<GameMainState, GameMainEvent>>();
         public void Enter()
         {
+            Debug.Log("Enter:" + this.GetType().ToString());
             GameMain.Instance.CurrentGamePlay.Dispathcer.RegistListener(GameEventDefine.GameBegin, this.OnGameBegin);
             UICmd cmd = UICmd.Get();
             cmd.UiState = UICmd.UIState.Open;
@@ -45,7 +47,7 @@ namespace FSM.GameMainStateDef
         public void RegistToFsm(StateMachine<GameMainState, GameMainEvent> fsm)
         {
             fsm.In(GameMainState.WaitScan)
-                .On(GameMainEvent.Begin).GoTo(GameMainState.InGame)
+                .On(GameMainEvent.Begin).GoTo(GameMainState.Guide)
                 .Attach(this);
             this._fsm.Ref = fsm;
         }
@@ -53,20 +55,6 @@ namespace FSM.GameMainStateDef
         private void OnGameBegin(EventData param)
         {
             this._fsm.Ref.Fire(GameMainEvent.Begin);
-//            if (param.type == EProtocol.NetCmd)
-//            {
-//                CommandList cmdList = param.message as CommandList;
-//                for (int i = 0; i < cmdList.commandDatas.Count; i++)
-//                {
-//                    var cmd = cmdList.commandDatas[i];
-//                    switch (cmd.ctype)
-//                    {
-//                            case CmdType.GameBegin:
-//                                
-//                                break;
-//                    }
-//                }
-//            }
         }
     }
 }

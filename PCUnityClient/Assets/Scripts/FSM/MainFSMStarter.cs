@@ -11,8 +11,10 @@ namespace FSM
             // 在此处初始化游戏主状态机
             this.RegisterGlobalState(new WaitScanState());
             this.RegisterGlobalState(new InGameState());
+            this.RegisterGlobalState(new GuideState());
+            this.RegisterGlobalState(new ScoreShowState());
             // TODO 测试用 初始化为 InGameState
-            _mainFsm.Initialize(GameMainState.InGame);
+            _mainFsm.Initialize(GameMainState.WaitScan);
             
         }
 

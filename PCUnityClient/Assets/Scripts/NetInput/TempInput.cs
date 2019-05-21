@@ -30,6 +30,21 @@ namespace NetInput
                         return true;
                     }
                     break;
+                case InputKeyType.Yes:
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        return true;
+                    }
+
+                    break;
+                case InputKeyType.No:
+                    if (Input.GetKeyDown(KeyCode.Escape))
+                    {
+                        return true;
+                    }
+
+                    break;
+                        
             }
 
             return false;

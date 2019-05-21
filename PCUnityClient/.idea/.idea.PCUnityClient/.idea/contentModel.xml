@@ -164,7 +164,9 @@
         <e p="FSM" t="Include">
           <e p="BaseState.cs" t="Include" />
           <e p="GameMainStateDef" t="Include">
+            <e p="GuideState.cs" t="Include" />
             <e p="InGameState.cs" t="Include" />
+            <e p="ScoreShowState.cs" t="Include" />
             <e p="WaitScanState.cs" t="Include" />
           </e>
           <e p="GameMainStateEnum.cs" t="Include" />

@@ -39,7 +39,7 @@ namespace Component.Actor
             }
         }
 
-        protected void AddWidget(IWidget widget)
+        public void AddWidget(IWidget widget)
         {
             if (widget != null)
             {
@@ -48,14 +48,13 @@ namespace Component.Actor
             }
         }
 
-        protected void RemoveWidget(IWidget widget)
+        public void RemoveWidget(IWidget widget)
         {
-            if (widget != null)
+            if (widget != null && this._widgets.Contains(widget))
             {
                 widget.Uninit();
+                this._widgets.Remove(widget);
             }
-
-            this._widgets.Remove(widget);
         }
 
         #region 子类关注

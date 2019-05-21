@@ -2,7 +2,9 @@
 using GamePlay.Command;
 using Message;
 using MessageSystem;
+using NetInput;
 using Protocol;
+using UnityEngine;
 using CmdType = Message.CmdType;
 
 namespace GamePlay
@@ -26,6 +28,16 @@ namespace GamePlay
 
         public void Update(float deltaTime)
         {
+            // Temp TODO Test
+            if (CurrentInput.CurInput.GetKey(InputKeyType.Yes))
+            {
+                this.LaunchEvent(GameEventDefine.GameBegin, null);
+            }
+
+            if (CurrentInput.CurInput.GetKey(InputKeyType.No))
+            {
+                this.LaunchEvent(GameEventDefine.GameEnd, null);
+            }
         }
 
         private void OnNetMessage(EventParam param)

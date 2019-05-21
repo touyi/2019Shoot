@@ -11,19 +11,23 @@ namespace Component.Widget
     {
         private RectTransform encode = null;
         private RawImage encodeImg = null;
+        private UIRootComp _parentComp = null;
         public void Init(ActorBaseComponent parentComp)
         {
             GameObject go = AssetsManager.Instance.LoadPrefab(PathDefine.EncodeUIPath);
             GameObject root = GameObject.Instantiate(go);
             encode = root.GetComponent<RectTransform>();
             encodeImg = encode.CustomGetComponent<RawImage>("encodeimg");
-            UIRootComp comp = parentComp as UIRootComp;
-            comp.AddChildGameObject(this.encode);
+            _parentComp = parentComp as UIRootComp;
+            _parentComp.AddChildGameObject(this.encode);
         }
 
         public void Uninit()
         {
             if(this.encode!=null)GameObject.Destroy(encode.gameObject);
+            this.encode = null;
+            this.encodeImg = null;
+            this._parentComp = null;
         }
 
         public void Update(float deltaTime)
@@ -47,6 +51,11 @@ namespace Component.Widget
             if (!string.IsNullOrEmpty(uiCmd.Info) && encodeImg != null)
             {
                 encodeImg.texture = BarcodeCam.GetEncodeByString(uiCmd.Info);
+            }
+
+            if (uiCmd.UiState == UICmd.UIState.Close)
+            {
+                this._parentComp.RemoveWidget(this);
             }
 
             cmd.IsUse = true;

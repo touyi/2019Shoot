@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using GamePlay;
 using GamePlay.Actor;
 using GamePlay.Command;
@@ -20,12 +21,17 @@ namespace FSM.GameMainStateDef
         private bool lastFireState = false;
         private int remainEnemy = 0;
         private int currentWave = 0;
+        private long localPlayerGid = 0;
         private WaveInfo _waveInfo = new WaveInfo();
         
         private WeakRef<StateMachine<GameMainState, GameMainEvent>> _fsm =
             new WeakRef<StateMachine<GameMainState, GameMainEvent>>();
         public void Enter()
         {
+            Debug.Log("Enter:" + this.GetType().ToString());
+            currentWave = 0;
+            lastFireState = false;
+            remainEnemy = 0;
             GameMain.Instance.CurrentGamePlay.Dispathcer.RegistListener(GameEventDefine.GameEnd, this.OnGameEnd);
             GameMain.Instance.CurrentGamePlay.Dispathcer.RegistListener(GameEventDefine.ActorLifeChange,
                 this.OnActorLifeChange);
@@ -43,7 +49,7 @@ namespace FSM.GameMainStateDef
             data.HP = 100;
             data.MaxHp = data.HP;
             data.Power = 10;
-            Actor actor = actorManager.CreateActor(data);
+            this.localPlayerGid = actorManager.CreateActor(data);
             data.Release();
 
             CMDHelper.AcceptUICmdToActorManager(UICmd.UIType.HPUI, UICmd.UIState.Open);
@@ -75,6 +81,7 @@ namespace FSM.GameMainStateDef
                 // 产生新波次
                 var datas = this._waveInfo.ProductWaveEnemyDatas(++currentWave);
                 remainEnemy = datas.Count;
+                Debug.Log(remainEnemy);
                 for (int i = 0; i < remainEnemy; i++)
                 {
                     GameMain.Instance.CurrentGamePlay.ActorManager.CreateActor(datas[i]);
@@ -84,18 +91,22 @@ namespace FSM.GameMainStateDef
 
         public void Exit()
         {
+            GameMain.Instance.CurrentGamePlay.ActorManager.DestoryActorByType(ActorType.Enemy);
+            GameMain.Instance.CurrentGamePlay.ActorManager.DestoryActorByGid(this.localPlayerGid);
             GPGameObjectPool.ReFormPoolObject<GPExplosion>(0);
             GameMain.Instance.CurrentGamePlay.Dispathcer.RemoveListener(GameEventDefine.GameEnd, this.OnGameEnd);
             GameMain.Instance.CurrentGamePlay.Dispathcer.RemoveListener(GameEventDefine.ActorLifeChange,
                 this.OnActorLifeChange);
             CMDHelper.AcceptUICmdToActorManager(UICmd.UIType.HPUI, UICmd.UIState.Close);
             CMDHelper.AcceptUICmdToActorManager(UICmd.UIType.RadarUI, UICmd.UIState.Close);
+            
         }
 
         public void RegistToFsm(StateMachine<GameMainState, GameMainEvent> fsm)
         {
             fsm.In(GameMainState.InGame)
-                .On(GameMainEvent.End).GoTo(GameMainState.WaitScan)
+                .On(GameMainEvent.GameOver).GoTo(GameMainState.ScoreShow)
+                .On(GameMainEvent.End).GoTo(GameMainState.ScoreShow)
                 .Attach(this);
 
             this._fsm.Ref = fsm;
@@ -111,21 +122,7 @@ namespace FSM.GameMainStateDef
 
         private void OnGameEnd(EventData param)
         {
-            this._fsm.Ref.Fire(GameMainEvent.End);
-//            if (param.type == EProtocol.NetCmd)
-//            {
-//                CommandList cmdList = param.message as CommandList;
-//                for (int i = 0; i < cmdList.commandDatas.Count; i++)
-//                {
-//                    var cmd = cmdList.commandDatas[i];
-//                    switch (cmd.ctype)
-//                    {
-//                        case CmdType.GameEnd:
-//                            
-//                            break;
-//                    }
-//                }
-//            }
+            this._fsm.Ref.Fire(GameMainEvent.GameOver);
         }
     }
 }
