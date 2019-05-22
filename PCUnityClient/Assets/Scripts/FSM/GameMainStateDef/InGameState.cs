@@ -116,6 +116,10 @@ namespace FSM.GameMainStateDef
         {
             if (data.floatPara <= 0 && GameMain.Instance.CurrentGamePlay.ActorManager.IsEnemy(data.longPara))
             {
+                IDataProvider dataProvider = GameMain.Instance.CurrentGamePlay.DataProvider;
+                int score = 0;
+                dataProvider.GetIntData(StringDefine.ScoreKey, out score);
+                dataProvider.SetIntData(StringDefine.ScoreKey, score + 10);
                 remainEnemy--;
             }
         }

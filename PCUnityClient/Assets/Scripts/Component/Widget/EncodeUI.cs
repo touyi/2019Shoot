@@ -14,7 +14,7 @@ namespace Component.Widget
         private UIRootComp _parentComp = null;
         public void Init(ActorBaseComponent parentComp)
         {
-            GameObject go = AssetsManager.Instance.LoadPrefab(PathDefine.EncodeUIPath);
+            GameObject go = AssetsManager.Instance.LoadPrefab(StringDefine.EncodeUIPath);
             GameObject root = GameObject.Instantiate(go);
             encode = root.GetComponent<RectTransform>();
             encodeImg = encode.CustomGetComponent<RawImage>("encodeimg");

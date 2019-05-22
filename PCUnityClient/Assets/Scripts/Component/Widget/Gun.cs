@@ -33,7 +33,7 @@ namespace Component.Widget
         public void SetParent(Transform parent)
         {
             // 激光器
-            GameObject prefab = AssetsManager.Instance.LoadPrefab(PathDefine.LineGunPath);
+            GameObject prefab = AssetsManager.Instance.LoadPrefab(StringDefine.LineGunPath);
             if (prefab != null)
             {
                 GameObject go = GameObject.Instantiate(prefab, parent);
@@ -44,7 +44,7 @@ namespace Component.Widget
                 
             }
             // 激光束
-            GameObject line = AssetsManager.Instance.LoadPrefab(PathDefine.BluLinePath);
+            GameObject line = AssetsManager.Instance.LoadPrefab(StringDefine.BluLinePath);
             if (line != null)
             {
                 Transform dir = this._gun.CustomFind("dir");

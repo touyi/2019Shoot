@@ -8,7 +8,7 @@ namespace GamePool.OBJ
     {
         public static string ResName()
         {
-            return PathDefine.ExplosionPath;
+            return StringDefine.ExplosionPath;
         }
         public override void Awake()
         {

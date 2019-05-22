@@ -22,7 +22,7 @@ namespace Component.Widget
         private Dictionary<long, RectTransform> actorPoints = new Dictionary<long, RectTransform>();
         public void Init(ActorBaseComponent parentComp)
         {
-            GameObject prefab = AssetsManager.Instance.LoadPrefab(PathDefine.RadarUIPath);
+            GameObject prefab = AssetsManager.Instance.LoadPrefab(StringDefine.RadarUIPath);
             GameObject go = GameObject.Instantiate(prefab);
             this.root = go.GetComponent<RectTransform>();
             this.radarPad = this.root.CustomFind("Radar/Rader") as RectTransform;

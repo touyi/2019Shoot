@@ -48,6 +48,7 @@ namespace GamePlay.Command
             EncodeUI,
             HPUI,
             RadarUI,
+            TaskUI,
         }
         public enum UIState
         {

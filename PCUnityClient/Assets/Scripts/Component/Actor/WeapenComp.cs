@@ -43,19 +43,10 @@ namespace Component.Actor
             this._currentGun.OnAttackActor += this.OnAttackActor;
         }
 
-        public override void Uninit()
+        protected override void UninitComponent()
         {
-//            for (int i = 0; i < this._guns.Count; i++)
-//            {
-//                IWidget widget = this._guns[i] as IWidget;
-//                if (widget != null)
-//                {
-//                    widget.Uninit();
-//                }
-//            }
             this._guns.Clear();
             this._currentGun.OnAttackActor -= this.OnAttackActor;
-            base.Uninit();
         }
 
         public override void Start()

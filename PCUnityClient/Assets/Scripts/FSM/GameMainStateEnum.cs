@@ -11,7 +11,7 @@
     public enum GameMainEvent
     {
         Begin,
-        GO,
+        Go,
         GameOver,
         End,
     }

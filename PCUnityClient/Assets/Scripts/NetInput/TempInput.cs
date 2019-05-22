@@ -31,14 +31,14 @@ namespace NetInput
                     }
                     break;
                 case InputKeyType.Yes:
-                    if (Input.GetKeyDown(KeyCode.Space))
+                    if (Input.GetKey(KeyCode.Space))
                     {
                         return true;
                     }
 
                     break;
                 case InputKeyType.No:
-                    if (Input.GetKeyDown(KeyCode.Escape))
+                    if (Input.GetKey(KeyCode.Escape))
                     {
                         return true;
                     }

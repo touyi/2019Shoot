@@ -12,7 +12,14 @@ namespace GamePlay
         private ActorManager _actorManager = null;
         private LevelManager _levelManager = null;
         private IDispathcer _dispathcer = null;
+        private IDataProvider _dataProvider = null;
         private bool _isRunning = false;
+
+        public IDataProvider DataProvider
+        {
+            get { return _dataProvider; }
+            set { _dataProvider = value; }
+        }
 
         public IDispathcer Dispathcer
         {

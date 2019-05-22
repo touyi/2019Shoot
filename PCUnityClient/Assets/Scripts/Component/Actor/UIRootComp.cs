@@ -21,17 +21,16 @@ namespace Component.Actor
 
         public override void Init()
         {
-            GameObject go = AssetsManager.Instance.LoadPrefab(PathDefine.UIRootPath);
+            GameObject go = AssetsManager.Instance.LoadPrefab(StringDefine.UIRootPath);
             GameObject root = GameObject.Instantiate(go);
             uIRoot = root.GetComponent<RectTransform>();
             //encode = uIRoot.CustomGetComponent<RawImage>("WaitScan/encodeimg");
             
         }
 
-        public override void Uninit()
+        protected override void UninitComponent()
         {
             GameObject.Destroy(uIRoot.gameObject);
-            base.Uninit();
         }
 
         public void AddChildGameObject(RectTransform trans)
@@ -83,6 +82,11 @@ namespace Component.Actor
                         RadarUI radarUi = new RadarUI();
                         this.AddWidget(radarUi);
                         radarUi.AcceptCmd(cmd);
+                        break;
+                    case UICmd.UIType.TaskUI:
+                        TaskUI taskui = new TaskUI();
+                        this.AddWidget(taskui);
+                        taskui.AcceptCmd(cmd);
                         break;
                 }
             }

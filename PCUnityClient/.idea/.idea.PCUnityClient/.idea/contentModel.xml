@@ -159,6 +159,8 @@
             <e p="Gun.cs" t="Include" />
             <e p="IWidget.cs" t="Include" />
             <e p="RadarUI.cs" t="Include" />
+            <e p="ScoreUI.cs" t="Include" />
+            <e p="TaskUI.cs" t="Include" />
           </e>
         </e>
         <e p="FSM" t="Include">
@@ -183,6 +185,8 @@
             <e p="CommandSystem.cs" t="Include" />
           </e>
           <e p="GamePlayBuilder.cs" t="Include" />
+          <e p="GlobalDataProvider.cs" t="Include" />
+          <e p="IDataProvider.cs" t="Include" />
           <e p="IDispathcer.cs" t="Include" />
           <e p="IGamePlay.cs" t="Include" />
           <e p="LevelManager.cs" t="Include" />
@@ -254,8 +258,8 @@
           <e p="CMDHelper.cs" t="Include" />
           <e p="InputDirChange.cs" t="Include" />
           <e p="IProcess.cs" t="Include" />
-          <e p="PathDefine.cs" t="Include" />
           <e p="ProtocolHelper.cs" t="Include" />
+          <e p="StringDefine.cs" t="Include" />
           <e p="Timer.cs" t="Include" />
           <e p="TransformExtend.cs" t="Include" />
         </e>

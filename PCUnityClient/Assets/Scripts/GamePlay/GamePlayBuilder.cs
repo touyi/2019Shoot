@@ -12,6 +12,7 @@ namespace GamePlay
             gamePlay.FsmStarter = new MainFSMStarter();
             gamePlay.LevelManager = new LevelManager();
             gamePlay.Dispathcer = new NormalDispatcher();
+            gamePlay.DataProvider = new GlobalDataProvider();
             return gamePlay;
         }
     }

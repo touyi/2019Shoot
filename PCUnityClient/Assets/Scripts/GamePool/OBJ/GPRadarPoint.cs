@@ -6,7 +6,7 @@ namespace GamePool.OBJ
     {
         public static string ResName()
         { 
-            return PathDefine.RadarPointPath;  
+            return StringDefine.RadarPointPath;  
         }
         public override void Awake()
         {

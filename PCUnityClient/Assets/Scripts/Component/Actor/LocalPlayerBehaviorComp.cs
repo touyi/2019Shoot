@@ -30,7 +30,7 @@ namespace Component.Actor
 
         public override void Init()
         {
-            this.SetGameObjPath(PathDefine.LocalPlayerPath);
+            this.SetGameObjPath(StringDefine.LocalPlayerPath);
             base.Init();
             Transform parent = GameMain.Instance.CurrentGamePlay.LevelManager.GetLocalPlayerBase(0);
             this._targetTrans = this.target;
@@ -52,12 +52,11 @@ namespace Component.Actor
             UpdateInput();
         }
 
-        public override void Uninit()
+        protected override void UninitComponent()
         {
             this.camera = null;
             this._weapen = null;
             this._targetTrans = null;
-            base.Uninit();
         }
 
         private void UpdateInput()

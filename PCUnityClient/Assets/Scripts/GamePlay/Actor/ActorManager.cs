@@ -240,7 +240,7 @@ namespace GamePlay.Actor
             else
             {
                 actor.InsertActorComponent(ActorComponentType.ActorGameObjectComponent,
-                    new GameObjectComp(actor, PathDefine.LocalPlayerPath));
+                    new GameObjectComp(actor, StringDefine.LocalPlayerPath));
                 
                 SetBornWorldPosComp comp = new SetBornWorldPosComp(actor);
                 comp.TempSetBornPos(GameMain.Instance.CurrentGamePlay.LevelManager.GetLocalPlayerPos());
@@ -254,7 +254,7 @@ namespace GamePlay.Actor
         {
             Actor actor = new Actor();
             actor.InsertActorComponent(ActorComponentType.ActorGameObjectComponent,
-                new GameObjectComp(actor, PathDefine.EnemyPrefabPath));
+                new GameObjectComp(actor, StringDefine.EnemyPrefabPath));
             
             var bornComp = new SetBornWorldPosComp(actor);
             bornComp.TempSetBornPos(data.BornWorldPos);

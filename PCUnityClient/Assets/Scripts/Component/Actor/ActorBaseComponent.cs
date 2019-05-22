@@ -39,7 +39,7 @@ namespace Component.Actor
             }
         }
 
-        public void AddWidget(IWidget widget)
+        public virtual void AddWidget(IWidget widget)
         {
             if (widget != null)
             {
@@ -48,13 +48,22 @@ namespace Component.Actor
             }
         }
 
-        public void RemoveWidget(IWidget widget)
+        public virtual void RemoveWidget(IWidget widget)
         {
             if (widget != null && this._widgets.Contains(widget))
             {
                 widget.Uninit();
                 this._widgets.Remove(widget);
             }
+        }
+        
+        public void Uninit()
+        {
+            for (int i = 0; i < this._widgets.Count; i++)
+            {
+                this.RemoveWidget(this._widgets[i]);
+            }
+            this.UninitComponent();
         }
 
         #region 子类关注
@@ -74,12 +83,11 @@ namespace Component.Actor
         {
         }
 
-        public virtual void Uninit()
+        
+
+        protected virtual void UninitComponent()
         {
-            for (int i = 0; i < this._widgets.Count; i++)
-            {
-                this._widgets[i].Uninit();
-            }
+            
         }
 
         public virtual void Update(float deltaTime)

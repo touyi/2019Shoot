@@ -1,6 +1,9 @@
 ﻿using System.Runtime.CompilerServices;
 using GamePlay;
 using GamePlay.Actor;
+using GamePlay.Command;
+using NetInput;
+using Tools;
 using UnityEngine;
 using Wrapper;
 
@@ -22,22 +25,28 @@ namespace FSM.GameMainStateDef
             this.localPlayerGid = actorManager.CreateActor(data);
             data.Release();
             
-            gamePlay.Dispathcer.RegistListener(GameEventDefine.GameBegin, this.OnGameGo);
+            //gamePlay.Dispathcer.RegistListener(GameEventDefine.GameBegin, this.OnGameGo);
+            CMDHelper.AcceptUICmdToActorManager(UICmd.UIType.TaskUI, UICmd.UIState.Open);
         }
 
         public void Execute()
         {
+            if (CurrentInput.CurInput.GetKeyDown(InputKeyType.Fire))
+            {
+                this._fsm.Ref.Fire(GameMainEvent.Go);
+            }
         }
 
         public void Exit()
         {
+            CMDHelper.AcceptUICmdToActorManager(UICmd.UIType.TaskUI, UICmd.UIState.Close);
             GameMain.Instance.CurrentGamePlay.ActorManager.DestoryActorImmediately(this.localPlayerGid, false);
         }
 
         public void RegistToFsm(StateMachine<GameMainState, GameMainEvent> fsm)
         {
             fsm.In(GameMainState.Guide)
-                .On(GameMainEvent.GO).GoTo(GameMainState.InGame)
+                .On(GameMainEvent.Go).GoTo(GameMainState.InGame)
                 .On(GameMainEvent.End).GoTo(GameMainState.WaitScan)
                 .Attach(this);
             this._fsm.Ref = fsm;
@@ -45,7 +54,7 @@ namespace FSM.GameMainStateDef
 
         private void OnGameGo(EventData data)
         {
-            this._fsm.Ref.Fire(GameMainEvent.GO);
+            this._fsm.Ref.Fire(GameMainEvent.Go);
         }
     }
 }

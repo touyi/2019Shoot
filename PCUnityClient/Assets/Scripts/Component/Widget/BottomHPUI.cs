@@ -17,7 +17,7 @@ namespace Component.Widget
         {
             this._parentComp = parentComp as UIRootComp;
             
-            GameObject prefab = AssetsManager.Instance.LoadPrefab(PathDefine.BottomHPPath);
+            GameObject prefab = AssetsManager.Instance.LoadPrefab(StringDefine.BottomHPPath);
             if (prefab != null && this._parentComp != null)
             {
                 GameObject go = GameObject.Instantiate(prefab);

@@ -24,12 +24,11 @@ namespace Component.Actor
             GameMain.Instance.CurrentGamePlay.Dispathcer.RegistListener(GameEventDefine.ActorLifeChange, this.OnActorLifeChange);
         }
 
-        public override void Uninit()
+        protected override void UninitComponent()
         {
             followTarget = null;
             navTarget = null;
             GameMain.Instance.CurrentGamePlay.Dispathcer.RemoveListener(GameEventDefine.ActorLifeChange, this.OnActorLifeChange);
-            base.Uninit();
         }
 
         private void OnActorLifeChange(EventData data)
