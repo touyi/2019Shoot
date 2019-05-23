@@ -36,7 +36,7 @@ private:
     //变量
     SOCKET	sClient;							//套接字
     HANDLE	hThreadSend;						//发送数据线程
-    HANDLE	hThreadRecv;						//接收数据线程
+    HANDLE	hThreadProcess;						//接收数据线程
     char    bufSend[MAX_NUM_BUF];				//发送数据缓冲区
     BOOL    bSend = FALSE;                      //发送标记位
     BOOL	bConnecting;						//与服务器的连接状态
@@ -68,9 +68,11 @@ private:
     int SetServerInfo(const char* ip, int port);
     void InitMember(void);              //初始化全局变量
     BOOL InitSockt(void);               //非阻塞套接字
-    BOOL CreateSendAndRecvThread(void);
-    static DWORD __stdcall RecvDataThread(void* pParam);
+    BOOL CreateProcessThread(void);
+    static DWORD __stdcall ProcessThread(void* pParam);
     static DWORD __stdcall SendDataThread(void* pParam);
+    static bool RunRecv(Client* client);
+    static bool RunSend(Client* client);
 
 };
 

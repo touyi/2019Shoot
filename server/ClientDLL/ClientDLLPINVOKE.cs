@@ -230,7 +230,7 @@ class ClientDLLPINVOKE {
   public static extern void ClientWarp_ExitClient(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_ClientWarp_SendData")]
-  public static extern void ClientWarp_SendData(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, string jarg3);
+  public static extern void ClientWarp_SendData(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, System.IntPtr jarg3, int jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("ClientDLL", EntryPoint="CSharp_ClientWarp_IsDataEmpty")]
   public static extern bool ClientWarp_IsDataEmpty(global::System.Runtime.InteropServices.HandleRef jarg1);

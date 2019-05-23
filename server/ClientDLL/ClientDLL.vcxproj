@@ -122,6 +122,12 @@
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>end.bat</Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>begin.bat</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='unityAttach|x64'">
     <ClCompile>

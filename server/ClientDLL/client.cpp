@@ -26,7 +26,7 @@ void Client::InitMember(void)
 	InitializeCriticalSection(&cs);
 
 	sClient = INVALID_SOCKET;	//套接字
-    hThreadRecv = NULL;			//接收数据线程句柄
+    hThreadProcess = NULL;			//接收数据线程句柄
 	hThreadSend = NULL;			//发送数据线程句柄
 	bConnecting = FALSE;		//为连接状态
 
@@ -95,7 +95,7 @@ BOOL Client::ConnectServer(void)
 			break;
 	}
 
-    if (!this->CreateSendAndRecvThread()) {
+    if (!this->CreateProcessThread()) {
         this->ExitClient();
         return FALSE;
     }
@@ -109,12 +109,12 @@ BOOL Client::ConnectServer(void)
 /**
  * 创建发送和接收数据线程
  */
-BOOL Client::CreateSendAndRecvThread(void)
+BOOL Client::CreateProcessThread(void)
 {
 	//创建接收数据的线程
 	unsigned long ulThreadId;
-	hThreadRecv = CreateThread(NULL, 0, RecvDataThread, this, 0, &ulThreadId);
-	if (NULL == hThreadRecv)
+	hThreadProcess = CreateThread(NULL, 0, ProcessThread, this, 0, &ulThreadId);
+	if (NULL == hThreadProcess)
 		return FALSE;
 
 	//创建发送数据的线程
@@ -127,56 +127,58 @@ BOOL Client::CreateSendAndRecvThread(void)
 /**
  * 接收数据线程
  */
-DWORD __stdcall	Client::RecvDataThread(void* pParam)
+DWORD __stdcall	Client::ProcessThread(void* pParam)
 {
     Client* client = static_cast<Client*>(pParam);
     if (client == NULL) {
         return 0;
     }
-	int		reVal;				    //返回值
-	char    bufRecv[MAX_NUM_DATA];   //接收数据缓冲区
+	//int		reVal;				    //返回值
+	//char    bufRecv[MAX_NUM_DATA];   //接收数据缓冲区
 
 	while(client->bConnecting)			    //连接状态
 	{
         Sleep(FRAME_TIME);
-        memset(bufRecv, 0, MAX_NUM_DATA);
-		reVal = recv(client->sClient, bufRecv, MAX_NUM_DATA, 0);//接收数据
-		if (SOCKET_ERROR == reVal)
-		{
-			int nErrCode = WSAGetLastError();
-			if (WSAEWOULDBLOCK == nErrCode)			//接受数据缓冲区不可用
-			{
-				continue;							//继续接收数据
-			}else{
-                client->bConnecting = FALSE;
-				return 0;							//线程退出
-			}
-		}
-
-		if ( reVal == 0)							//服务器关闭了连接
-		{
-            client->bConnecting = FALSE;
-            client->bSend = FALSE;
-            memset(bufRecv, 0, MAX_NUM_BUF);		//清空接收缓冲区
-            client->ExitClient();
-			return 0;								//线程退出
-		}
-		if(reVal > 0)
-        {
-
-            //if(('E'==bufRecv[0] || 'e'==bufRecv[0]))     //判断是否退出
-            //{
-            //    client->bConnecting = FALSE;
-            //    client->bSend = FALSE;
-            //    memset(bufRecv, 0, MAX_NUM_BUF);		//清空接收缓冲区
-            //    client->ExitClient();
-            //}
-            //显示数据
-            DataBuffer* data = new DataBuffer();
-            memset(data, 0, sizeof(DataBuffer));
-            memcpy(data->buffer, bufRecv, MAX_NUM_DATA);
-            client->m_safeQueue.push(data);
+        if (!Client::RunRecv(client)) {
+            return 0;
         }
+        if (!Client::RunSend(client)) {
+            return 0;
+        }
+        // TODO NEXT
+
+
+
+
+  //      memset(bufRecv, 0, MAX_NUM_DATA);
+		//reVal = recv(client->sClient, bufRecv, MAX_NUM_DATA, 0);//接收数据
+		//if (SOCKET_ERROR == reVal)
+		//{
+		//	int nErrCode = WSAGetLastError();
+		//	if (WSAEWOULDBLOCK == nErrCode)			//接受数据缓冲区不可用
+		//	{
+		//		continue;							//继续接收数据
+		//	}else{
+  //              client->bConnecting = FALSE;
+		//		return 0;							//线程退出
+		//	}
+		//}
+
+		//if ( reVal == 0)							//服务器关闭了连接
+		//{
+  //          client->bConnecting = FALSE;
+  //          client->bSend = FALSE;
+  //          memset(bufRecv, 0, MAX_NUM_BUF);		//清空接收缓冲区
+  //          client->ExitClient();
+		//	return 0;								//线程退出
+		//}
+		//if(reVal > 0)
+  //      {
+  //          DataBuffer* data = new DataBuffer();
+  //          memset(data, 0, sizeof(DataBuffer));
+  //          memcpy(data->buffer, bufRecv, MAX_NUM_DATA);
+  //          client->m_safeQueue.push(data);
+  //      }
 	}
 	return 0;
 }
@@ -219,6 +221,14 @@ DWORD __stdcall	Client::SendDataThread(void* pParam)
 		}
     }
 	return 0;
+}
+bool Client::RunRecv(Client * client)
+{
+    return false;
+}
+bool Client::RunSend(Client * client)
+{
+    return false;
 }
 /**
  * 输入数据和显示结果
@@ -268,7 +278,7 @@ int Client::SetServerInfo(const char * ip, int port)
 void Client::ExitClient(void)
 {
 	DeleteCriticalSection(&cs);
-    CloseHandle(hThreadRecv);
+    CloseHandle(hThreadProcess);
 	CloseHandle(hThreadSend);
     memset(bufSend, 0, MAX_NUM_BUF);
 	closesocket(sClient);

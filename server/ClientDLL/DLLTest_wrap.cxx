@@ -465,15 +465,17 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ClientWarp_ExitClient(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ClientWarp_SendData(void * jarg1, int jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ClientWarp_SendData(void * jarg1, int jarg2, void * jarg3, int jarg4) {
   ClientWarp *arg1 = (ClientWarp *) 0 ;
   int arg2 ;
-  char *arg3 = (char *) 0 ;
+  void *arg3 = (void *) 0 ;
+  int arg4 ;
   
   arg1 = (ClientWarp *)jarg1; 
   arg2 = (int)jarg2; 
-  arg3 = (char *)jarg3; 
-  (arg1)->SendData(arg2,arg3);
+  arg3 = jarg3; 
+  arg4 = (int)jarg4; 
+  (arg1)->SendData(arg2,arg3,arg4);
 }
 
 

@@ -26,9 +26,10 @@ void ClientWarp::ExitClient(void)
     this->client.ExitClient();
 }
 
-void ClientWarp::SendData(int proto, char * content)
+void ClientWarp::SendData(int proto, void * content, int contentLength)
 {
-    this->client.SendData(proto, content);
+    char* ptr = (char*)content;
+    this->client.SendData(proto, ptr);
 }
 
 bool ClientWarp::IsDataEmpty()
