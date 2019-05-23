@@ -58,7 +58,7 @@ namespace FSM.GameMainStateDef
             GPGameObjectPool.ReFormPoolObject<GPExplosion>(10);
         }
 
-        public void Execute()
+        public void Execute(float deltaTime)
         {
             bool isFire = CurrentInput.CurInput.GetKey(InputKeyType.Fire);
             if (isFire && (lastFireState != isFire))
@@ -81,7 +81,6 @@ namespace FSM.GameMainStateDef
                 // 产生新波次
                 var datas = this._waveInfo.ProductWaveEnemyDatas(++currentWave);
                 remainEnemy = datas.Count;
-                Debug.Log(remainEnemy);
                 for (int i = 0; i < remainEnemy; i++)
                 {
                     GameMain.Instance.CurrentGamePlay.ActorManager.CreateActor(datas[i]);
@@ -114,13 +113,20 @@ namespace FSM.GameMainStateDef
 
         private void OnActorLifeChange(EventData data)
         {
-            if (data.floatPara <= 0 && GameMain.Instance.CurrentGamePlay.ActorManager.IsEnemy(data.longPara))
+            if (data.floatPara <= 0)
             {
-                IDataProvider dataProvider = GameMain.Instance.CurrentGamePlay.DataProvider;
-                int score = 0;
-                dataProvider.GetIntData(StringDefine.ScoreKey, out score);
-                dataProvider.SetIntData(StringDefine.ScoreKey, score + 10);
-                remainEnemy--;
+                if (GameMain.Instance.CurrentGamePlay.ActorManager.IsEnemy(data.longPara))
+                {
+                    IDataProvider dataProvider = GameMain.Instance.CurrentGamePlay.DataProvider;
+                    int score = 0;
+                    dataProvider.GetIntData(StringDefine.CurrentScoreKey, out score);
+                    dataProvider.SetIntData(StringDefine.CurrentScoreKey, score + 10);
+                    remainEnemy--;
+                }
+                else if (GameMain.Instance.CurrentGamePlay.ActorManager.LocalPlayer.ActorGid == data.longPara)
+                {
+                    GameMain.Instance.CurrentGamePlay.Dispathcer.LaunchEvent(GameEventDefine.GameEnd);
+                }
             }
         }
 

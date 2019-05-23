@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using assets;
 using Component;
@@ -23,6 +24,7 @@ namespace GamePlay.Actor
         // TODO
         List<Actor> _actors = new List<Actor>();
         List<Actor> _deleteActors = new List<Actor>();
+        List<Actor> _waitAddActors = new List<Actor>();
 
         private Actor localPlayer = null;
         private Actor uiRootActor = null;
@@ -47,11 +49,6 @@ namespace GamePlay.Actor
             {
                     case ActorType.LocalPlayer:
                     case ActorType.EmptyLocalPlayer:
-                        if (this.localPlayer != null)
-                        {
-                            // 暂时不支持多个localplayer
-                            return -1;
-                        }
                         actor = this.BuildLocalPlayer(buildData);
                         this.localPlayer = actor;
                         break;
@@ -70,7 +67,7 @@ namespace GamePlay.Actor
                 actor.ActorType = buildData.type;
                 actor.Init();
                 actor.Start();
-                this._actors.Add(actor);
+                this._waitAddActors.Add(actor);
                 GameMain.Instance.CurrentGamePlay.Dispathcer.LaunchEvent(GameEventDefine.ActorCreated, actor.ActorGid);
                 return actor.ActorGid;
             }
@@ -88,6 +85,14 @@ namespace GamePlay.Actor
                     return this._actors[i];
                 }
             }
+            
+            for (int i = 0; i < this._waitAddActors.Count; i++)
+            {
+                if (this._waitAddActors[i].ActorGid == actorGid)
+                {
+                    return this._waitAddActors[i];
+                }
+            }
 
             return null;
         }
@@ -102,6 +107,17 @@ namespace GamePlay.Actor
 
         public void Update(float deltaTime)
         {
+            for (int i = 0; i < _deleteActors.Count; i++)
+            {
+                this.RemoveInner(this._deleteActors[i]);
+            }
+            this._deleteActors.Clear();
+
+            for (int i = 0; i < this._waitAddActors.Count; i++)
+            {
+                this._actors.Add(this._waitAddActors[i]);
+            }
+            this._waitAddActors.Clear();
             
             using (List<Actor>.Enumerator item = this._actors.GetEnumerator())
             {
@@ -109,10 +125,13 @@ namespace GamePlay.Actor
                 {
                     if (item.Current != null)
                     {
-                        item.Current.Update(deltaTime);
                         if (item.Current.IsNeedRecover)
                         {
                             _deleteActors.Add(item.Current);
+                        }
+                        else
+                        {
+                            item.Current.Update(deltaTime);
                         }
                     }
                 }
@@ -124,12 +143,6 @@ namespace GamePlay.Actor
                 GameMain.Instance.CurrentGamePlay.Dispathcer.LaunchEvent(GameEventDefine.ActorDestory,
                     _deleteActors[i].ActorGid);
             }
-            
-            for (int i = 0; i < _deleteActors.Count; i++)
-            {
-                this.RemoveInner(this._deleteActors[i]);
-            }
-            this._deleteActors.Clear();
         }
 
         public void DestoryActorByType(ActorType type)
@@ -142,10 +155,10 @@ namespace GamePlay.Actor
                 }
             }
         }
-
+        
         public void DestoryActorByGid(long actorGid)
         {
-            for (int i = 0; i < this._actors.Count; i++)
+            for (int i = this._actors.Count - 1; i >= 0; i--)
             {
                 if (this._actors[i].ActorGid == actorGid)
                 {
@@ -153,33 +166,34 @@ namespace GamePlay.Actor
                 }
             }
         }
+//        [Obsolete("会出现问题")]
+//        public void DestoryActorImmediately(long actorGid, bool isSendEvent)
+//        {
+//            for (int i = 0; i < this._actors.Count; i++)
+//            {
+//                if (this._actors[i].ActorGid == actorGid)
+//                {
+//                    var actor = this._actors[i];
+//                    this._actors.RemoveAt(i);
+//                    if (isSendEvent)
+//                    {
+//                        GameMain.Instance.CurrentGamePlay.Dispathcer.LaunchEvent(GameEventDefine.ActorDestory,
+//                            actorGid);
+//                    }
+//                    this.RemoveInner(actor);
+//                }
+//            }
+//        }
 
-        public void DestoryActorImmediately(long actorGid, bool isSendEvent)
-        {
-            for (int i = 0; i < this._actors.Count; i++)
-            {
-                if (this._actors[i].ActorGid == actorGid)
-                {
-                    var actor = this._actors[i];
-                    this._actors.RemoveAt(i);
-                    if (isSendEvent)
-                    {
-                        GameMain.Instance.CurrentGamePlay.Dispathcer.LaunchEvent(GameEventDefine.ActorDestory,
-                            actorGid);
-                    }
-                    this.RemoveInner(actor);
-                }
-            }
-        }
-
-        public void DestoryActorImmediately(Actor actor, bool isSendEvent)
-        {
-            if (actor == null)
-            {
-                return;
-            }
-            this.DestoryActorImmediately(actor.ActorGid, isSendEvent);
-        }
+//        [Obsolete]
+//        public void DestoryActorImmediately(Actor actor, bool isSendEvent)
+//        {
+//            if (actor == null)
+//            {
+//                return;
+//            }
+//            this.DestoryActorImmediately(actor.ActorGid, isSendEvent);
+//        }
 
         private void RemoveInner(Actor actor)
         {
@@ -316,6 +330,11 @@ namespace GamePlay.Actor
                 {
                     break;
                 }
+            }
+
+            for (int i = 0; i < this._waitAddActors.Count && !cmd.IsUse; i++)
+            {
+                this._waitAddActors[i].AcceptCmd(cmd);
             }
         }
     }

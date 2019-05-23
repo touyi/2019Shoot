@@ -5,7 +5,7 @@ public interface IState {
 
 	void Enter();
 
-	void Execute();
+	void Execute(float deltaTime);
 
 	void Exit();
 

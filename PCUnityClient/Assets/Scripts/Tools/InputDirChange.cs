@@ -10,9 +10,9 @@ namespace Tools
         private Vector3 screenPos;
         private Vector3 lastScreenPos;
         private Queue<Vector3> smoothQue = new Queue<Vector3>();
-        private float speed = 0.2f;
+        private float speed = 0.6f;
         private const float G = 9.8f;
-        private const int QueueMaxSize = 8;
+        private const int QueueMaxSize = 5;
 
         public InputDirChange()
         {

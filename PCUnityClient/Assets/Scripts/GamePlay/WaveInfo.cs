@@ -18,7 +18,7 @@ namespace GamePlay
                 data.type = ActorType.Enemy;
                 data.HP = Mathf.Sqrt(nWave * 50);
                 data.MaxHp = data.HP;
-                data.Power = 10;
+                data.Power = 100;
                 datas.Add(data);
             }
             return datas;

@@ -1,4 +1,5 @@
 ﻿using System.Net.Configuration;
+using System.Runtime.InteropServices;
 using GamePlay;
 using GamePlay.Command;
 using Message;
@@ -14,6 +15,9 @@ namespace FSM.GameMainStateDef
     {
         private WeakRef<StateMachine<GameMainState, GameMainEvent>> _fsm =
             new WeakRef<StateMachine<GameMainState, GameMainEvent>>();
+
+        private const int RunFrame = 100;
+        private const int WaitFrame = 10;
         public void Enter()
         {
             Debug.Log("Enter:" + this.GetType().ToString());
@@ -25,10 +29,10 @@ namespace FSM.GameMainStateDef
             cmd.Info = "http://192.168.31.183:8080";
             GameMain.Instance.CurrentGamePlay.ActorManager.AcceptCmd(cmd);
             cmd.Release();
-            
+            Application.targetFrameRate = WaitFrame;
         }
 
-        public void Execute()
+        public void Execute(float deltaTime)
         {
             // TODO
         }
@@ -41,7 +45,7 @@ namespace FSM.GameMainStateDef
             cmd.UiType = UICmd.UIType.EncodeUI;
             GameMain.Instance.CurrentGamePlay.ActorManager.AcceptCmd(cmd);
             cmd.Release();
-            
+            Application.targetFrameRate = RunFrame;
         }
 
         public void RegistToFsm(StateMachine<GameMainState, GameMainEvent> fsm)

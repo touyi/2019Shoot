@@ -93,14 +93,14 @@ public class StateMachine<TState, TEvent>
 		get { return isRuning; }
 	}
 
-	public virtual void Execute()
+	public virtual void Execute(float deltaTime)
 	{
 		Check_StateMachineHasInitializedAndIsRunning();
 
 		if (CurrentState == null)
 			CurrentState = InitialState;
 
-		CurrentState.Execute();
+		CurrentState.Execute(deltaTime);
 	}
 
 	public void Fire(TEvent evtId, object evtparams = null)

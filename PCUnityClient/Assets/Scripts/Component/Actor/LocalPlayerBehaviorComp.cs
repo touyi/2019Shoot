@@ -57,6 +57,7 @@ namespace Component.Actor
             this.camera = null;
             this._weapen = null;
             this._targetTrans = null;
+            base.UninitComponent();
         }
 
         private void UpdateInput()

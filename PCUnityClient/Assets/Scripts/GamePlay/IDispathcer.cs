@@ -36,7 +36,7 @@ namespace GamePlay
     {
         void RegistListener(GameEventDefine eventId, GameEventCallBack callBack);
         bool RemoveListener(GameEventDefine eventId, GameEventCallBack callBack);
-        void LaunchEvent(GameEventDefine eventId, EventData data);
+        void LaunchEvent(GameEventDefine eventId, EventData data = null);
         void LaunchEvent(GameEventDefine eventId, long param);
     }
 }

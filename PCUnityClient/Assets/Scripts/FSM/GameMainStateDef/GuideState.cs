@@ -29,9 +29,9 @@ namespace FSM.GameMainStateDef
             CMDHelper.AcceptUICmdToActorManager(UICmd.UIType.TaskUI, UICmd.UIState.Open);
         }
 
-        public void Execute()
+        public void Execute(float deltaTime)
         {
-            if (CurrentInput.CurInput.GetKeyDown(InputKeyType.Fire))
+            if (CurrentInput.CurInput.GetKey(InputKeyType.Fire))
             {
                 this._fsm.Ref.Fire(GameMainEvent.Go);
             }
@@ -40,7 +40,7 @@ namespace FSM.GameMainStateDef
         public void Exit()
         {
             CMDHelper.AcceptUICmdToActorManager(UICmd.UIType.TaskUI, UICmd.UIState.Close);
-            GameMain.Instance.CurrentGamePlay.ActorManager.DestoryActorImmediately(this.localPlayerGid, false);
+            GameMain.Instance.CurrentGamePlay.ActorManager.DestoryActorByGid(this.localPlayerGid);
         }
 
         public void RegistToFsm(StateMachine<GameMainState, GameMainEvent> fsm)

@@ -88,6 +88,11 @@ namespace Component.Actor
                         this.AddWidget(taskui);
                         taskui.AcceptCmd(cmd);
                         break;
+                    case UICmd.UIType.ScoreUI:
+                        ScoreUI scoreUi = new ScoreUI();
+                        this.AddWidget(scoreUi);
+                        scoreUi.AcceptCmd(cmd);
+                        break;
                 }
             }
             cmd.IsUse = true;

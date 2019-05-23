@@ -37,11 +37,15 @@ namespace Component.Widget
         public void OnActorLifeChange(EventData data)
         {
             GamePlay.Actor.Actor actor = GameMain.Instance.CurrentGamePlay.ActorManager.LocalPlayer;
-            if (data.longPara == actor.ActorGid && this._slider != null)
+            if (actor != null && data.longPara == actor.ActorGid && this._slider != null)
             {
                 ActorDataComp comp = actor.ActorData();
-                float value = comp.CurrentHp / comp.MaxHp;
-                this._slider.value = value;
+                if (comp != null)
+                {
+                    float value = comp.CurrentHp / comp.MaxHp;
+                    this._slider.value = value;
+                }
+                
             }
         }
 

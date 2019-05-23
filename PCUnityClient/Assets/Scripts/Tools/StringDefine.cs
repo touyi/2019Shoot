@@ -15,12 +15,14 @@
         public const string RadarUIPath = "UI/Radar";
         public const string RadarPointPath = "UI/Point";
         public const string TaskUIPath = "UI/TaskCanvas";
+        public const string ScoreUIPath = "UI/ScoreBoard";
 
         #endregion
 
         #region Key
 
-        public const string ScoreKey = "Score";
+        public const string CurrentScoreKey = "CurrentScore";
+        public const string MaxScoreKey = "MaxScore";
 
         #endregion
     }

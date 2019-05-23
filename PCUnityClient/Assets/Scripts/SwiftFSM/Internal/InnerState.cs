@@ -29,13 +29,13 @@ internal class InnerState<TState, TEvent> : IInnerState<TState, TEvent>
 			AttachedState.Enter();
 	}
 
-	public void Execute()
+	public void Execute(float deltaTime)
 	{
 		if (ExecuteAction != null)
 			ExecuteAction();
 
 		if (AttachedState != null)
-			AttachedState.Execute();
+			AttachedState.Execute(deltaTime);
 	}
 
 	public void Exit()

@@ -30,7 +30,7 @@ namespace FSM
 
         public void Update(float deltaTime)
         {
-            _mainFsm.Execute();
+            _mainFsm.Execute(deltaTime);
         }
 
         private void RegisterGlobalState(BaseState state)

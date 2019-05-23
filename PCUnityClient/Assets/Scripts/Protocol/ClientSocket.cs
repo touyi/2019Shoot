@@ -11,14 +11,13 @@ using Debug = UnityEngine.Debug;
 
 namespace Protocol
 {
-    
+
     public class ClientSocket : Singleton<ClientSocket>
     {
         public const int BYTE_LENGTH = 60;
         private ClientWarp _warp = null;
         private bool isConnect = false;
         
-        [Conditional("NORMAL")]
         public void Init()
         {
             _warp = new ClientWarp();
@@ -31,12 +30,10 @@ namespace Protocol
 
             isConnect = true;
         }
-        [Conditional("NORMAL")]
         public void Uninit()
         {
             _warp.ExitClient();
         }
-        [Conditional("NORMAL")]
         public void Update(float deltaTime)
         {
             if (!this._warp.IsConnected())

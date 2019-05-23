@@ -21,7 +21,7 @@ internal interface IInnerState <TState, TEvent>
     Action<object> HandleMsgAction {set;}
 
     void Enter();
-	void Execute();
+	void Execute(float deltaTime);
 	void Exit();
     void SetEvtParams(object evtparams);
     void HandleMsg(object msg);

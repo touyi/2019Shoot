@@ -45,7 +45,8 @@ namespace Component.Widget
             {
                 while (item.MoveNext())
                 {
-                    GPGameObjectPool.Return(item.Current.Value.gameObject);
+                    if(item.Current.Value != null)
+                        GPGameObjectPool.Return(item.Current.Value.gameObject);
                 }
             }
             GPGameObjectPool.ReFormPoolObject<GPRadarPoint>(0);
