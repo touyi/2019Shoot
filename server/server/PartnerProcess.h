@@ -14,6 +14,7 @@ public:
     void ExchangeData();
 
     bool ParseWebInfo(std::vector<DataBuffer>& parseBuffer);
+    bool ParsePCInfo(std::vector<DataBuffer>& parseBuffer);
 
     bool IsPair();
 private:

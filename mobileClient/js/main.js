@@ -82,6 +82,7 @@ function getIp(ipString) {
 		alert("连接异常");
 	}
 	websocket.onmessage = function(event) {
+		console.log(event.data);
 		if (event.data == "more") {
 			isuser = true;
 		}

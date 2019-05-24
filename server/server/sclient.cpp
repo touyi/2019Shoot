@@ -145,8 +145,18 @@ bool CClient::InnerSendData(DataBuffer * buffer)
     bool flag = true;
     //进入临界区
     EnterCriticalSection(&this->m_cs);
+    int val = 0;
+    if (this->m_socketType == SocketConnType::Web) {
+        char webData[MAX_NUM_WEB_ALL];
+        int size = 0;
+        this->m_webSocketHandler->ProcessDataToWeb(buffer, webData, size);
+        val = send(this->m_socket, webData, size, 0);
+    }
+    else {
+        val = send(this->m_socket, buffer->buffer, buffer->Package.head.Length, 0);
+    }
     //发送数据
-    int val = send(this->m_socket, buffer->buffer, buffer->Package.head.Length, 0);
+    
     //处理返回错误
     if (SOCKET_ERROR == val)
     {

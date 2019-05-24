@@ -54,6 +54,41 @@ void PartnerProcess::ParseVec3(const char * obj, float & x, float & y, float & z
     z = 0;
 }
 
+bool PartnerProcess::ParsePCInfo(std::vector<DataBuffer>& parseBuffer)
+{
+    using namespace Message;
+    CommandList cmdList;
+    bool isEnd = false;
+    while (!Screen->isEmpty()) {
+        DataBuffer* buffer = Screen->PopNextData();
+        if (!cmdList.ParseFromArray(buffer->Package.datas, buffer->Package.head.Length - HEAD_SIZE)) {
+            LogManager::Error("ParsePCInfo Error");
+            continue;
+        }
+        int size = cmdList.commanddatas_size();
+        for (int i = 0; i < size; i++) {
+            const Command& cmd = cmdList.commanddatas(i);
+            if (cmd.ctype() == CmdType::GameEnd) {
+                isEnd = true;
+                break;
+            }
+        }
+    }
+    if (isEnd) {
+        DataBuffer buffer;
+        memset(&buffer, 0, sizeof(buffer));
+        const char* endStr = "E#";
+        buffer.Package.head.proto = 10;
+        buffer.Package.head.Length = HEAD_SIZE + strlen(endStr);
+        memcpy(buffer.Package.datas, endStr, strlen(endStr));
+        parseBuffer.push_back(buffer);
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 bool PartnerProcess::ParseWebInfo(std::vector<DataBuffer>& parseBufferVec)
 {
     using namespace Message;
@@ -148,12 +183,21 @@ void PartnerProcess::ExchangeData()
     if (!IsPair()) {
         return;
     }
-    std::vector<DataBuffer> parseBuffer;
-    if (this->ParseWebInfo(parseBuffer)) {
-        for (int i = 0; i < parseBuffer.size(); i++) {
-            Screen->SetFrameSend(parseBuffer[i]);
+    std::vector<DataBuffer> *parseBuffer = new std::vector<DataBuffer>();
+    if (this->ParseWebInfo(*parseBuffer)) {
+        for (int i = 0; i < parseBuffer->size(); i++) {
+            Screen->SetFrameSend((*parseBuffer)[i]);
         }
     }
+
+    parseBuffer->clear();
+    if (this->ParsePCInfo(*parseBuffer)) {
+        for (int i = 0; i < parseBuffer->size(); i++) {
+            Mobile->SetFrameSend((*parseBuffer)[i]);
+        }
+    }
+    delete parseBuffer;
+
     
 }
 

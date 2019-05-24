@@ -6,11 +6,26 @@ Websocket_Handler::Websocket_Handler(int fd):
 		status_(WEBSOCKET_UNCONNECT),
 		header_map_(),
 		fd_(fd),
-		request_(new Websocket_Request)
+		request_(new Websocket_Request),
+        respond_(new Websocket_Respond)
 {
 }
 
 Websocket_Handler::~Websocket_Handler(){
+    if(request_)
+        delete request_;
+    if(respond_)
+        delete respond_;
+}
+
+void Websocket_Handler::ProcessDataToWeb(DataBuffer * buffer, char* outptr, int& size)
+{
+    if (buffer == NULL) {
+        return;
+    }
+    buffer->Package.datas[buffer->Package.head.Length - HEAD_SIZE] = '\0';
+    std::string str(buffer->Package.datas);
+    this->respond_->wsEncodeFrame(str, outptr, WS_TEXT_FRAME, size);
 }
 
 int Websocket_Handler::process(char* buffer){

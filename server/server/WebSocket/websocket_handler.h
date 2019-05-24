@@ -7,6 +7,7 @@
 #include "base64.h"
 #include "sha1.h"
 #include "websocket_request.h"
+#include"websocket_respond.h"
 #include "../define.h"
 
 #define MAGIC_KEY "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
@@ -24,6 +25,7 @@ public:
 	~Websocket_Handler();
 	int process(char* buffer);
 	inline char *getbuff();
+    void ProcessDataToWeb(DataBuffer* buffer, char* outptr, int& size);
     // 已经废弃 直接在process里面返回buffer
     void GetParseData(char* buffer);
 private:
@@ -37,6 +39,7 @@ private:
 	HEADER_MAP header_map_;
 	int fd_;
 	Websocket_Request *request_;
+    Websocket_Respond *respond_;
 };
 
 inline char *Websocket_Handler::getbuff() {
