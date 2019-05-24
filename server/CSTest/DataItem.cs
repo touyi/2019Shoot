@@ -49,14 +49,29 @@ public class DataItem : global::System.IDisposable {
     } 
   }
 
-  public string buffer {
+  public int bufferLength {
     set {
-      ClientDLLPINVOKE.DataItem_buffer_set(swigCPtr, value);
+      ClientDLLPINVOKE.DataItem_bufferLength_set(swigCPtr, value);
     } 
     get {
-      string ret = ClientDLLPINVOKE.DataItem_buffer_get(swigCPtr);
+      int ret = ClientDLLPINVOKE.DataItem_bufferLength_get(swigCPtr);
       return ret;
     } 
+  }
+
+  public System.IntPtr GetBuffer() {
+    System.IntPtr cPtr = ClientDLLPINVOKE.DataItem_GetBuffer(swigCPtr); 
+    return cPtr;
+}
+
+  public long SetBuffer(System.IntPtr ptr) {
+    long ret = ClientDLLPINVOKE.DataItem_SetBuffer(swigCPtr, ptr);
+    return ret;
+  }
+
+  public int ByteRead(System.IntPtr ptr) {
+    int ret = ClientDLLPINVOKE.DataItem_ByteRead(swigCPtr, ptr);
+    return ret;
   }
 
   public DataItem() : this(ClientDLLPINVOKE.new_DataItem(), true) {

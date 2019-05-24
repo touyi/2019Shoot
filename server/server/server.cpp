@@ -344,6 +344,7 @@ bool PartnerStateRight() {
 
     while(bRunning)
     {
+        
         if (OnlyPartner.IsPair()) {
             if (!PartnerStateRight()) {
                 continue;

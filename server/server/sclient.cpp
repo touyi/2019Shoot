@@ -38,9 +38,11 @@ CClient::~CClient()
 {
     if (m_hThreadRecv != NULL) {
         TerminateThread(m_hThreadRecv, 0);
+        CloseHandle(m_hThreadRecv);
     }
     if (m_hThreadSend != NULL) {
         TerminateThread(m_hThreadSend, 0);
+        CloseHandle(m_hThreadSend);
     }
     
 	closesocket(m_socket);			//关闭套接字
@@ -109,10 +111,7 @@ BOOL CClient::StartRuning(void)
 	if(NULL == m_hThreadSend)
 	{
 		return FALSE;
-	}/*else{
-		CloseHandle(m_hThreadSend);
-	}*/
-
+	}
 	return TRUE;
 }
 
@@ -238,6 +237,7 @@ void CClient::RecvDataNormal(CClient * pClient)
             EnterCriticalSection(&pClient->m_cs);
             // TODO GC问题
             DataBuffer* databuffer = new DataBuffer(tempBuffer);
+            LogManager::Debug(databuffer->Package.datas);
             pClient->m_RecvBufferQuene.push(databuffer);
             LeaveCriticalSection(&pClient->m_cs);
 

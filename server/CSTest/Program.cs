@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,23 +12,25 @@ namespace CSTest
     {
         static void Main(string[] args)
         {
-            //ClientWarp warp = new ClientWarp();
-            //warp.InitClient("127.0.0.1", 6666);
-            //Console.WriteLine(warp.ConnectServer());
-            //string con = Console.ReadLine();
-            //while (true)
-            //{
-            //    DataItem item = warp.PopNextData();
+            ClientWarp warp = new ClientWarp();
+            warp.InitClient("127.0.0.1", 7000);
+            warp.ConnectServer();
+            string str = "abc";
+            IntPtr ptr = Marshal.StringToHGlobalAnsi(str);
+            warp.SendData(1, ptr, 3);
+            while (true)
+            {
+                DataItem item = warp.PopNextData();
 
-            //    Console.WriteLine(item.protocol + "+" + item.buffer);
-            //    Thread.Sleep(1000);
-            //}
-            TypeCastHelper helper = new TypeCastHelper();
-            string str = helper.Get();
-
-            byte[] b = Encoding.ASCII.GetBytes(str);
-            Console.WriteLine(string.Format("c# {0} {1}", (int)b[0], (int)b[1]));
-            helper.Put(str);
+                
+                if (item.protocol != 0)
+                {
+                    Console.WriteLine(item.protocol);
+                    break;
+                }
+            }
+            
+            Console.ReadLine();
         }
     }
 }

@@ -76,4 +76,7 @@
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>begin.bat</PreBuildEvent>
+  </PropertyGroup>
 </Project>

@@ -27,11 +27,8 @@ void Client::InitMember(void)
 
 	sClient = INVALID_SOCKET;	//套接字
     hThreadProcess = NULL;			//接收数据线程句柄
-	hThreadSend = NULL;			//发送数据线程句柄
 	bConnecting = FALSE;		//为连接状态
 
-    //初始化数据缓冲区
-	memset(bufSend, 0, MAX_NUM_BUF);
 }
 
 /**
@@ -103,7 +100,7 @@ BOOL Client::ConnectServer(void)
 	bConnecting = TRUE;
 
     // 发送握手消息
-    this->SendData(0, "PCUnity");
+    this->SendData(0, "PCUnity", strlen("PCUnity"));
 	return TRUE;
 }
 /**
@@ -118,9 +115,9 @@ BOOL Client::CreateProcessThread(void)
 		return FALSE;
 
 	//创建发送数据的线程
-	hThreadSend = CreateThread(NULL, 0, SendDataThread, this, 0, &ulThreadId);
+	/*hThreadSend = CreateThread(NULL, 0, SendDataThread, this, 0, &ulThreadId);
 	if (NULL == hThreadSend)
-		return FALSE;
+		return FALSE;*/
 
 	return TRUE;
 }
@@ -133,8 +130,6 @@ DWORD __stdcall	Client::ProcessThread(void* pParam)
     if (client == NULL) {
         return 0;
     }
-	//int		reVal;				    //返回值
-	//char    bufRecv[MAX_NUM_DATA];   //接收数据缓冲区
 
 	while(client->bConnecting)			    //连接状态
 	{
@@ -145,108 +140,134 @@ DWORD __stdcall	Client::ProcessThread(void* pParam)
         if (!Client::RunSend(client)) {
             return 0;
         }
-        // TODO NEXT
-
-
-
-
-  //      memset(bufRecv, 0, MAX_NUM_DATA);
-		//reVal = recv(client->sClient, bufRecv, MAX_NUM_DATA, 0);//接收数据
-		//if (SOCKET_ERROR == reVal)
-		//{
-		//	int nErrCode = WSAGetLastError();
-		//	if (WSAEWOULDBLOCK == nErrCode)			//接受数据缓冲区不可用
-		//	{
-		//		continue;							//继续接收数据
-		//	}else{
-  //              client->bConnecting = FALSE;
-		//		return 0;							//线程退出
-		//	}
-		//}
-
-		//if ( reVal == 0)							//服务器关闭了连接
-		//{
-  //          client->bConnecting = FALSE;
-  //          client->bSend = FALSE;
-  //          memset(bufRecv, 0, MAX_NUM_BUF);		//清空接收缓冲区
-  //          client->ExitClient();
-		//	return 0;								//线程退出
-		//}
-		//if(reVal > 0)
-  //      {
-  //          DataBuffer* data = new DataBuffer();
-  //          memset(data, 0, sizeof(DataBuffer));
-  //          memcpy(data->buffer, bufRecv, MAX_NUM_DATA);
-  //          client->m_safeQueue.push(data);
-  //      }
 	}
 	return 0;
 }
 /**
  * 发送数据线程
  */
-DWORD __stdcall	Client::SendDataThread(void* pParam)
-{
-    Client* client = static_cast<Client*>(pParam);
-    if (client == NULL) {
-        return 0;
-    }
-	while(client->bConnecting)						//连接状态
-	{
-		if (client->bSend)						//发送数据
-		{
-            EnterCriticalSection(&client->cs);	//进入临界区
-			while(TRUE)
-            {
-                int val = send(client->sClient, client->bufSend, MAX_NUM_BUF,0);
-
-                //处理返回错误
-                if (SOCKET_ERROR == val)
-                {
-                    int nErrCode = WSAGetLastError();
-                    if(WSAEWOULDBLOCK == nErrCode)		//发送缓冲区不可用
-                    {
-                        continue;						//继续循环
-                    }else
-                    {
-                        LeaveCriticalSection(&client->cs);	//离开临界区
-                        return 0;
-                    }
-                }
-
-                client->bSend = FALSE;			//发送状态
-                    break;					//跳出for
-            }
-            LeaveCriticalSection(&client->cs);	//离开临界区
-		}
-    }
-	return 0;
-}
+//DWORD __stdcall	Client::SendDataThread(void* pParam)
+//{
+//    Client* client = static_cast<Client*>(pParam);
+//    if (client == NULL) {
+//        return 0;
+//    }
+//	while(client->bConnecting)						//连接状态
+//	{
+//		if (client->bSend)						//发送数据
+//		{
+//            EnterCriticalSection(&client->cs);	//进入临界区
+//			while(TRUE)
+//            {
+//                int val = send(client->sClient, client->bufSend, MAX_NUM_BUF,0);
+//
+//                //处理返回错误
+//                if (SOCKET_ERROR == val)
+//                {
+//                    int nErrCode = WSAGetLastError();
+//                    if(WSAEWOULDBLOCK == nErrCode)		//发送缓冲区不可用
+//                    {
+//                        continue;						//继续循环
+//                    }else
+//                    {
+//                        LeaveCriticalSection(&client->cs);	//离开临界区
+//                        return 0;
+//                    }
+//                }
+//
+//                client->bSend = FALSE;			//发送状态
+//                    break;					//跳出for
+//            }
+//            LeaveCriticalSection(&client->cs);	//离开临界区
+//		}
+//    }
+//	return 0;
+//}
 bool Client::RunRecv(Client * client)
 {
-    return false;
+    static char bufRecv[MAX_NUM_DATA];
+    memset(bufRecv, 0, MAX_NUM_DATA);
+    int reVal = recv(client->sClient, bufRecv, MAX_NUM_DATA, 0);//接收数据
+    if (SOCKET_ERROR == reVal)
+    {
+        int nErrCode = WSAGetLastError();
+        if (WSAEWOULDBLOCK == nErrCode)			//接受数据缓冲区不可用
+        {
+            return true;							//继续接收数据
+        }
+        else {
+            client->bConnecting = FALSE;
+            return false;							//线程退出
+        }
+    }
+
+    if (reVal == 0)							//服务器关闭了连接
+    {
+        client->bConnecting = FALSE;
+        memset(bufRecv, 0, MAX_NUM_BUF);		//清空接收缓冲区
+        client->ExitClient();
+        return false;								//线程退出
+    }
+    if (reVal > 0)
+    {
+        DataBuffer* data = new DataBuffer();
+        memset(data, 0, sizeof(DataBuffer));
+        memcpy(data->buffer, bufRecv, MAX_NUM_DATA);
+        client->m_safeRecvQueue.push(data);
+    }
+    return true;
 }
 bool Client::RunSend(Client * client)
 {
-    return false;
+    while (!client->m_safeSendQueue.empty())	//发送数据
+    {
+        DataBuffer* buffer = NULL;
+        client->m_safeSendQueue.try_pop(buffer);
+        if (buffer == NULL) {
+            return true;
+        }
+        int val = send(client->sClient, buffer->buffer, MAX_NUM_DATA, 0);
+
+        //处理返回错误
+        if (SOCKET_ERROR == val)
+        {
+            int nErrCode = WSAGetLastError();
+            if (WSAEWOULDBLOCK == nErrCode)		//发送缓冲区不可用
+            {
+                return true;						//继续循环
+            }
+            else
+            {
+                return false;
+            }
+            // 这个是插入队尾 可能造成发送顺序颠倒，后续有问题再改 TODO
+            client->m_safeSendQueue.push(buffer);
+        }
+        if (buffer) {
+            delete buffer;
+        }
+    }
+    
+    return true;
 }
+
 /**
  * 输入数据和显示结果
  */
-void Client::InputAndOutput(void)
-{
-    char cInput[MAX_NUM_BUF];	//用户输入缓冲区
-    while(bConnecting)			//连接状态
-	{
-		memset(cInput, 0, MAX_NUM_BUF);
-		cin >> cInput;			        //输入表达式
-        EnterCriticalSection(&cs);		//进入临界区
-        memset(bufSend, 0, sizeof(bufSend));
-		memcpy(bufSend, cInput, strlen(cInput));
-		LeaveCriticalSection(&cs);		//离开临界区
-		bSend = TRUE;
-	}
-}
+//void Client::InputAndOutput(void)
+//{
+//    char cInput[MAX_NUM_BUF];	//用户输入缓冲区
+//    while(bConnecting)			//连接状态
+//	{
+//		memset(cInput, 0, MAX_NUM_BUF);
+//		cin >> cInput;			        //输入表达式
+//        EnterCriticalSection(&cs);		//进入临界区
+//        memset(bufSend, 0, sizeof(bufSend));
+//		memcpy(bufSend, cInput, strlen(cInput));
+//		LeaveCriticalSection(&cs);		//离开临界区
+//		bSend = TRUE;
+//	}
+//}
 
 Client::~Client()
 {
@@ -278,35 +299,31 @@ int Client::SetServerInfo(const char * ip, int port)
 void Client::ExitClient(void)
 {
 	DeleteCriticalSection(&cs);
-    CloseHandle(hThreadProcess);
-	CloseHandle(hThreadSend);
-    memset(bufSend, 0, MAX_NUM_BUF);
+    if (hThreadProcess != NULL) {
+        TerminateThread(hThreadProcess, 0);
+        CloseHandle(hThreadProcess);
+    }
 	closesocket(sClient);
 	WSACleanup();
 }
 
-void Client::SendData(int proto, const char * content)
+void Client::SendData(int proto, const char * content, int contentLength)
 {
     
     if (bConnecting)			//连接状态
     {
-        char cInput[MAX_NUM_BUF];	//用户输入缓冲区
-        Int32ToChar(cInput, proto);
-        memcpy(cInput + 4, content, strlen(content));
-        EnterCriticalSection(&cs);		//进入临界区
-        memset(bufSend, 0, sizeof(bufSend));
-        memcpy(bufSend, cInput, strlen(cInput));
-        // Temp TODO
-        memcpy(bufSend, "PCUnity", strlen("PCUnity")); // Temp
-        LeaveCriticalSection(&cs);		//离开临界区
-        bSend = TRUE;
+        DataBuffer* buffer = new DataBuffer();
+        buffer->Package.head.proto = proto;
+        buffer->Package.head.Length = contentLength + DATA_HEAD_NUM;
+        memcpy(buffer->Package.datas, content, contentLength);
+        this->m_safeSendQueue.push(buffer);
     }
 }
 
 DataBuffer * Client::PopNextPackageData()
 {
     DataBuffer* data = NULL;
-    if (!m_safeQueue.try_pop(data)) {
+    if (!m_safeRecvQueue.try_pop(data)) {
         data = NULL;
     }
     return data;
@@ -314,7 +331,7 @@ DataBuffer * Client::PopNextPackageData()
 
 bool Client::IsDataEmpty()
 {
-    return m_safeQueue.empty();
+    return m_safeRecvQueue.empty();
 }
 
 bool Client::IsConnected()

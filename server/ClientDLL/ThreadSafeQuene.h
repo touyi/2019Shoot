@@ -87,5 +87,13 @@ namespace ThreadSafe {
             std::lock_guard<std::mutex>lk(mut);
             return data_queue.size();
         }
+        /*bool front(value_type& value) {
+            std::lock_guard<std::mutex>lk(mut);
+            if (data_queue.empty()) {
+                return false;
+            }
+            value = data_queue.front();
+            return true;
+        }*/
     }; /* threadsafe_queue */
 }/* namespace gdface */

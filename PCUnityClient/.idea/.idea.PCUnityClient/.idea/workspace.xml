@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="32adbdb0-51ab-4a32-8172-dad12e9e9067" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.PCUnityClient/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PCUnityClient/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/ClientDLL.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/ClientDLL.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/ClientDLL.dll.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/ClientDLL.dll.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/ClientDLL.exp.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/ClientDLL.exp.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/ClientDLL.ilk" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/ClientDLL.ilk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/ClientDLL.ilk.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/ClientDLL.ilk.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/ClientDLL.lib.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/ClientDLL.lib.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/ClientDLL.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/ClientDLL.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/ClientDLL.pdb.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/ClientDLL.pdb.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Net/ClientDLL.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Net/ClientDLL.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Net/ClientDLLPINVOKE.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Net/ClientDLLPINVOKE.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Net/ClientDLLPINVOKE.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Net/ClientDLLPINVOKE.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Net/ClientWarp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Net/ClientWarp.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Net/ClientWarp.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Net/ClientWarp.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Net/DataItem.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Net/DataItem.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PCUnityClient.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/PCUnityClient.sln.DotSettings.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/ClientDLL/ClientDLL.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../server/ClientDLL/ClientDLL.vcxproj" afterDir="false" />
-    </list>
+    <list default="true" id="32adbdb0-51ab-4a32-8172-dad12e9e9067" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -468,7 +450,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
     <option name="x" value="-355" />
     <option name="y" value="70" />
     <option name="width" value="1440" />
@@ -595,8 +577,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
+    <frame x="-284" y="56" width="1152" height="612" extended-state="0" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="right" id="Errors In Solution" order="3" />
@@ -606,7 +587,7 @@
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20107238" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27422303" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Unity" order="7" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />

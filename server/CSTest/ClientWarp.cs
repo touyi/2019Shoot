@@ -56,8 +56,18 @@ public class ClientWarp : global::System.IDisposable {
     ClientDLLPINVOKE.ClientWarp_ExitClient(swigCPtr);
   }
 
-  public void SendData(int proto, string content) {
-    ClientDLLPINVOKE.ClientWarp_SendData(swigCPtr, proto, content);
+  public void SendData(int proto, System.IntPtr content, int contentLength) {
+    ClientDLLPINVOKE.ClientWarp_SendData(swigCPtr, proto, content, contentLength);
+  }
+
+  public bool IsDataEmpty() {
+    bool ret = ClientDLLPINVOKE.ClientWarp_IsDataEmpty(swigCPtr);
+    return ret;
+  }
+
+  public bool IsConnected() {
+    bool ret = ClientDLLPINVOKE.ClientWarp_IsConnected(swigCPtr);
+    return ret;
   }
 
   public DataItem PopNextData() {
