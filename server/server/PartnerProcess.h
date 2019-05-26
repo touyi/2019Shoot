@@ -11,6 +11,7 @@ public:
     CClient* GetScreen();
     CClient* GetMobile();
 
+
     void ExchangeData();
 
     bool ParseWebInfo(std::vector<DataBuffer>& parseBuffer);

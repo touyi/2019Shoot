@@ -303,10 +303,16 @@ DWORD __stdcall cleanThread(void* pParam)
 * 清理链接断开的
 */
 bool PartnerStateRight() {
+    static int freqence = 10;
     // 清理连接断开的
     CClient* mobile = OnlyPartner.GetMobile();
     CClient* screen = OnlyPartner.GetScreen();
     if (mobile != NULL && screen != NULL && mobile->IsConning() && screen->IsConning()) {
+        // 手机端心跳检查
+        if (freqence-- <= 0) {
+            mobile->CheckHeart(false);
+            freqence = 10;
+        }
         return true;
     }
     SendCMDToClient(OnlyPartner.GetScreen(), Message::CmdType::GameEnd);

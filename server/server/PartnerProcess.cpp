@@ -40,6 +40,8 @@ CClient * PartnerProcess::GetMobile()
     return Mobile;
 }
 
+
+
 void PartnerProcess::ParseVec3(const char * obj, float & x, float & y, float & z)
 {
     using namespace std;
@@ -50,7 +52,6 @@ void PartnerProcess::ParseVec3(const char * obj, float & x, float & y, float & z
     src += 2;
     stringstream stream(src);
     stream >> x >> y;
-    std::cout << x << " " << y << std::endl;
     z = 0;
 }
 
@@ -70,6 +71,7 @@ bool PartnerProcess::ParsePCInfo(std::vector<DataBuffer>& parseBuffer)
             const Command& cmd = cmdList.commanddatas(i);
             if (cmd.ctype() == CmdType::GameEnd) {
                 isEnd = true;
+                Mobile->DisConning();
                 break;
             }
         }
@@ -98,6 +100,7 @@ bool PartnerProcess::ParseWebInfo(std::vector<DataBuffer>& parseBufferVec)
     using std::map;
     using std::pair;
     map<KeyType, KeyState> keyMap;
+    bool canAdd = true;
     while (!Mobile->isEmpty()) {
         // TODO 这里的解析可以再优化一哈
         DataBuffer* buffer = Mobile->PopNextData();
@@ -130,13 +133,16 @@ bool PartnerProcess::ParseWebInfo(std::vector<DataBuffer>& parseBufferVec)
             cmd->set_ctype(CmdType::GameEnd);
             
         }
-        if (strstr(buffer->buffer, "O#") != NULL) {
+        if (strstr(buffer->buffer, "O#") != NULL && canAdd) {
             Vec3* vec = vecList.add_vec();
             float x, y, z;
             this->ParseVec3(buffer->buffer, x, y, z);
             vec->set_x(x);
             vec->set_y(y);
             vec->set_z(z);
+            if (vecList.ByteSize() + vec->ByteSize() >= MAX_NUM_BUF) {
+                canAdd = false;
+            }
         }
         delete buffer;
     }

@@ -1,6 +1,7 @@
 ﻿using GamePlay;
 using GamePlay.Actor;
 using GamePlay.Command;
+using Protocol;
 using Tools;
 using Wrapper;
 
@@ -24,6 +25,8 @@ namespace FSM.GameMainStateDef
             data.Release();
             
             CMDHelper.AcceptUICmdToActorManager(UICmd.UIType.ScoreUI, UICmd.UIState.Open);
+            
+            ClientSocket.Instance.SendGameEnd();
         }
 
         public void Execute(float deltaTime)
@@ -31,7 +34,7 @@ namespace FSM.GameMainStateDef
             timer -= deltaTime;
             if (timer <= 0)
             {
-                this._fsm.Ref.Fire(GameMainEvent.End);
+                this._fsm.Ref.Fire(GameMainEvent.AllEnd);
             }
         }
 
@@ -44,7 +47,7 @@ namespace FSM.GameMainStateDef
         public void RegistToFsm(StateMachine<GameMainState, GameMainEvent> fsm)
         {
             fsm.In(GameMainState.ScoreShow)
-                .On(GameMainEvent.End).GoTo(GameMainState.WaitScan)
+                .On(GameMainEvent.AllEnd).GoTo(GameMainState.WaitScan)
                 .Attach(this);
             this._fsm.Ref = fsm;
         }

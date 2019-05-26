@@ -7,6 +7,7 @@ using Message;
 using MessageSystem;
 using NetInput;
 using Wrapper;
+using Command = Message.Command;
 using Debug = UnityEngine.Debug;
 
 namespace Protocol
@@ -92,6 +93,21 @@ namespace Protocol
                     return ProtoBuf.Serializer.Deserialize<VecList>(stream);
                 default: return null;
             }
+        }
+
+        public void SendGameEnd()
+        {
+            CommandList list = new CommandList();
+            Message.Command cmd = new Message.Command();
+            cmd.ctype = CmdType.GameEnd;
+            list.commandDatas.Add(cmd);
+            MemoryStream stream = new MemoryStream();
+
+            ProtoBuf.Serializer.Serialize(stream, list);
+            int size = (int)stream.Length;
+            IntPtr mem = Marshal.AllocHGlobal(size);
+            Marshal.Copy(stream.ToArray(), 0, mem, size);
+            this._warp.SendData((int) EProtocol.NetCmd, mem, size);
         }
 
         #region 按键数据

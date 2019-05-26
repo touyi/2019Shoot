@@ -165,6 +165,14 @@ namespace GamePlay.Actor
                     this._actors[i].IsNeedRecover = true;
                 }
             }
+
+            for (int i = this._waitAddActors.Count - 1; i >= 0; i--)
+            {
+                if (this._waitAddActors[i].ActorGid == actorGid)
+                {
+                    this._waitAddActors[i].IsNeedRecover = true;
+                }
+            }
         }
 //        [Obsolete("会出现问题")]
 //        public void DestoryActorImmediately(long actorGid, bool isSendEvent)

@@ -14,5 +14,6 @@
         Go,
         GameOver,
         End,
+        AllEnd,
     }
 }

@@ -83,8 +83,14 @@ function getIp(ipString) {
 	}
 	websocket.onmessage = function(event) {
 		console.log(event.data);
-		if (event.data == "more") {
+		if (event.data == "U#") {
 			isuser = true;
+		}
+		else if(event.data == "E#"){
+
+		}
+		else if(event.data == "H#"){ // 心跳检查
+			websocket.send("H#"); // 收到回文
 		}
 	}
 }

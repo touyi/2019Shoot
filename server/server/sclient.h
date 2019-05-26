@@ -58,7 +58,9 @@ private:
     bool InnerSendData(DataBuffer* buffer);
     void SetFrameSendInner(DataBuffer* buffer);
     
+    
 public:
+    void CheckHeart(bool isRecv);
     static DWORD __stdcall	 RecvDataThread(void* pParam);		//接收客户端数据
     static DWORD __stdcall	 FrameSendDataThread(void* pParam);		//向客户端发送数据
     static void	RecvDataNormal(CClient* pClient);		//接收客户端数据
@@ -86,6 +88,10 @@ private:
     BOOL		m_bExit;			//线程退出
     Websocket_Handler* m_webSocketHandler;
     SocketConnType m_socketType;
+
+    //这里是一读一写 容忍时间差 无需加锁
+    int sendCount = 0;
+    int recvCount = 0;
 };
 
 

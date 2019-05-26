@@ -5,6 +5,7 @@
 #include "WebSocket/websocket_handler.h"
 #include "WebSocket/sockhead.h"
 #include <exception>
+#include "define.h"
 
 //extern BOOL bSend;
 //extern char	dataBuf[MAX_NUM_BUF];
@@ -62,6 +63,7 @@ int CClient::CheckSocketType(CClient* pClient)
     if (recVal <= 0) {
         return -1;
     }
+    DataBuffer databuffer(buffer);
     if (strstr(buffer, "GET") || strstr(buffer, "HTTP")) {
         // websocket
         pClient->m_socketType = SocketConnType::Web;
@@ -70,7 +72,7 @@ int CClient::CheckSocketType(CClient* pClient)
         pClient->m_webSocketHandler->process(buffer);
         LogManager::Debug("Web 端连接");
     }
-    else if(strstr(buffer, "PCUnity")){
+    else if(strstr(buffer, "PCUnity") || strstr(databuffer.Package.datas, "PCUnity")){
         pClient->m_socketType = SocketConnType::Normal;
         LogManager::Debug("PC 端连接");
     }
@@ -143,9 +145,9 @@ bool CClient::InnerSendData(DataBuffer * buffer)
 {
     if (buffer == NULL)return true;
     bool flag = true;
+    int val = 0;
     //进入临界区
     EnterCriticalSection(&this->m_cs);
-    int val = 0;
     if (this->m_socketType == SocketConnType::Web) {
         char webData[MAX_NUM_WEB_ALL];
         int size = 0;
@@ -196,6 +198,34 @@ DWORD  CClient::RecvDataThread(void* pParam)
 	return 0;								//线程退出
 }
 
+
+void CClient::CheckHeart(bool isRecv)
+{
+    return;
+    // 目前只检查移动端心跳
+    if (this->m_socketType == SocketConnType::Web) {
+        if (isRecv) {
+            recvCount++;
+            LogManager::Debug("recv");
+        }
+        else {
+            sendCount++;
+            const char* cmdStr = "H#";
+            DataBuffer buffer;
+            memset(&buffer, 0, sizeof(buffer));
+            buffer.Package.head.proto = MobileCMDProtocol;
+            buffer.Package.head.Length = HEAD_SIZE + strlen(cmdStr);
+            memcpy(buffer.Package.datas, cmdStr, strlen(cmdStr));
+            this->SetFrameSend(buffer);
+            LogManager::Debug("send");
+        }
+        if (abs(recvCount - sendCount) > 5) { // 5个心跳包没有答上 表示断开连接
+            this->DisConning();
+        }
+    }
+    
+}
+
 /*
  * @des: 向客户端发送数据
  */
@@ -204,7 +234,6 @@ DWORD CClient::FrameSendDataThread(void* pParam)
 	CClient *pClient = (CClient*)pParam;//转换数据类型为CClient指针
 	while(pClient->m_bConning)//连接状态
 	{
-        Sleep(FRAME_TIME);
         if(pClient->m_bSend || bSend || !pClient->m_sendBufferQuene.empty())
         {
             DataBuffer* tbuffer = pClient->m_sendBufferQuene.wait_and_pop();
@@ -245,12 +274,16 @@ void CClient::RecvDataNormal(CClient * pClient)
         else if (reVal > 0)
         {
             EnterCriticalSection(&pClient->m_cs);
-            // TODO GC问题
-            DataBuffer* databuffer = new DataBuffer(tempBuffer);
-            LogManager::Debug(databuffer->Package.datas);
-            pClient->m_RecvBufferQuene.push(databuffer);
+            if (strstr(tempBuffer, "H#") != NULL) {
+                pClient->CheckHeart(true);
+            }
+            else {
+                DataBuffer* databuffer = new DataBuffer(tempBuffer);
+                pClient->m_RecvBufferQuene.push(databuffer);
+                
+            }
+            
             LeaveCriticalSection(&pClient->m_cs);
-
             memset(tempBuffer, 0, MAX_NUM_WEB_ALL);	//清空临时变量
         }
     }

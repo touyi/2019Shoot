@@ -25,7 +25,7 @@ namespace FSM.GameMainStateDef
             this.localPlayerGid = actorManager.CreateActor(data);
             data.Release();
             
-            //gamePlay.Dispathcer.RegistListener(GameEventDefine.GameBegin, this.OnGameGo);
+            gamePlay.Dispathcer.RegistListener(GameEventDefine.GameEnd, this.OnGameEnd);
             CMDHelper.AcceptUICmdToActorManager(UICmd.UIType.TaskUI, UICmd.UIState.Open);
         }
 
@@ -52,9 +52,11 @@ namespace FSM.GameMainStateDef
             this._fsm.Ref = fsm;
         }
 
-        private void OnGameGo(EventData data)
+        private void OnGameEnd(EventData data)
         {
-            this._fsm.Ref.Fire(GameMainEvent.Go);
+            this._fsm.Ref.Fire(GameMainEvent.End);
         }
+        
+        
     }
 }
