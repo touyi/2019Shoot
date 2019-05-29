@@ -91,6 +91,8 @@ namespace Protocol
                     break;
                 case EProtocol.MobileDir:
                     return ProtoBuf.Serializer.Deserialize<VecList>(stream);
+                case EProtocol.IPExchange:
+                    return ProtoBuf.Serializer.Deserialize<IPInfo>(stream);
                 default: return null;
             }
         }
@@ -108,6 +110,11 @@ namespace Protocol
             IntPtr mem = Marshal.AllocHGlobal(size);
             Marshal.Copy(stream.ToArray(), 0, mem, size);
             this._warp.SendData((int) EProtocol.NetCmd, mem, size);
+        }
+
+        public void RequestIP()
+        {
+            this._warp.SendData((int) EProtocol.IPExchange, new IntPtr(0), 0);
         }
 
         #region 按键数据

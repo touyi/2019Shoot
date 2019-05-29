@@ -44,6 +44,10 @@ class VecListDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<VecList> _instance;
 } _VecList_default_instance_;
+class IPInfoDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<IPInfo> _instance;
+} _IPInfo_default_instance_;
 }  // namespace Message
 static void InitDefaultsKeyData_Protocol_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -132,6 +136,20 @@ static void InitDefaultsVecList_Protocol_2eproto() {
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsVecList_Protocol_2eproto}, {
       &scc_info_Vec3_Protocol_2eproto.base,}};
 
+static void InitDefaultsIPInfo_Protocol_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::Message::_IPInfo_default_instance_;
+    new (ptr) ::Message::IPInfo();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::Message::IPInfo::InitAsDefaultInstance();
+}
+
+::google::protobuf::internal::SCCInfo<0> scc_info_IPInfo_Protocol_2eproto =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsIPInfo_Protocol_2eproto}, {}};
+
 void InitDefaults_Protocol_2eproto() {
   ::google::protobuf::internal::InitSCC(&scc_info_KeyData_Protocol_2eproto.base);
   ::google::protobuf::internal::InitSCC(&scc_info_KeyChange_Protocol_2eproto.base);
@@ -139,9 +157,10 @@ void InitDefaults_Protocol_2eproto() {
   ::google::protobuf::internal::InitSCC(&scc_info_CommandList_Protocol_2eproto.base);
   ::google::protobuf::internal::InitSCC(&scc_info_Vec3_Protocol_2eproto.base);
   ::google::protobuf::internal::InitSCC(&scc_info_VecList_Protocol_2eproto.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_IPInfo_Protocol_2eproto.base);
 }
 
-::google::protobuf::Metadata file_level_metadata_Protocol_2eproto[6];
+::google::protobuf::Metadata file_level_metadata_Protocol_2eproto[7];
 const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors_Protocol_2eproto[3];
 constexpr ::google::protobuf::ServiceDescriptor const** file_level_service_descriptors_Protocol_2eproto = nullptr;
 
@@ -194,6 +213,13 @@ const ::google::protobuf::uint32 TableStruct_Protocol_2eproto::offsets[] PROTOBU
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::Message::VecList, vec_),
   ~0u,
+  PROTOBUF_FIELD_OFFSET(::Message::IPInfo, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::Message::IPInfo, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::Message::IPInfo, ip_),
+  0,
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 7, sizeof(::Message::KeyData)},
@@ -202,6 +228,7 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] PROTOBUF_SE
   { 23, 29, sizeof(::Message::CommandList)},
   { 30, 38, sizeof(::Message::Vec3)},
   { 41, 47, sizeof(::Message::VecList)},
+  { 48, 54, sizeof(::Message::IPInfo)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -211,12 +238,13 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::Message::_CommandList_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::Message::_Vec3_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::Message::_VecList_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::Message::_IPInfo_default_instance_),
 };
 
 ::google::protobuf::internal::AssignDescriptorsTable assign_descriptors_table_Protocol_2eproto = {
   {}, AddDescriptors_Protocol_2eproto, "Protocol.proto", schemas,
   file_default_instances, TableStruct_Protocol_2eproto::offsets,
-  file_level_metadata_Protocol_2eproto, 6, file_level_enum_descriptors_Protocol_2eproto, file_level_service_descriptors_Protocol_2eproto,
+  file_level_metadata_Protocol_2eproto, 7, file_level_enum_descriptors_Protocol_2eproto, file_level_service_descriptors_Protocol_2eproto,
 };
 
 const char descriptor_table_protodef_Protocol_2eproto[] =
@@ -228,16 +256,17 @@ const char descriptor_table_protodef_Protocol_2eproto[] =
   "\013CommandList\022&\n\014commandDatas\030\001 \003(\0132\020.Mes"
   "sage.Command\"\'\n\004Vec3\022\t\n\001x\030\001 \002(\002\022\t\n\001y\030\002 \002"
   "(\002\022\t\n\001z\030\003 \002(\002\"%\n\007VecList\022\032\n\003vec\030\001 \003(\0132\r."
-  "Message.Vec3*.\n\007KeyType\022\010\n\004Fire\020\000\022\n\n\006Cha"
-  "nge\020\001\022\r\n\tTypeCount\020\002*7\n\010KeyState\022\010\n\004Down"
-  "\020\000\022\006\n\002Up\020\001\022\t\n\005Click\020\002\022\016\n\nStateCount\020\003*>\n"
-  "\007CmdType\022\n\n\006UserIn\020\000\022\013\n\007UserOut\020\001\022\013\n\007Gam"
-  "eEnd\020\002\022\r\n\tGameBegin\020\003"
+  "Message.Vec3\"\024\n\006IPInfo\022\n\n\002ip\030\001 \001(\t*.\n\007Ke"
+  "yType\022\010\n\004Fire\020\000\022\n\n\006Change\020\001\022\r\n\tTypeCount"
+  "\020\002*7\n\010KeyState\022\010\n\004Down\020\000\022\006\n\002Up\020\001\022\t\n\005Clic"
+  "k\020\002\022\016\n\nStateCount\020\003*>\n\007CmdType\022\n\n\006UserIn"
+  "\020\000\022\013\n\007UserOut\020\001\022\013\n\007GameEnd\020\002\022\r\n\tGameBegi"
+  "n\020\003"
   ;
 ::google::protobuf::internal::DescriptorTable descriptor_table_Protocol_2eproto = {
   false, InitDefaults_Protocol_2eproto, 
   descriptor_table_protodef_Protocol_2eproto,
-  "Protocol.proto", &assign_descriptors_table_Protocol_2eproto, 501,
+  "Protocol.proto", &assign_descriptors_table_Protocol_2eproto, 523,
 };
 
 void AddDescriptors_Protocol_2eproto() {
@@ -2184,6 +2213,315 @@ void VecList::InternalSwap(VecList* other) {
 }
 
 
+// ===================================================================
+
+void IPInfo::InitAsDefaultInstance() {
+}
+class IPInfo::HasBitSetters {
+ public:
+  static void set_has_ip(IPInfo* msg) {
+    msg->_has_bits_[0] |= 0x00000001u;
+  }
+};
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int IPInfo::kIpFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+IPInfo::IPInfo()
+  : ::google::protobuf::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Message.IPInfo)
+}
+IPInfo::IPInfo(const IPInfo& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ip_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_ip()) {
+    ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.ip_);
+  }
+  // @@protoc_insertion_point(copy_constructor:Message.IPInfo)
+}
+
+void IPInfo::SharedCtor() {
+  ::google::protobuf::internal::InitSCC(
+      &scc_info_IPInfo_Protocol_2eproto.base);
+  ip_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+IPInfo::~IPInfo() {
+  // @@protoc_insertion_point(destructor:Message.IPInfo)
+  SharedDtor();
+}
+
+void IPInfo::SharedDtor() {
+  ip_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+void IPInfo::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const IPInfo& IPInfo::default_instance() {
+  ::google::protobuf::internal::InitSCC(&::scc_info_IPInfo_Protocol_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void IPInfo::Clear() {
+// @@protoc_insertion_point(message_clear_start:Message.IPInfo)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ip_.ClearNonDefaultToEmptyNoArena();
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+const char* IPInfo::_InternalParse(const char* begin, const char* end, void* object,
+                  ::google::protobuf::internal::ParseContext* ctx) {
+  auto msg = static_cast<IPInfo*>(object);
+  ::google::protobuf::int32 size; (void)size;
+  int depth; (void)depth;
+  ::google::protobuf::uint32 tag;
+  ::google::protobuf::internal::ParseFunc parser_till_end; (void)parser_till_end;
+  auto ptr = begin;
+  while (ptr < end) {
+    ptr = ::google::protobuf::io::Parse32(ptr, &tag);
+    GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+    switch (tag >> 3) {
+      // optional string ip = 1;
+      case 1: {
+        if (static_cast<::google::protobuf::uint8>(tag) != 10) goto handle_unusual;
+        ptr = ::google::protobuf::io::ReadSize(ptr, &size);
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr);
+        ctx->extra_parse_data().SetFieldName("Message.IPInfo.ip");
+        object = msg->mutable_ip();
+        if (size > end - ptr + ::google::protobuf::internal::ParseContext::kSlopBytes) {
+          parser_till_end = ::google::protobuf::internal::GreedyStringParserUTF8Verify;
+          goto string_till_end;
+        }
+        GOOGLE_PROTOBUF_PARSER_ASSERT(::google::protobuf::internal::StringCheckUTF8Verify(ptr, size, ctx));
+        ::google::protobuf::internal::InlineGreedyStringParser(object, ptr, size, ctx);
+        ptr += size;
+        break;
+      }
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->EndGroup(tag);
+          return ptr;
+        }
+        auto res = UnknownFieldParse(tag, {_InternalParse, msg},
+          ptr, end, msg->_internal_metadata_.mutable_unknown_fields(), ctx);
+        ptr = res.first;
+        GOOGLE_PROTOBUF_PARSER_ASSERT(ptr != nullptr);
+        if (res.second) return ptr;
+      }
+    }  // switch
+  }  // while
+  return ptr;
+string_till_end:
+  static_cast<::std::string*>(object)->clear();
+  static_cast<::std::string*>(object)->reserve(size);
+  goto len_delim_till_end;
+len_delim_till_end:
+  return ctx->StoreAndTailCall(ptr, end, {_InternalParse, msg},
+                               {parser_till_end, object}, size);
+}
+#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+bool IPInfo::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:Message.IPInfo)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional string ip = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) == (10 & 0xFF)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_ip()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->ip().data(), static_cast<int>(this->ip().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "Message.IPInfo.ip");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Message.IPInfo)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Message.IPInfo)
+  return false;
+#undef DO_
+}
+#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+
+void IPInfo::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Message.IPInfo)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional string ip = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->ip().data(), static_cast<int>(this->ip().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "Message.IPInfo.ip");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->ip(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        _internal_metadata_.unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:Message.IPInfo)
+}
+
+::google::protobuf::uint8* IPInfo::InternalSerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Message.IPInfo)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional string ip = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->ip().data(), static_cast<int>(this->ip().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "Message.IPInfo.ip");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->ip(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Message.IPInfo)
+  return target;
+}
+
+size_t IPInfo::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Message.IPInfo)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        _internal_metadata_.unknown_fields());
+  }
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // optional string ip = 1;
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->ip());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void IPInfo::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:Message.IPInfo)
+  GOOGLE_DCHECK_NE(&from, this);
+  const IPInfo* source =
+      ::google::protobuf::DynamicCastToGenerated<IPInfo>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Message.IPInfo)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Message.IPInfo)
+    MergeFrom(*source);
+  }
+}
+
+void IPInfo::MergeFrom(const IPInfo& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Message.IPInfo)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.has_ip()) {
+    _has_bits_[0] |= 0x00000001u;
+    ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.ip_);
+  }
+}
+
+void IPInfo::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:Message.IPInfo)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void IPInfo::CopyFrom(const IPInfo& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Message.IPInfo)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool IPInfo::IsInitialized() const {
+  return true;
+}
+
+void IPInfo::Swap(IPInfo* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void IPInfo::InternalSwap(IPInfo* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  ip_.Swap(&other->ip_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+}
+
+::google::protobuf::Metadata IPInfo::GetMetadata() const {
+  ::google::protobuf::internal::AssignDescriptors(&::assign_descriptors_table_Protocol_2eproto);
+  return ::file_level_metadata_Protocol_2eproto[kIndexInFileMessages];
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace Message
 namespace google {
@@ -2205,6 +2543,9 @@ template<> PROTOBUF_NOINLINE ::Message::Vec3* Arena::CreateMaybeMessage< ::Messa
 }
 template<> PROTOBUF_NOINLINE ::Message::VecList* Arena::CreateMaybeMessage< ::Message::VecList >(Arena* arena) {
   return Arena::CreateInternal< ::Message::VecList >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Message::IPInfo* Arena::CreateMaybeMessage< ::Message::IPInfo >(Arena* arena) {
+  return Arena::CreateInternal< ::Message::IPInfo >(arena);
 }
 }  // namespace protobuf
 }  // namespace google

@@ -6,6 +6,7 @@
         KeyChange = 1,
         NetCmd = 2,
         MobileDir = 3,
-        Count = 4,
+        IPExchange = 4,
+        Count = 5,
     }
 }

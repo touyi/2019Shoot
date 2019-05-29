@@ -42,7 +42,7 @@ struct TableStruct_Protocol_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::google::protobuf::internal::ParseTable schema[6]
+  static const ::google::protobuf::internal::ParseTable schema[7]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
@@ -56,6 +56,9 @@ extern CommandDefaultTypeInternal _Command_default_instance_;
 class CommandList;
 class CommandListDefaultTypeInternal;
 extern CommandListDefaultTypeInternal _CommandList_default_instance_;
+class IPInfo;
+class IPInfoDefaultTypeInternal;
+extern IPInfoDefaultTypeInternal _IPInfo_default_instance_;
 class KeyChange;
 class KeyChangeDefaultTypeInternal;
 extern KeyChangeDefaultTypeInternal _KeyChange_default_instance_;
@@ -73,6 +76,7 @@ namespace google {
 namespace protobuf {
 template<> ::Message::Command* Arena::CreateMaybeMessage<::Message::Command>(Arena*);
 template<> ::Message::CommandList* Arena::CreateMaybeMessage<::Message::CommandList>(Arena*);
+template<> ::Message::IPInfo* Arena::CreateMaybeMessage<::Message::IPInfo>(Arena*);
 template<> ::Message::KeyChange* Arena::CreateMaybeMessage<::Message::KeyChange>(Arena*);
 template<> ::Message::KeyData* Arena::CreateMaybeMessage<::Message::KeyData>(Arena*);
 template<> ::Message::Vec3* Arena::CreateMaybeMessage<::Message::Vec3>(Arena*);
@@ -914,6 +918,135 @@ class VecList final :
   ::google::protobuf::RepeatedPtrField< ::Message::Vec3 > vec_;
   friend struct ::TableStruct_Protocol_2eproto;
 };
+// -------------------------------------------------------------------
+
+class IPInfo final :
+    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Message.IPInfo) */ {
+ public:
+  IPInfo();
+  virtual ~IPInfo();
+
+  IPInfo(const IPInfo& from);
+
+  inline IPInfo& operator=(const IPInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  IPInfo(IPInfo&& from) noexcept
+    : IPInfo() {
+    *this = ::std::move(from);
+  }
+
+  inline IPInfo& operator=(IPInfo&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return default_instance().GetDescriptor();
+  }
+  static const IPInfo& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const IPInfo* internal_default_instance() {
+    return reinterpret_cast<const IPInfo*>(
+               &_IPInfo_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    6;
+
+  void Swap(IPInfo* other);
+  friend void swap(IPInfo& a, IPInfo& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline IPInfo* New() const final {
+    return CreateMaybeMessage<IPInfo>(nullptr);
+  }
+
+  IPInfo* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<IPInfo>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const IPInfo& from);
+  void MergeFrom(const IPInfo& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  static const char* _InternalParse(const char* begin, const char* end, void* object, ::google::protobuf::internal::ParseContext* ctx);
+  ::google::protobuf::internal::ParseFunc _ParseFunc() const final { return _InternalParse; }
+  #else
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(IPInfo* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional string ip = 1;
+  bool has_ip() const;
+  void clear_ip();
+  static const int kIpFieldNumber = 1;
+  const ::std::string& ip() const;
+  void set_ip(const ::std::string& value);
+  #if LANG_CXX11
+  void set_ip(::std::string&& value);
+  #endif
+  void set_ip(const char* value);
+  void set_ip(const char* value, size_t size);
+  ::std::string* mutable_ip();
+  ::std::string* release_ip();
+  void set_allocated_ip(::std::string* ip);
+
+  // @@protoc_insertion_point(class_scope:Message.IPInfo)
+ private:
+  class HasBitSetters;
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  ::google::protobuf::internal::ArenaStringPtr ip_;
+  friend struct ::TableStruct_Protocol_2eproto;
+};
 // ===================================================================
 
 
@@ -1146,9 +1279,75 @@ VecList::vec() const {
   return vec_;
 }
 
+// -------------------------------------------------------------------
+
+// IPInfo
+
+// optional string ip = 1;
+inline bool IPInfo::has_ip() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void IPInfo::clear_ip() {
+  ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const ::std::string& IPInfo::ip() const {
+  // @@protoc_insertion_point(field_get:Message.IPInfo.ip)
+  return ip_.GetNoArena();
+}
+inline void IPInfo::set_ip(const ::std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:Message.IPInfo.ip)
+}
+#if LANG_CXX11
+inline void IPInfo::set_ip(::std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  ip_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:Message.IPInfo.ip)
+}
+#endif
+inline void IPInfo::set_ip(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:Message.IPInfo.ip)
+}
+inline void IPInfo::set_ip(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:Message.IPInfo.ip)
+}
+inline ::std::string* IPInfo::mutable_ip() {
+  _has_bits_[0] |= 0x00000001u;
+  // @@protoc_insertion_point(field_mutable:Message.IPInfo.ip)
+  return ip_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* IPInfo::release_ip() {
+  // @@protoc_insertion_point(field_release:Message.IPInfo.ip)
+  if (!has_ip()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return ip_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void IPInfo::set_allocated_ip(::std::string* ip) {
+  if (ip != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  ip_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ip);
+  // @@protoc_insertion_point(field_set_allocated:Message.IPInfo.ip)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

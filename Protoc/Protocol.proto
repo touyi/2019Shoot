@@ -42,3 +42,7 @@ message Vec3{
 message VecList{
 	repeated Vec3 vec = 1;
 }
+
+message IPInfo{
+	optional string ip = 1;
+}

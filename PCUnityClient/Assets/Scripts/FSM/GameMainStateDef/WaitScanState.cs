@@ -26,7 +26,7 @@ namespace FSM.GameMainStateDef
             cmd.UiState = UICmd.UIState.Open;
             cmd.UiType = UICmd.UIType.EncodeUI;
             // TODO 服务器下发
-            cmd.Info = "http://192.168.31.183:8080";
+            cmd.Info = "12";
             GameMain.Instance.CurrentGamePlay.ActorManager.AcceptCmd(cmd);
             cmd.Release();
             Application.targetFrameRate = WaitFrame;

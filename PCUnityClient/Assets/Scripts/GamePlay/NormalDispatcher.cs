@@ -15,6 +15,7 @@ namespace GamePlay
         public void Init()
         {
             NetMessage.Instance.RegistNetListener(EProtocol.NetCmd, this.OnNetMessage);
+            NetMessage.Instance.RegistNetListener(EProtocol.IPExchange, this.OnNetMessage);
         }
 
         public void Start()
@@ -24,6 +25,7 @@ namespace GamePlay
         public void Uninit()
         {
             NetMessage.Instance.RemoveNetListener(EProtocol.NetCmd, this.OnNetMessage);
+            NetMessage.Instance.RemoveNetListener(EProtocol.IPExchange, this.OnNetMessage);
         }
 
         public void Update(float deltaTime)
@@ -42,20 +44,34 @@ namespace GamePlay
 
         private void OnNetMessage(EventParam param)
         {
-            if (param.type != EProtocol.NetCmd) return;
-            CommandList list = param.message as CommandList;
-            for (int i = 0; i < list.commandDatas.Count; i++)
+            if (param.type == EProtocol.NetCmd)
             {
-                Message.Command cmd = list.commandDatas[i];
-                switch (cmd.ctype)
+                CommandList list = param.message as CommandList;
+                for (int i = 0; i < list.commandDatas.Count; i++)
                 {
+                    Message.Command cmd = list.commandDatas[i];
+                    switch (cmd.ctype)
+                    {
                         case CmdType.GameBegin:
                             this.LaunchEvent(GameEventDefine.GameBegin, null);
                             break;
                         case CmdType.GameEnd:
                             this.LaunchEvent(GameEventDefine.GameEnd, null);
                             break;
+                    }
                 }
+            }
+            else if (param.type == EProtocol.IPExchange)
+            {
+                IPInfo info = param.message as IPInfo;
+                if (info != null)
+                {
+                    EventData data = EventData.Get();
+                    data.strPara = info.ip;
+                    this.LaunchEvent(GameEventDefine.NtyWebIP, data);
+                    data.Release();
+                }
+                
             }
         }
 

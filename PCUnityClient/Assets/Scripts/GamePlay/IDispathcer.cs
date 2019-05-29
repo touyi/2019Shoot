@@ -12,7 +12,8 @@ namespace GamePlay
         ActorLifeChange = 3,
         ActorCreated = 4,
         ActorDestory = 5,
-        Count = 6,
+        NtyWebIP = 6,
+        Count = 7,
     }
 
     public class EventData : Poolable<EventData>

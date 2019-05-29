@@ -279,6 +279,19 @@ void CClient::RecvDataNormal(CClient * pClient)
             }
             else {
                 DataBuffer* databuffer = new DataBuffer(tempBuffer);
+                if (databuffer->Package.head.proto == 4) {
+                    // ÇëÇówebip
+                    DataBuffer ipBuffer;
+                    Message::IPInfo info;
+                    string ip("http://192.168.31.183:8080");
+                    info.set_ip(ip);
+                    int size = info.ByteSize();
+                    ipBuffer.Package.head.proto = 4;
+                    ipBuffer.Package.head.Length = HEAD_SIZE + size;
+                    info.SerializeToArray(ipBuffer.Package.datas, size);
+                    pClient->SetFrameSend(ipBuffer);
+                    delete databuffer;
+                }
                 pClient->m_RecvBufferQuene.push(databuffer);
                 
             }
