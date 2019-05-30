@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#define PCTEST
+using UnityEngine;
 
 namespace NetInput
 {
@@ -30,7 +31,12 @@ namespace NetInput
                     {
                         if (_input == null)
                         {
+                            #if PCTEST
+                            _input = new TempInput();
+                            #else
                             _input = new SInput();
+                            #endif
+                            
                         }
                     }
                 }
