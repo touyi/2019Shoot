@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Wrapper;
 
@@ -10,9 +12,10 @@ namespace Tools
         private Vector3 screenPos;
         private Vector3 lastScreenPos;
         private Queue<Vector3> smoothQue = new Queue<Vector3>();
-        private float speed = 0.6f;
+        private float speed = 0.5f;
         private const float G = 9.8f;
-        private const int QueueMaxSize = 5;
+        private const int QueueMaxSize = 8;
+        private const bool Use = true;
 
         public InputDirChange()
         {
@@ -46,12 +49,21 @@ namespace Tools
 
         public Vector3 GetLookAtScreenPos()
         {
-            //SetScreenPos(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
-            // screenPos = GetLimitPos(screenPos);
-            // lastScreenPos = Vector3.Slerp(lastScreenPos, screenPos, speed);
-            // lastScreenPos = GetLimitPos(lastScreenPos);
-
-            // Vector3 worldPos = FGameObjectBar._instance.shakeCamera.GetComponent<Camera>().ScreenToWorldPoint(lastScreenPos);
+            if (Use == false)
+            {
+                if (smoothQue.Count > 0)
+                {
+                    Vector3 value = smoothQue.Last();
+                    lastScreenPos = Vector3.Lerp(lastScreenPos, value, 0.3f);
+                    //return new Vector3(value.x, Screen.height - value.y, value.z);
+                    return new Vector3(lastScreenPos.x, Screen.height - lastScreenPos.y, lastScreenPos.z);
+                }
+                else
+                {
+                    return Vector3.zero;
+                }
+                
+            }
             // 算术平均滤波+一阶滞后滤波法
             Vector3 avg = new Vector3(0, 0, 0);
             foreach (Vector3 it in smoothQue)
@@ -59,10 +71,25 @@ namespace Tools
                 avg += it;
             }
 
+            Vector3 last = Vector3.zero;
             if (smoothQue.Count > 0)
+            {
                 avg /= smoothQue.Count;
+                last = smoothQue.Last();
+            }
 
-            lastScreenPos = Vector3.Slerp(lastScreenPos, avg, speed);
+            float dis = Vector3.Distance(lastScreenPos, last);
+            Debug.Log(dis);
+            if (dis > 50)
+            {
+                speed = 1;
+            }
+            else
+            {
+                speed = 0.2f;
+            }
+
+            lastScreenPos = Vector3.Lerp(lastScreenPos, last, speed);
 //            Vector3 worldPos = FGameObjectBar._instance.shakeCamera.GetComponent<Camera>()
 //                .ScreenToWorldPoint(lastScreenPos);
             return new Vector3(lastScreenPos.x, Screen.height - lastScreenPos.y, lastScreenPos.z);

@@ -1,5 +1,4 @@
-﻿#define PCTEST
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -19,7 +18,6 @@ namespace Protocol
         public const int BYTE_LENGTH = 60;
         private ClientWarp _warp = null;
         private bool isConnect = false;
-        [Conditional("PCTEST")]
         public void Init()
         {
             _warp = new ClientWarp();
@@ -32,12 +30,10 @@ namespace Protocol
 
             isConnect = true;
         }
-        [Conditional("PCTEST")]
         public void Uninit()
         {
             _warp.ExitClient();
         }
-        [Conditional("PCTEST")]
         public void Update(float deltaTime)
         {
             if (!this._warp.IsConnected())
@@ -61,24 +57,18 @@ namespace Protocol
 
         private byte[] memBytes = new byte[BYTE_LENGTH];
 
-        
+
         private void HandleData(DataItem item)
         {
             Debug.Log(string.Format("协议：{0} ", item.protocol));
-            try
+            Marshal.Copy(item.GetBuffer(), memBytes, 0, item.bufferLength);
+            using (MemoryStream stream = new MemoryStream(memBytes, 0, item.bufferLength))
             {
-                Marshal.Copy(item.GetBuffer(), memBytes, 0, item.bufferLength);
-                using (MemoryStream stream = new MemoryStream(memBytes, 0, item.bufferLength))
-                {
-                    //KeyChange change = ProtoBuf.Serializer.Deserialize<KeyChange>(stream);
-                    object msg = this.ParseBuffer(item.protocol, stream);
-                    NetMessage.Instance.LaunchNetMessage((EProtocol) item.protocol, msg);
-                }
+                //KeyChange change = ProtoBuf.Serializer.Deserialize<KeyChange>(stream);
+                object msg = this.ParseBuffer(item.protocol, stream);
+                NetMessage.Instance.LaunchNetMessage((EProtocol) item.protocol, msg);
             }
-            catch (Exception ex)
-            {
-                Debug.LogError(ex.Message);
-            }
+
         }
 
         private object ParseBuffer(int protocol, MemoryStream stream)
@@ -100,7 +90,6 @@ namespace Protocol
                 default: return null;
             }
         }
-        [Conditional("PCTEST")]
         public void SendGameEnd()
         {
             CommandList list = new CommandList();
@@ -115,7 +104,6 @@ namespace Protocol
             Marshal.Copy(stream.ToArray(), 0, mem, size);
             this._warp.SendData((int) EProtocol.NetCmd, mem, size);
         }
-        [Conditional("PCTEST")]
         public void RequestIP()
         {
             this._warp.SendData((int) EProtocol.IPExchange, new IntPtr(0), 0);

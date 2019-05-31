@@ -1,4 +1,4 @@
-﻿#define PCTEST
+﻿// #define PCTEST
 using UnityEngine;
 
 namespace NetInput

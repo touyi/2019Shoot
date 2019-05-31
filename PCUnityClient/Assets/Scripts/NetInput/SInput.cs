@@ -124,7 +124,6 @@ namespace NetInput
                 Vector2 uVec3;
                 uVec3.x = vec.x;
                 uVec3.y = vec.y;
-                Debug.Log(uVec3);
                 InputDirChange.Instance.AddNewPos(uVec3);
             }
         }

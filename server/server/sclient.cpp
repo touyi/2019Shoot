@@ -292,7 +292,10 @@ void CClient::RecvDataNormal(CClient * pClient)
                     pClient->SetFrameSend(ipBuffer);
                     delete databuffer;
                 }
-                pClient->m_RecvBufferQuene.push(databuffer);
+                else {
+                    pClient->m_RecvBufferQuene.push(databuffer);
+                }
+                
                 
             }
             
